@@ -1,0 +1,13 @@
+default:
+  image: alpine:latest
+
+deploy:
+  stage: deploy
+  only:
+    - main
+  script:
+    - apk add --update --no-cache curl p7zip && rm -rf /var/cache/apk/*
+    - 7z a plugin *
+    - curl -T 'plugin.7z' -u $USERNAME:$PASSWORD $URL/$PLUGIN_NAME.plugin
+
+  
