@@ -1,5 +1,5 @@
 from .tabs import MainTab
-from ..plugin import Plugin
+import activity_browser.plugins as ab 
 
 ######################
 # PLUGIN DESCRIPTION #
@@ -16,10 +16,10 @@ infos = {
 
 #######################
 
-class Resicled(Plugin):
+class Plugin(ab.Plugin):
 
     def __init__(self):
-        Plugin.__init__(self, infos)
+        ab.Plugin.__init__(self, infos)
         self.mainTab = MainTab()
         self.tabs = [self.mainTab]
     

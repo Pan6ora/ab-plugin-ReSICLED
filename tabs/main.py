@@ -1,5 +1,5 @@
 from PySide2 import QtCore, QtWidgets
-from ....ui.style import horizontal_line, header
+from activity_browser.ui.style import horizontal_line, header
 
 class MainTab(QtWidgets.QWidget):
     def __init__(self, parent=None):
