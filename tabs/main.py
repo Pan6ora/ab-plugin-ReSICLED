@@ -1,7 +1,8 @@
 from PySide2 import QtCore, QtWidgets
+from activity_browser.layouts.panels import ABTab
 from activity_browser.ui.style import horizontal_line, header
 
-class MainTab(QtWidgets.QWidget):
+class MainTab(ABTab):
     def __init__(self, parent=None):
         super(MainTab, self).__init__(parent)        
         self.isPlugin = True
