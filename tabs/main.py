@@ -4,7 +4,8 @@ from activity_browser.ui.style import horizontal_line, header
 
 class MainTab(ABTab):
     def __init__(self, parent=None):
-        super(MainTab, self).__init__(parent)        
+        super(MainTab, self).__init__(parent)
+        self.panel = "right"
         self.isPlugin = True
         self.layout = QtWidgets.QVBoxLayout()
         self.layout.setAlignment(QtCore.Qt.AlignTop)
