@@ -1,5 +1,5 @@
 from .tabs import MainTab
-import activity_browser.plugins as ab 
+import activity_browser as ab 
 
 ######################
 # PLUGIN DESCRIPTION #
@@ -20,6 +20,6 @@ class Plugin(ab.Plugin):
 
     def __init__(self):
         ab.Plugin.__init__(self, infos)
-        self.mainTab = MainTab()
+        self.mainTab = MainTab(self)
         self.tabs = [self.mainTab]
     
