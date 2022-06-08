@@ -7,7 +7,7 @@ import activity_browser as ab
 
 infos = {
     'name': 'ReSICLED',
-    'version': '0.0.1',
+    'version': '0.0.2',
     'author': 'Rémy Le Calloch',
     'author_email': 'remy@lecalloch.net',
     'url': 'https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop-demo/ab-plugins/resicled',
