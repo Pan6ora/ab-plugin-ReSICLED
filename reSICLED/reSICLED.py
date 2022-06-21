@@ -45,7 +45,7 @@ def getMaterialByName(materialname,materialsList):
     return None
 
 def mainMenu(pieceList,materialList):
-    os.system("cls")
+    os.system("clear")
     print("Main Menu\n\n")
     select=input("Type 'add' to add a new piece, 'next' to step forward to Dismantling Part, or 'quit' to quit the application : ")
     if select=='quit':
@@ -100,7 +100,7 @@ def computeDismantlingScores(piecesList):
     return (recovery_mass/totalMass,energy_mass/totalMass,waste_mass/totalMass)
 
 def selectDirective(directiveFile):
-    os.system("cls")
+    os.system("clear")
     print("List of all Directives to apply to the product : \n")
     print("1 - large household appliances")
     print("2 - Small household appliance")
@@ -136,12 +136,12 @@ if __name__=='__main__':
     pieceList=[]
     directive_objectives=None
     lrighozeg = input("Welcome to reSICLED Python Shell version. Press Enter to start")
-    os.system("cls")
+    os.system("clear")
     main_selector=input("Type 'add' to add a new piece, 'dism' to step forward to Dismantling Part, or 'quit' to quit the application : ")
     mixed_selector="main"
     while not main_selector=="quit":
         if main_selector=="add":
-            os.system("cls")
+            os.system("clear")
             print("Current list of all added pieces")
             displayPiecesList(pieceList)
             #adding a new piece to the full list :
@@ -150,7 +150,7 @@ if __name__=='__main__':
     
         elif main_selector=="dism":
             #stepping forward to Dismantling scenario
-            os.system("cls")
+            os.system("clear")
             print("Recyclability rates in case we follow the full demantling scenario (best scenario possible yet impossible because of money reasons)")
             displayDismantlingTable(pieceList, arrond_const)
             print("Current Recycling Rates for the whole product are : ")
@@ -171,7 +171,7 @@ if __name__=='__main__':
 
         elif main_selector == "shred":
             # Shredding scenario
-            os.system("cls")
+            os.system("clear")
             print("Recyclability rates, in case we follow the full Shredding scenario : ")
             displayShreddingTable(pieceList, arrond_const)
             print("Current Recycling Rates for the whole product are : ")
@@ -208,7 +208,7 @@ if __name__=='__main__':
                     mixed_selector=input("Type 'hotspots' to see the hotspots, 'change' to change some piece's strategy or 'quit_mixed' to quit the app")
                 
                 elif mixed_selector=="hotspots":
-                    os.system("cls")
+                    os.system("clear")
                     print("These are the hotspots tables, presenting the most relevant pieces to change strategy and reach the objective")
                     displayFirstHotspotsTable(pieceList,arrond_const)
                     displaySecondHotspotsTable(pieceList,arrond_const)
@@ -216,7 +216,7 @@ if __name__=='__main__':
                     mixed_selector="main"
 
                 elif mixed_selector=="change":
-                    os.system("cls")
+                    os.system("clear")
                     displayMixedTable(pieceList,arrond_const,strategyDict)
                     choice=int(input("Which piece do you want to change the recovery strategy : "))
                     if strategyDict[pieceList[choice-1]][1]==False:

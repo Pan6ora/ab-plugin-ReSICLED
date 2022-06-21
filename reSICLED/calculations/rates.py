@@ -41,11 +41,11 @@ def getMixedRates(piecesList : list, strategyDict : dict, arrond) -> tuple:
     totalWeight=weight(piecesList)
     for piece in piecesList:
         if strategyDict[piece][0]=="Dismantling":
-            recovery_rate+=computeDismantlingPerPiece(piece,arrond)[0]
+            recoveryRate+=computeDismantlingPerPiece(piece,arrond)[0]
             energyRate+=computeDismantlingPerPiece(piece,arrond)[1]
             wasteRate+=computeDismantlingPerPiece(piece,arrond)[2]
         else:
             recoveryRate+=computeShreddingPerPiece(piece,arrond)[0]
             energyRate+=computeShreddingPerPiece(piece,arrond)[1]
             wasteRate+=computeShreddingPerPiece(piece,arrond)[2]
-    return (recovery_rate/totalWeight,energyRate/totalWeight,wasteRate/totalWeight)
+    return (recoveryRate/totalWeight,energyRate/totalWeight,wasteRate/totalWeight)
