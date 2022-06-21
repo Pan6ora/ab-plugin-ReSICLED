@@ -1,0 +1,557 @@
+[
+  {
+    "material type": "Polymers",
+    "material name": "ABS",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.74,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.25,
+      "price": 2
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "ABS with any additives",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 4
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "HIPS",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.83,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.16,
+      "price": 5.45
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "HIPS with any additives",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 2.81
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PP",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.9,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.09,
+      "price": 3.3
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PP+EPDM",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.9,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.09,
+      "price": 3.15
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PP-GF",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.9,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.09,
+      "price": 3
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PP with any other additives",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 1.81
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "P/E",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.9,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.09,
+      "price": 2
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PC",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 2.48
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "ABS-PC",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 5.3
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PA",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 299.28
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PA-6",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 150
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "HDPE",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 1.32
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "SAN",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 7.93
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "SAN without additive",
+    "after dismantling": {
+      "recovery potential": 0.94,
+      "energy recovery potential": 0.01,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 3.96
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "PE-Film, PS-E (packaging)",
+    "after dismantling": {
+      "recovery potential": 0.15,
+      "energy recovery potential": 0.14,
+      "residual waste potential": 0.71
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1,
+      "price": null
+    }
+  },
+  {
+    "material type": "Polymers",
+    "material name": "Other Polymer",
+    "after dismantling": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0.05,
+      "residual waste potential": 0.95,
+      "price": 4
+    }
+  },
+  {
+    "material type": "Metals",
+    "material name": "Steel",
+    "after dismantling": {
+      "recovery potential": 0.95,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.95,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.05,
+      "price": 1.76
+    }
+  },
+  {
+    "material type": "Metals",
+    "material name": "Aluminium",
+    "after dismantling": {
+      "recovery potential": 0.93,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.07
+    },
+    "after shredding": {
+      "recovery potential": 0.91,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.09,
+      "price": 3.7
+    }
+  },
+  {
+    "material type": "Metals",
+    "material name": "Copper",
+    "after dismantling": {
+      "recovery potential": 0.95,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.05
+    },
+    "after shredding": {
+      "recovery potential": 0.85,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.15,
+      "price": 24.47
+    }
+  },
+  {
+    "material type": "Metals",
+    "material name": "Metal alloys",
+    "after dismantling": {
+      "recovery potential": 0.8,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.2
+    },
+    "after shredding": {
+      "recovery potential": 0.7,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.3,
+      "price": 8
+    }
+  },
+  {
+    "material type": "Metals",
+    "material name": "Other metal",
+    "after dismantling": {
+      "recovery potential": 0.8,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.2
+    },
+    "after shredding": {
+      "recovery potential": 0.7,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.3,
+      "price": 9
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "LCD",
+    "after dismantling": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Cable (high current)",
+    "after dismantling": {
+      "recovery potential": 0.33,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.67
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Cable (low current)",
+    "after dismantling": {
+      "recovery potential": 0.24,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.76
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Battery (Lead-acid)",
+    "after dismantling": {
+      "recovery potential": 0.6,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.4
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "\"Battery (Ni-Cd) (2 type: portable (<1kg), non-portable (>1kg))\"",
+    "after dismantling": {
+      "recovery potential": 0.7,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.3
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Other battery",
+    "after dismantling": {
+      "recovery potential": 0.45,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.55
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "CPT",
+    "after dismantling": {
+      "recovery potential": 0.9,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.1
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Moteur",
+    "after dismantling": {
+      "recovery potential": 0.8540000000000001,
+      "energy recovery potential": 0.0013,
+      "residual waste potential": 0.1447
+    },
+    "after shredding": {
+      "recovery potential": 0.81,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.19,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Heatsink",
+    "after dismantling": {
+      "recovery potential": 0.93,
+      "energy recovery potential": 0,
+      "residual waste potential": 0.07
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Cable (optical)",
+    "after dismantling": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Bulb",
+    "after dismantling": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Cartouche encre",
+    "after dismantling": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "Cardboard (packaging)",
+    "after dismantling": {
+      "recovery potential": 0.59,
+      "energy recovery potential": 0.07,
+      "residual waste potential": 0.34
+    },
+    "after shredding": {
+      "recovery potential": 0,
+      "energy recovery potential": 0,
+      "residual waste potential": 1,
+      "price": null
+    }
+  },
+  {
+    "material type": "Other",
+    "material name": "PWB (Rich)",
+    "after dismantling": {
+      "recovery potential": 0.18,
+      "energy recovery potential": 0.43,
+      "residual waste potential": 0.395
+    },
+    "after shredding": {
+      "recovery potential": null,
+      "energy recovery potential": null,
+      "residual waste potential": null,
+      "price": null
+    }
+  }
+]
