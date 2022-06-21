@@ -1,6 +1,6 @@
 # ReSICLED
 
-Evaluating the recyclability of product Electr(on)ic for improving product design (eco-oriented design end of life).
+Evaluating the recyclability of electr(on)ic product for improving product design (eco-oriented design end of life).
 
 This plugin is a rewrite of [the website](https://resicled-dev.g-scop.grenoble-inp.fr/ReSICLED-0.1/user/login) developed during the these "**ReSICLED: a new recovery-conscious design method for complex products based on a multicriteria assessment of the recoverability**"[^1]
 
