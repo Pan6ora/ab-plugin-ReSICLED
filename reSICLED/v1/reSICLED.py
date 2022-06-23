@@ -10,6 +10,9 @@ from layouts.piecesList import displayPiecesList
 from calculations.rates import getMixedRates
 from calculations.utils import arrondi
 
+import brightway2 as bw
+from setup_material_database import setupDict
+
 def getMaterialsNames(materialsList):
     """
     Returns the list of all materials' names in materialsList
@@ -131,6 +134,7 @@ if __name__=='__main__':
     with open("data.json","r") as f:
         jdata = json.load(f)
     materialList=setMaterialsList(jdata)
+
     #pieceList=[Piece("capot",20,"Polymer",getMaterialByName("ABS",materialList),1),Piece("carte sim",1,"Polymer",getMaterialByName("Other Polymer",materialList),1),Piece("Vis",0.25,"Metal",getMaterialByName("Other metal",materialList),4)]
     StrategyDict_setup_status=False
     pieceList=[]
