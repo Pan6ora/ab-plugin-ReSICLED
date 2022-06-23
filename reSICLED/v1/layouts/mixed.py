@@ -18,7 +18,7 @@ def setStrategyDict(piecesList):
     return strategyDict
 
 
-def displayMixedTable(piecesList : list[Piece] ,arrond : int, strategyDict : dict) -> None:
+def displayMixedTable(piecesList : list ,arrond : int, strategyDict : dict) -> None:
     maxName = max([len(piece.name) for piece in piecesList])
     print("------+"+"-"*(maxName+11)+"+"+'-'*10+"+"+"-"*8+"+"+"-"*8+"+"+"-"*17+"+"+"-"*13+"+"+"-"*16+"+"+"-"*15+"+"+"-"*14+"+"+"-"*8+"+")
     print("  Id  | Name"+" "*(maxName+6)+"|"+" Polluant | Gain 1 | Gain 2 | Relative weight | Strategy    | Recycle weight | Energy weight | Waste weight | Amount |")
