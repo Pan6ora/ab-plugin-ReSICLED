@@ -14,7 +14,7 @@ from layouts.mixed import setStrategyDict
 
 def getFileByName(directory):
     for file in os.listdir(directory):
-        if file[:9]=="Materials" and os.path.splitext(file)==".bw2package":
+        if file[:9]=="Materials" and os.path.splitext(file)[1]==".bw2package":
             return file
     return None
 
@@ -47,12 +47,13 @@ def selectDirective(directiveFile):
 def main():
     directive = None
     os.system("clear")
+    print(os.getcwd())
     print("Welcome to ReSICLED")
     print("Current version : 1.2\n")
     a = input("Type 'begin' to start a new product, or 'quit' to quit the app : ")
     bw.projects.set_current("reSICLED")
-    if "Materials" not in bw.databases or bw.Database("Materials").load()=={}:
-        #We have to add it to the databases linked to the project
+    if "Materials" not in bw.databases:
+        #We have to add it to the databases linxœked to the project
         if getFileByName(os.getcwd()) is not None:
             BW2Package().import_file(os.path.join(os.getcwd(),getFileByName(os.getcwd())))
         else:
@@ -110,6 +111,7 @@ def main():
         elif a == "mixed":
             stratDcit = setStrategyDict(piecesList, materialsList)
             displayMixedTable(piecesList,stratDcit,materialsList)
+            os.system("pause")
 
 
         elif a== 'quit':
