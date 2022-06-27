@@ -6,6 +6,7 @@ import activity_browser as ab
 ######################
 
 infos = {
+    'id': 'ReSICLED',
     'name': 'ReSICLED',
     'version': '0.0.2',
     'author': 'Rémy Le Calloch',
