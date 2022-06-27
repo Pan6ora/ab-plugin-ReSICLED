@@ -1,1 +1,2 @@
-from .main import MainTab
+from .right import RightTab
+from .left import LeftTab

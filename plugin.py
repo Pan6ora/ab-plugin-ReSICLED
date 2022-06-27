@@ -1,4 +1,4 @@
-from .tabs import MainTab
+from .tabs import LeftTab, RightTab
 import activity_browser as ab 
 
 ######################
@@ -20,6 +20,7 @@ class Plugin(ab.Plugin):
 
     def __init__(self):
         ab.Plugin.__init__(self, infos)
-        self.mainTab = MainTab(self)
-        self.tabs = [self.mainTab]
+        self.mainTab = RightTab(self)
+        self.leftTab = LeftTab(self)
+        self.tabs = [self.mainTab, self.leftTab]
     
