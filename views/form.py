@@ -6,6 +6,7 @@ from PySide2.QtWidgets import (
     QApplication, QDoubleSpinBox, QWidget, QFormLayout, QGridLayout, QComboBox
 )
 from PySide2.QtCore import Qt
+from PySide2.QtGui import QIntValidator, QDoubleValidator
 from .icon import Icon
 from .style import Style
 
@@ -26,6 +27,10 @@ class Form(QDialog):
     def show_dialog_insert_component(self):
         dialog_insert_component = Dialog_insert_component()
         dialog_insert_component.exec_()
+        
+    def show_dialog_insert_material(self):
+        dialog_insert_material = Dialog_insert_material()
+        dialog_insert_material.exec_()
         
     def show_question(self):
         reply = QMessageBox.question(self, "Question MessageBox", "Do You Like Pyside2", QMessageBox.Yes | QMessageBox.No)
@@ -111,20 +116,27 @@ class Dialog_insert_component(QDialog):
         self.edit_component_material_metal.addItem("Select")
         self.edit_component_material_other.addItem("Select")
         self.edit_component_material_personalmaterial.addItem("Select")
+         # validator
+        self.validator_int = QIntValidator(self)
+        self.validator_double = QDoubleValidator(self)
+        self.edit_component_numberofpieces.setValidator(self.validator_int)
+        self.edit_component_weight.setValidator(self.validator_double)
         #-- buttons add material
         self.button_component_material_add = QPushButton("Create new material")
         self.layout_button_component_material_add = QGridLayout()
         self.layout_button_component_material_add.addWidget(self.button_component_material_add)
         self.widget_button_component_material_add.setLayout(self.layout_button_component_material_add)
         #--- signal buttons add material
-        self.button_component_material_add.clicked.connect(self.save_insert_component)
+        self.form = Form()
+        self.button_component_material_add.clicked.connect(self.form.show_dialog_insert_material)
         # form layout component
         self.layout_component = QFormLayout()
         self.layout_component.addRow("Product: ", self.edit_component_product)
         self.layout_component.addRow("Name  component: ", self.edit_name_component)
         self.layout_component.addRow(style.horizontal_line())
         self.layout_component.addRow("Weight (grams/piece) : ", self.edit_component_weight)
-        self.layout_component.addRow("Is it pollutant ? : ", self.edit_component_isitpollutant)
+        #self.layout_component.addRow("Is it pollutant ? : ", self.edit_component_isitpollutant)
+        self.layout_component.addRow("Number of pieces : ", self.edit_component_numberofpieces)
         self.layout_component.addRow("Comment : ", self.edit_component_comments)
         self.widget_component.setLayout(self.layout_component)
         # form layout material
@@ -174,6 +186,111 @@ class Dialog_insert_component(QDialog):
         
     def save_insert_component(self):
         name_component_value= self.edit_name_component.value()
+        
+        
+class Dialog_insert_material(QDialog):
+    def __init__(self, parent=None):
+        QDialog.__init__(self,parent)
+        #--- style ---
+        style = Style()
+        #--- QtWidget ---
+        self.widget_material = QWidget()
+        self.widget_button = QWidget()
+        # The input
+        self.edit_name_material = QLineEdit("")
+        self.edit_type_material = QLineEdit("")
+        self.edit_recdis_material = QLineEdit("")
+        self.edit_recodis_material = QLabel()
+        self.edit_enerdis_material = QLineEdit("")
+        self.edit_wastedis_material = QLabel()
+        self.edit_recshr_material = QLineEdit("")
+        self.edit_recoshr_material = QLabel()
+        self.edit_enershr_material = QLineEdit("")
+        self.edit_wasteshr_material = QLabel()
+        self.edit_pollutant_material = QComboBox()
+        self.edit_type_material = QComboBox()
+        self.edit_price_material = QLineEdit("")
+        # init input
+        self.edit_pollutant_material.addItem("Select")
+        self.edit_pollutant_material.addItems(["Yes","No"])
+        self.edit_type_material.addItem("Select")
+        self.edit_type_material.addItems(["Polymer","Metal","Other"])
+        # validator
+        self.validator_int = QIntValidator(0, 100, self)
+        self.edit_recdis_material.setValidator(self.validator_int)
+        self.edit_enerdis_material.setValidator(self.validator_int)
+        self.edit_recshr_material.setValidator(self.validator_int)
+        self.edit_enershr_material.setValidator(self.validator_int)
+        # signal
+        self.edit_recdis_material.textChanged.connect(self.get_recoverydis)
+        self.edit_enerdis_material.textChanged.connect(self.get_recoverydis)
+        self.edit_enerdis_material.textChanged.connect(self.get_residualwastedis)
+        self.edit_recshr_material.textChanged.connect(self.get_recoveryshr)
+        self.edit_enershr_material.textChanged.connect(self.get_recoveryshr)
+        self.edit_enershr_material.textChanged.connect(self.get_residualwasteshr)
+        # form layout
+        self.layout_material = QFormLayout()
+        self.layout_material.addRow("Name  Material: ", self.edit_name_material)
+        self.layout_material.addRow(style.horizontal_line())
+        self.layout_material.addRow("Type : ", self.edit_type_material)
+        self.layout_material.addRow("Is it pollutant ? : ", self.edit_pollutant_material)
+        self.layout_material.addRow(QLabel("---- RATES After Dismantling ----"))
+        self.layout_material.addRow("Recycling (%) : ", self.edit_recdis_material)
+        self.layout_material.addRow("Energy recovery (%) : ", self.edit_enerdis_material)
+        self.layout_material.addRow("Recovery (%) : ", self.edit_recodis_material)
+        self.layout_material.addRow("Residual waste (%) : ", self.edit_wastedis_material)
+        self.layout_material.addRow(QLabel("---- RATES After Shredding ----"))
+        self.layout_material.addRow("Recycling (%) : ", self.edit_recshr_material)
+        self.layout_material.addRow("Energy recovery (%) : ", self.edit_enershr_material)
+        self.layout_material.addRow("Recovery (%) : ", self.edit_recoshr_material)
+        self.layout_material.addRow("Residual waste (%) : ", self.edit_wasteshr_material)
+        self.widget_material.setLayout(self.layout_material)
+        # Les boutons
+        self.bouton_close = QPushButton("Close")
+        self.bouton_save = QPushButton("Save")
+        self.bouton_close.setStyleSheet("background-color : red")
+        #--- signal button ---
+        self.bouton_close.clicked.connect(self.close)
+        self.bouton_save.clicked.connect(self.save_insert_material)
+        #--- button layout --
+        self.layout_button = QGridLayout()
+        self.layout_button.addWidget(self.bouton_close,0,0)
+        self.layout_button.addWidget(self.bouton_save,0,1)
+        self.widget_button.setLayout(self.layout_button)
+        #--- Final layout ---
+        self.layout_main = QVBoxLayout()
+        self.layout_main.addWidget(self.widget_material)
+        self.layout_main.addWidget(style.horizontal_line())
+        self.layout_main.addWidget(self.widget_button)
+        self.setLayout(self.layout_main)
+        self.setWindowTitle("Form add product")
+    
+    def close(self):
+        self.accept()
+        
+    def save_insert_material(self):
+        name_material_value= self.edit_name_material.value()
+        
+    def get_recoverydis(self, text):
+        """ recovery_rate = recycling_rate + Energy_rate """
+        rate = str(int(self.edit_recdis_material.text()) + int(self.edit_enerdis_material.text()))
+        self.edit_recodis_material.setText(rate)
+        #self.edit_recdis_material.adjustSize()
+        
+    def get_recoveryshr(self, text):
+        """ recovery_rate = recycling_rate + Energy_rate """
+        rate = str(int(self.edit_recshr_material.text()) + int(self.edit_enershr_material.text()))
+        self.edit_recoshr_material.setText(rate)
+        
+    def get_residualwastedis(self, text):
+        """ Residual waste = 100 - energy_recovery_rate  """
+        rate = str(100 - int(self.edit_enerdis_material.text()))
+        self.edit_wastedis_material.setText(rate)
+        
+    def get_residualwasteshr(self, text):
+        """ Residual waste = 100 - energy_recovery_rate  """
+        rate = str(100 - int(self.edit_enershr_material.text()))
+        self.edit_wasteshr_material.setText(rate)
         
         
         

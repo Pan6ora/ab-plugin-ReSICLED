@@ -31,8 +31,8 @@ class ResicledTab(QTabWidget):
 		}
         for tab_name, tab_obj in self.tabs.items():
             self.tabwidget.addTab(tab_obj, tab_name)
-            # coleur arriere plan
-            tab_obj.setStyleSheet("background-color:  #daf7a6;")
+            # coleur arriere plan #daf7a6;
+            tab_obj.setStyleSheet("background-color:  #9bbb59;")
             
         #display tab in layout   
         self.layout = QVBoxLayout()
