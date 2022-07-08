@@ -3,14 +3,98 @@ from PySide2 import QtCore
 
 import operator
 from PySide2.QtCore import *
+from ..databases.database import DatabaseManager
+
+databasemanager = DatabaseManager()
 
 class Datamodel(QAbstractTableModel):
     def __init__(self, parent=None):
         QAbstractTableModel.__init__(self, parent)
         # the solvent data ...
-        self.header_component = ['Solvent Name', ' BP (deg C)', ' MP (deg C)', ' Density (g/ml)']
+        self.header_component_test = ['Solvent Name', ' BP (deg C)', ' MP (deg C)', ' Density (g/ml)']
+        self.header_database_product = ['Name product', 'Name author product', 'Firstname author product']
+        self.header_database_component = ['Name component','Name material','Type material', 'Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
         
-    def getdata_component(self):
+    def getdata_product(self):
+        self.data_list = []
+        #---product to select
+        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        for key, value in self.all_product_form.items():
+            self.data_list.append((value['name_product'],value['nameauthor_product'],value['firstname_product']))
+        return self.data_list
+    
+    def getdata_component(self,id_product):
+        self.data_list = []
+        #---product to select
+        self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
+        print("getdata_component",self.all_component_form)
+        """
+        eg. result self.all_component_form:
+        {
+            ("resicled_compose", "1657178236.9446831657206274.284218"): {
+                "one_compose": {
+                    "id_product": 1657178236.944683,
+                    "id_component": 1657206274.284218,
+                    "piecenumber_component": "6",
+                    "database": "resicled_compose",
+                    "code": "1657178236.9446831657206274.284218",
+                    "exchanges": [],
+                },
+                "one_product": {
+                    "id_product": 1657178236.944683,
+                    "name_product": "product 3",
+                    "nameauthor_product": "",
+                    "firstname_product": "",
+                    "database": "resicled_product",
+                    "code": "1657178236.944683",
+                    "exchanges": [],
+                },
+                "one_component": {
+                    "id_component": 1657206274.284218,
+                    "id_material": 20,
+                    "name_component": "component 1",
+                    "weight_component": "15",
+                    "comment_component": "test insert 1",
+                    "database": "resicled_component",
+                    "code": "1657206274.284218",
+                    "exchanges": [],
+                },
+                "material_of_component": {
+                    "id_material": 20,
+                    "type_material": "Metals",
+                    "name_material": "Aluminium",
+                    "recdis_material": "93,00",
+                    "enerdis_material": "0,00",
+                    "wastedis_material": "7,00",
+                    "recshr_material": "91,00",
+                    "enershr_material": "0,00",
+                    "wasteshr_material": "9,00",
+                    "price_material": 370,
+                    "pollutant_material": "false",
+                    "database": "resicled_material",
+                    "code": "20",
+                    "exchanges": [],
+                },
+            }
+        }
+        """        
+        for key, value in self.all_component_form.items():
+            Name_component = value['one_component']['name_component']
+            Name_material = value['material_of_component']['name_material']
+            Type_material = value['material_of_component']['type_material']
+            Weight = value['one_component']['weight_component']
+            Pollutant = str(value['material_of_component']['pollutant_material'])
+            if(Pollutant.lower()=="false"):
+                Pollutant = "No"
+            else:
+                Pollutant = "Yes"
+            Number_of_pieces =  value['one_compose']['piecenumber_component']
+            Comment_component = value['one_component']['comment_component']
+            self.data_list.append((Name_component, Name_material, Type_material, Weight, Pollutant, Number_of_pieces, Comment_component))
+        return self.data_list
+       
+        
+    def getdata_component_test(self):
         # use numbers for numeric data to sort properly
         self.data_list = [
             ('ACETIC ACID', 117.9, 16.7, 1.049),

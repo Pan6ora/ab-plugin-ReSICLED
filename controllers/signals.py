@@ -131,6 +131,10 @@ class Signals(QObject):
     plugins_changed = Signal()
     
     # RESICLED
-    add_product = Signal(tuple)
+    add_product = Signal(str)
+    alert_information = Signal(str)
+    update_combobox = Signal(object)
+    update_table_component_product = Signal(object, object)
+        
     
 signals = Signals()

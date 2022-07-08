@@ -25,7 +25,7 @@ class PresentationTab(QTabWidget):
         #--- label ---
         label = QLabel(self)
         label.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        label.setText('<h3 style=""> Symplified - Recoverry System modelling and Calculation Leading To End-of-life conscious Design </h3>')
+        label.setText('<h3 style=""> Symplified - Recovery System modelling and Indicator Calculation Leading To End-of-life conscious Design </h3>')
         label.setTextFormat(Qt.RichText)
         label.setAlignment(Qt.AlignBottom | Qt.AlignRight)
         # moving position

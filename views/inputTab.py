@@ -1,4 +1,5 @@
 from PySide2 import QtCore
+from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
     QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
     QStyle, QVBoxLayout, QTabWidget, QFrame, QLabel, QGridLayout, QComboBox,
@@ -12,7 +13,9 @@ from .style import Style
 from ..controllers.signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
+from ..databases.database import DatabaseManager
 
+databasemanager = DatabaseManager()
 
 class InputTab(QTabWidget):
     def __init__(self, parent=None):
@@ -22,7 +25,6 @@ class InputTab(QTabWidget):
         self.form = Form()
         style = Style()
         
-
         # --- title ---
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
@@ -36,8 +38,7 @@ class InputTab(QTabWidget):
         self.button_add_product.move(10, 100)
         #add signal
         self.button_add_product.clicked.connect(
-            #signals.add_product.emit(None)
-            self.form.show_dialog_insert_product
+            self.call_show_dialog_insert_product
         )
         
         #--- button add component
@@ -50,12 +51,18 @@ class InputTab(QTabWidget):
         )
         
         #---product to select
+        self.all_product = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
-        self.edit_component_product.addItem("Select a product")
-        self.edit_component_product.addItem("eg. product")
+        self.edit_component_product.addItem("Select a product", userData=None)
+        for key_product, value_product in self.all_product.items():
+            self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
         #self.edit_component_product.setGeometry(260, 100, 120, 30)
         self.edit_component_product.move(250, 100)
         self.edit_component_product.setFrame(False)
+        #add signal
+        self.edit_component_product.currentIndexChanged.connect(
+            self.call_show_table_component_product
+        )
         
         #---line
         self.ligne_local = style.horizontal_line(self)
@@ -64,13 +71,13 @@ class InputTab(QTabWidget):
         
         #--- table
         self.datamodel = Datamodel();
-        self.data_list = self.datamodel.getdata_component()
-        self.header = self.datamodel.header_component
+        self.data_list = self.datamodel.getdata_product() #self.datamodel.getdata_component()
+        self.header = self.datamodel.header_database_product #self.datamodel.header_component
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
         # set font
-        self.font = QFont("Courier New", 14)
+        self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
@@ -81,8 +88,15 @@ class InputTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 150, 800, 800)
+        #self.widget_table_view.move(10, 170)
+        self.widget_table_view.setGeometry(10, 170, 800, 500)
         self.widget_table_view.show()
+        
+        # --- title ---
+        self.title_component_product = QLabel(self)
+        self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.title_component_product.setText('')
+        self.title_component_product.setGeometry(10, 140, 800, 30)
              
         
         """#--- QGridLayout grid placement ---
@@ -98,20 +112,47 @@ class InputTab(QTabWidget):
         self.layout_main.addWidget(self.edit_component_product)
         #self.layout_main.addWidget(self.widget_button)
         self.setLayout(self.layout_main)"""
-        
-
-        
+    
     
     def open_tab(self, parent):
-        """
-        #parent.tabs.setTabVisible(2,0)
-        label = QLabel(self)
-        for tab_name, tab_obj in parent.tabs.items():
-            parent.addTab(QPushButton("button "+tab_name), tab_name)
-            label.setText('<h3 style="">'+tab_name+'</h3>')
-            label.setTextFormat(Qt.RichText)
-            label.setAlignment(Qt.AlignBottom | Qt.AlignRight)
-        """
         parent.tabwidget.setCurrentIndex(4)
         
-    
+    def call_show_dialog_insert_product(self):
+        self.form.show_dialog_insert_product(self.edit_component_product)
+        
+    def call_show_table_component_product(self,index):
+        product_selected = self.edit_component_product.currentData()
+        print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
+        self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' component list  </h1>' )
+        """#get new values"""
+        self.datamodel = Datamodel();
+        self.data_list = self.datamodel.getdata_component(product_selected.__getitem__('id_product')) #self.datamodel.getdata_component()
+        self.header = self.datamodel.header_database_component #self.datamodel.header_component
+        self.table_model = TableModel(self, self.data_list, self.header)
+        self.table_view = QTableView()
+        self.table_view.setModel(self.table_model)
+        # set font
+        self.font = QFont("Courier New", 10)
+        self.table_view.setFont(self.font)
+        # set column width to fit contents (set font first!)
+        self.table_view.resizeColumnsToContents()
+        # enable sorting
+        self.table_view.setSortingEnabled(True)
+        #display
+        self.widget_table_view = QWidget(self)
+        self.layout_table_view = QVBoxLayout(self)
+        self.layout_table_view.addWidget(self.table_view)
+        self.widget_table_view.setLayout(self.layout_table_view)
+        self.widget_table_view.setGeometry(10, 170, 800, 500)
+        self.widget_table_view.show()
+        """#signal update table
+        signals.update_table_component_product.connect(self.update_table_component_product)
+        signals.update_table_component_product.emit(self.header, self.data_list)"""
+        
+    @Slot(object, object)
+    def update_table_component_product(self, header_param, data_list_param):
+        #---product to select
+        self.header = header_param
+        self.data_list = data_list_param
+            
+            
