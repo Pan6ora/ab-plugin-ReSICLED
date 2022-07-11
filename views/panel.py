@@ -6,12 +6,14 @@ from PySide2.QtWidgets import (
 )
 from .PresentationTab import PresentationTab
 from .inputTab import InputTab
+from .dismantlingTab import DismantlingTab
+from .shreddingTab import ShreddingTab
 
 
 class ResicledTab(QTabWidget):
     def __init__(self, parent=None):
         super(ResicledTab, self).__init__(parent)
-        self.tabs = dict([('index1',1),('index2',2)])
+        self.tabs = dict([('index1',1),('index2',2),('index3',3)])
 		# button = QPushButton("button 1")
 		# self.addTab(button, "tab button 1")
 		# Initialisation des tabs
@@ -20,8 +22,8 @@ class ResicledTab(QTabWidget):
         self.tabs = {
             "Presentation": PresentationTab(self),
             "Input": InputTab(self),
-            "Dismantling": QPushButton("button 3"),
-            "Shredding": QPushButton("button 4"),
+            "Dismantling": DismantlingTab(self),
+            "Shredding": ShreddingTab(self),
             "Mixed": QPushButton("button 5"),
             "HotSpots": QPushButton("button 6"),
             "Guidelines": QPushButton("button 7"),

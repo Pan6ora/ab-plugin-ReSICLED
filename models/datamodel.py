@@ -8,23 +8,30 @@ from ..databases.database import DatabaseManager
 databasemanager = DatabaseManager()
 
 class Datamodel(QAbstractTableModel):
+    """
+    A class that sets the info in databases that need to be printed as table
+    """
     def __init__(self, parent=None):
         QAbstractTableModel.__init__(self, parent)
         # the solvent data ...
         self.header_component_test = ['Solvent Name', ' BP (deg C)', ' MP (deg C)', ' Density (g/ml)']
         self.header_database_product = ['Name product', 'Name author product', 'Firstname author product']
         self.header_database_component = ['Name component','Name material','Type material', 'Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
-        
+        self.header_dismantling = ["Name Component","Recycle weight (gr/piece)","Energy recovery weight (gr/piece)","Residual waste (gr/piece)","Number"]
+
     def getdata_product(self):
-        self.data_list = []
+        data_list = []
         #---product to select
         self.all_product_form = databasemanager.productdatabase.get_all_product()
         for key, value in self.all_product_form.items():
-            self.data_list.append((value['name_product'],value['nameauthor_product'],value['firstname_product']))
-        return self.data_list
+            data_list.append((value['name_product'],value['nameauthor_product'],value['firstname_product']))
+        return data_list
     
     def getdata_component(self,id_product):
-        self.data_list = []
+        """
+        Sets the data for the list of products that are printed in input tab
+        """
+        data_list = []
         #---product to select
         self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
         print("getdata_component",self.all_component_form)
@@ -90,11 +97,31 @@ class Datamodel(QAbstractTableModel):
                 Pollutant = "Yes"
             Number_of_pieces =  value['one_compose']['piecenumber_component']
             Comment_component = value['one_component']['comment_component']
-            self.data_list.append((Name_component, Name_material, Type_material, Weight, Pollutant, Number_of_pieces, Comment_component))
-        return self.data_list
-       
-        
+            data_list.append((Name_component, Name_material, Type_material, Weight, Pollutant, Number_of_pieces, Comment_component))
+        return data_list
+
+    def getDismantling_data(self,id_product):
+        """
+        Sets the data for the dismantling tab table (including values)
+        """
+        dataList=[]
+        for _, value in databasemanager.composedatabase.get_component_by_product(id_product).items():
+            calculations = DatabaseManager().computeComponentDismantling(value)
+            dataList.append((value["one_component"]["name_component"],calculations[0],calculations[1],calculations[2],value["one_compose"]["piecenumber_component"]))
+        return dataList
+
+    def getShredding_data(self,id_product):
+        data_list = []
+        for _, value in databasemanager.composedatabase.get_component_by_product(id_product).items():
+            calculations = DatabaseManager().computeComponentShredding(value)
+            data_list.append((value["one_component"]["name_component"],calculations[0],calculations[1],calculations[2],value["one_compose"]["piecenumber_component"]))
+        return data_list
+
+
     def getdata_component_test(self):
+        """
+        Test example function
+        """
         # use numbers for numeric data to sort properly
         self.data_list = [
             ('ACETIC ACID', 117.9, 16.7, 1.049),

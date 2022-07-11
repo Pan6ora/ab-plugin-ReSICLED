@@ -70,7 +70,7 @@ class InputTab(QTabWidget):
         #self.ligne_local.move(10, 110)
         
         #--- table
-        self.datamodel = Datamodel();
+        self.datamodel = Datamodel()
         self.data_list = self.datamodel.getdata_product() #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_product #self.datamodel.header_component
         self.table_model = TableModel(self, self.data_list, self.header)
@@ -125,7 +125,8 @@ class InputTab(QTabWidget):
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' component list  </h1>' )
         """#get new values"""
-        self.datamodel = Datamodel();
+        self.datamodel = Datamodel()
+        print(self.datamodel.getDismantling_data(product_selected))
         self.data_list = self.datamodel.getdata_component(product_selected.__getitem__('id_product')) #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_component #self.datamodel.header_component
         self.table_model = TableModel(self, self.data_list, self.header)
