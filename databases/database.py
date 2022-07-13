@@ -32,3 +32,24 @@ class DatabaseManager():
             #pollutant
             return (component_weight*float(component_material["recshr_material"])/100,component_weight*float(component_material["enershr_material"])/100,component_weight*float(component_material["wasteshr_material"])/100)
 
+    @classmethod
+    def computeGain1(self, value : dict):
+        if value["material_of_component"]["pollutant_material"]=="false":
+            return (value["material_of_component"]["recdis_material"]-value["material_of_component"]["recshr_material"])/100
+        else:
+            return 0
+
+    @classmethod
+    def computeGain2(self,value : dict):
+        if value["material_of_component"]["pollutant_material"]=="false":
+            return (value["material_of_component"]["recdis_material"]+value["material_of_component"]["enerdis_material"]-value["material_of_component"]["recshr_material"]-value["material_of_component"]["enershr_material"])/100
+        else:
+            return 0
+
+    @classmethod
+    def relativeWeight(self, value,valueDict):
+        total_weight = 0
+        for _,value2 in valueDict.items():
+            total_weight+=float(value2["one_component"]["weight_component"])*int(value2["one_compose"]["piecenumber_component"])
+        return float(value["one_component"]["weight_component"])/total_weight
+        

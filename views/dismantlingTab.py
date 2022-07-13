@@ -1,16 +1,11 @@
-from PySide2 import QtCore
-from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
-    QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
-    QStyle, QVBoxLayout, QTabWidget, QFrame, QLabel, QGridLayout, QComboBox,
+    QVBoxLayout, QTabWidget, QFrame, QLabel, QComboBox,
     QWidget, QTableView, QWidget
 )
 from PySide2.QtGui import QFont 
-from PySide2.QtCore import Qt
 from .icon import Icon
 from .form import Form
 from .style import Style
-from ..controllers.signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
@@ -18,7 +13,7 @@ from ..databases.database import DatabaseManager
 databasemanager = DatabaseManager()
 
 class DismantlingTab(QTabWidget):
-    def __init__(self,parent=None):
+    def __init__(self, parent = None):
         super(DismantlingTab, self).__init__(parent)
         self.icon = Icon()
         self.form = Form()
@@ -27,14 +22,15 @@ class DismantlingTab(QTabWidget):
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title.setText('<h1 style=""> DISMANTLING </h1>')
-        self.title.move(10,50)
+        self.title.move(10, 50)
 
         self.all_products = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
-        self.edit_component_product.addItem("Select a product", userData = None)
+        self.edit_component_product.addItem("Select a product", userData=None)
         for _, value_product in self.all_products.items():
-            self.edit_component_product.addItem(str(value_product["name_product"]), userData = value_product)
-        self.edit_component_product.move(250,100)
+            self.edit_component_product.addItem(str(value_product["name_product"]), 
+            userData=value_product)
+        self.edit_component_product.move(250, 100)
         self.edit_component_product.setFrame(False)
         self.edit_component_product.currentIndexChanged.connect(
             self.call_show_table_dismantling_product)
@@ -53,7 +49,7 @@ class DismantlingTab(QTabWidget):
         self.layout_tableview = QVBoxLayout(self)
         self.layout_tableview.addWidget(self.tableview)
         self.widget_tableview.setLayout(self.layout_tableview)
-        self.widget_tableview.setGeometry(10,170,800,500)
+        self.widget_tableview.setGeometry(10, 170, 800, 500)
         self.widget_tableview.show()
         self.title_product = QLabel(self)
         self.title_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
@@ -63,16 +59,16 @@ class DismantlingTab(QTabWidget):
     def open_tab(self, parent):
         parent.tabwidget.setCurrentIndex(5)
 
-    def call_show_table_dismantling_product(self,index):
+    def call_show_table_dismantling_product(self, index):
         selected_product = self.edit_component_product.currentData()
-        self.title_product.setText('<h1 style=""> '+selected_product["name_product"]+' dismantling values </h1>')
-        self.datamodel=Datamodel()
+        self.title_product.setText('<h1 style=""> ' + selected_product["name_product"]+' dismantling values </h1>')
+        self.datamodel = Datamodel()
         self.data_list = self.datamodel.getDismantling_data(selected_product["id_product"])
         self.header = self.datamodel.header_dismantling
-        self.tablemodel = TableModel(self,self.data_list,self.header)
+        self.tablemodel = TableModel(self, self.data_list, self.header)
         self.tableview = QTableView()
         self.tableview.setModel(self.tablemodel)
-        self.font = QFont("Courier New",10)
+        self.font = QFont("Courier New", 10)
         self.tableview.setFont(self.font)
         self.tableview.resizeColumnsToContents()
         # enable sorting
@@ -83,4 +79,3 @@ class DismantlingTab(QTabWidget):
         self.widget_table_view.setLayout(self.layout_table_view)
         self.widget_table_view.setGeometry(10, 170, 800, 500)
         self.widget_table_view.show()
-

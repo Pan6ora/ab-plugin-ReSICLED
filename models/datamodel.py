@@ -18,6 +18,9 @@ class Datamodel(QAbstractTableModel):
         self.header_database_product = ['Name product', 'Name author product', 'Firstname author product']
         self.header_database_component = ['Name component','Name material','Type material', 'Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
         self.header_dismantling = ["Name Component","Recycle weight (gr/piece)","Energy recovery weight (gr/piece)","Residual waste (gr/piece)","Number"]
+        self.header_mixed = ["Name Component","Is it pollutant ?","Gain 1", "Gain 2", "Relative weight", "Result", "Recycle weight (g/piece)","Energy recovery weight (gr/piece)","Residual waste (gr/piece)","Number"]
+        self.header_hotspots_1 = ["Id","Name","Pollutant","Gain 1","Relative weight","Gain 1*Relative weight"]
+        self.header_hotspots_2 = ["Id", "Name", "Pollutant","Residual waste weight (g/piece)","Number of pieces"]
 
     def getdata_product(self):
         data_list = []
@@ -85,7 +88,7 @@ class Datamodel(QAbstractTableModel):
             }
         }
         """        
-        for key, value in self.all_component_form.items():
+        for _, value in self.all_component_form.items():
             Name_component = value['one_component']['name_component']
             Name_material = value['material_of_component']['name_material']
             Type_material = value['material_of_component']['type_material']
@@ -105,6 +108,7 @@ class Datamodel(QAbstractTableModel):
         Sets the data for the dismantling tab table (including values)
         """
         dataList=[]
+        print(databasemanager.composedatabase.get_compose_by_product(id_product))
         for _, value in databasemanager.composedatabase.get_component_by_product(id_product).items():
             calculations = DatabaseManager().computeComponentDismantling(value)
             dataList.append((value["one_component"]["name_component"],calculations[0],calculations[1],calculations[2],value["one_compose"]["piecenumber_component"]))
@@ -117,6 +121,24 @@ class Datamodel(QAbstractTableModel):
             data_list.append((value["one_component"]["name_component"],calculations[0],calculations[1],calculations[2],value["one_compose"]["piecenumber_component"]))
         return data_list
 
+    def get_mixed_data(self,id_product):
+        data_list = []
+        for _,value in databasemanager.composedatabase.get_component_by_product(id_product).items():
+            pass
+
+    def get_hotspot1_data(self,id_product):
+        data_list=[]
+        for key, value in enumerate(databasemanager.composedatabase.get_component_by_product(id_product).values()):
+            gain = DatabaseManager().computeGain1(value)
+            relative_weight = DatabaseManager().relativeWeight(value, databasemanager.composedatabase.get_component_by_product(id_product))
+            data_list.append((key+1,value["one_component"]["name_component"],value["material_of_component"]["pollutant_material"],gain,relative_weight,gain*relative_weight))
+        return sorted(data_list, key = lambda x :x[5], reverse=True)
+
+    def get_hotspot2_data(self,id_product):
+        data_list=[]
+        for key, value in enumerate(databasemanager.composedatabase.get_component_by_product(id_product).values()):
+            data_list.append((key+1,value["one_component"]["name_component"],value["material_of_component"]["pollutant_material"],DatabaseManager().computeComponentShredding(value)[2],value["one_compose"]["piecenumber_component"]))
+        return sorted(data_list, key = lambda x : x[3], reverse=True)
 
     def getdata_component_test(self):
         """

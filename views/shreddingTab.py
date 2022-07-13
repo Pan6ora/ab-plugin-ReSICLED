@@ -61,7 +61,7 @@ class ShreddingTab(QTabWidget):
         self.title_product.setGeometry(10, 140, 800, 30)
 
     def open_tab(self, parent):
-        parent.tabwidget.setCurrentIndex(5)
+        parent.tabwidget.setCurrentIndex(6)
 
     def call_show_table_dismantling_product(self,index):
         selected_product = self.edit_component_product.currentData()
