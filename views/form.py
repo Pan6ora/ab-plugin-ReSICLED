@@ -4,7 +4,7 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
     QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
     QStyle, QVBoxLayout, QTabWidget, QFrame, QLabel, QLineEdit, QDialog, 
-    QApplication, QDoubleSpinBox, QWidget, QFormLayout, QGridLayout, QComboBox
+    QApplication, QDoubleSpinBox, QWidget, QFormLayout, QGridLayout, QComboBox, QRadioButton
 )
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator, QDoubleValidator
@@ -546,9 +546,6 @@ class Dialog_insert_material(QDialog):
         """ Residual waste = 100 - energy_recovery_rate  """
         rate = str(100 - (int(self.edit_recshr_material.text()) + int(self.edit_enershr_material.text())))
         self.edit_wasteshr_material.setText(rate)
-        
-        
-        
         
     
 class Dialog(QDialog):

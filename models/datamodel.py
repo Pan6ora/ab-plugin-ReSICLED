@@ -124,7 +124,13 @@ class Datamodel(QAbstractTableModel):
     def get_mixed_data(self,id_product):
         data_list = []
         for _,value in databasemanager.composedatabase.get_component_by_product(id_product).items():
-            pass
+            gain1 = DatabaseManager().computeGain1(value)
+            gain2 = DatabaseManager().computeGain2(value)
+            relative_weight = DatabaseManager().relativeWeight(value,databasemanager.composedatabase.get_component_by_product(id_product))
+            calculations = DatabaseManager().computeComponentShredding(value)
+            result = "Shredding"*(value["material_of_component"]["pollutant_material"]=="false")+"Dismantling"*(value["material_of_component"]["pollutant_material"]=="true")
+            data_list.append((value["one_component"]["name_component"],value["material_of_component"]["pollutant_material"],gain1,gain2,relative_weight,result,calculations[0],calculations[1],calculations[2],value["one_compose"]["piecenumber_component"]))
+        return data_list
 
     def get_hotspot1_data(self,id_product):
         data_list=[]

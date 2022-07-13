@@ -8,6 +8,7 @@ from .PresentationTab import PresentationTab
 from .inputTab import InputTab
 from .dismantlingTab import DismantlingTab
 from .shreddingTab import ShreddingTab
+from .mixedTab import MixedTab
 from .hotspotsTab import HotspotsTab
 
 
@@ -25,7 +26,7 @@ class ResicledTab(QTabWidget):
             "Input": InputTab(self),
             "Dismantling": DismantlingTab(self),
             "Shredding": ShreddingTab(self),
-            "Mixed": QPushButton("button 5"),
+            "Mixed": MixedTab(self),
             "HotSpots": HotspotsTab(self),
             "Guidelines": QPushButton("button 7"),
             "Rapport": QPushButton("button 8"),
