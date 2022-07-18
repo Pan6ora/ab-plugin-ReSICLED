@@ -72,6 +72,17 @@ class Composedatabase:
             if str(id_product_param) == str_id_product:
                 result_dict[key] = dict([("one_compose",self.get_one_compose(str_combi)),("one_product",self.productdatabase.get_one_product(str_id_product)),("one_component",self.componentdatabase.get_one_component(str_id_component)),("material_of_component",self.componentdatabase.get_all_material_of_component(str_id_component))]) #value
         return result_dict
+    
+    def get_all_component_and_product(self):
+        result_dict = dict()
+        dico = self.db.load()
+        # dict_material = dico.__getitem__((self.name_database, str(id_material_param)))
+        for key, value in dico.items():
+            str_id_product = str(value["id_product"])
+            str_id_component = str(value["id_component"])
+            str_combi = str(str_id_product + str_id_component)
+            result_dict[key] = dict([("one_compose",self.get_one_compose(str_combi)),("one_product",self.productdatabase.get_one_product(str_id_product)),("one_component",self.componentdatabase.get_one_component(str_id_component)),("material_of_component",self.componentdatabase.get_all_material_of_component(str_id_component))]) #value
+        return result_dict
 
     def insert_one_compose(self, dict_compose: dict):
         self.dt = datetime.now()
@@ -105,7 +116,7 @@ class Composedatabase:
         # get all referenced component
         dict_compose = self.get_compose_by_product(id_product_param)
         for key, value in dict_compose.items():
-            self.id_component = dict_compose["id_component"]
+            self.id_component = value["id_component"]
             # delete component
             self.componentdatabase.delete_one_component(self.id_component)
             # delete compose
@@ -117,7 +128,7 @@ class Composedatabase:
         dict_compose = self.get_compose_by_component(id_component_param)
         for key, value in dict_compose.items():
             # delete compose
-            self.id_compose = str(dict_compose["id_product"]) + str(id_component_param)
+            self.id_compose = str(value["id_product"]) + str(id_component_param)
             self.delete_one_compose(self.id_compose)
             
     def delete_one_product(self, id_product_param):

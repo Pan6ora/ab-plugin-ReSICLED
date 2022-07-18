@@ -44,12 +44,18 @@ class Form(QDialog):
         dialog_dialog_alert.show_alert_information(message)
         dialog_dialog_alert.exec_()
         
-    def show_question(self):
-        reply = QMessageBox.question(self, "Question MessageBox", "Do You Like Pyside2", QMessageBox.Yes | QMessageBox.No)
+    def show_dialog_insert_directive(self, parent_class, type_scenario):
+        dialog_insert_directive= Dialog_insert_directive(type_scenario, parent=parent_class)
+        dialog_insert_directive.exec_()
+        
+    def show_dialog_question(self, parent, text_question):
+        reply = QMessageBox.question(parent, "Question Message", text_question, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
-            self.label.setText("I Like Pyside2")
+            #self.label.setText("I Like Pyside2")
+            return True
         elif reply == QMessageBox.No:
-            self.label.setText("I Dont Like Pyside2")
+            #self.label.setText("I Dont Like Pyside2")
+            return False
 
 
 class Dialog_alert(QDialog):
@@ -66,6 +72,109 @@ class Dialog_alert(QDialog):
         elif reply == QMessageBox.Cancel:
             self.label.setText("CANCEL")
         """
+                 
+        
+class Dialog_insert_directive(QDialog):
+    def __init__(self, type_scenario, parent=None):
+        QDialog.__init__(self,parent)
+        #-- init
+        self.parent = parent
+        self.type_scenario = type_scenario
+        #--- style ---
+        style = Style()
+        #--- QtWidget ---
+        self.widget_directive = QWidget()
+        self.widget_button = QWidget()
+        
+        #--- layout 
+        self.layout_directive = QVBoxLayout()
+        #---directive to select
+        self.all_directive_form = databasemanager.directivedatabase.get_all_directive()
+        self.dict_var = dict()
+        for key, value in self.all_directive_form.items():
+            # The input
+            self.dict_var[key] = QRadioButton(str(value['directive_title']), self)
+            # signal
+            self.dict_var[key].toggled.connect(self.set_value_directive)
+            
+            # addWidget
+            self.layout_directive.addWidget(self.dict_var[key])
+        self.widget_directive.setLayout(self.layout_directive)
+        
+        # Les boutons
+        self.bouton_close = QPushButton("Close")
+        self.bouton_save = QPushButton("Save")
+        self.bouton_close.setStyleSheet("background-color : red")
+        #--- signal button ---
+        self.bouton_close.clicked.connect(self.close)
+        self.bouton_save.clicked.connect(self.set_insert_directive)
+        #--- button layout --
+        self.layout_button = QGridLayout()
+        self.layout_button.addWidget(self.bouton_close,0,0)
+        #self.layout_button.addWidget(self.bouton_save,0,1)
+        self.widget_button.setLayout(self.layout_button)
+        
+        #--- Final layout ---
+        self.layout_main = QVBoxLayout()
+        self.layout_main.addWidget(self.widget_directive)
+        self.layout_main.addWidget(style.horizontal_line())
+        self.layout_main.addWidget(self.widget_button)
+        self.setLayout(self.layout_main)
+        self.setWindowTitle("Form add directive")
+        
+    @Slot(object)
+    def update_menu_combobox(self, box: QComboBox):
+        #---directive to select
+        self.all_directive_form = databasemanager.directivedatabase.get_all_directive()
+        box.clear()
+        box.addItem("Select a directive")
+        for key, value in self.all_directive_form.items():
+            box.addItem(str(value['name_directive']), userData=value)
+            
+    def set_value_directive(self):
+        #---directive to select
+        for key, value in self.dict_var.items():
+            radioButton = self.sender()
+            if (radioButton.isChecked() and radioButton==value):
+                if(str(self.type_scenario).lower()=="dismantling"):
+                    self.parent.value_recycling_rate_directive.setText(str(round(float(self.all_directive_form[key]["dismantling_recycling_rate"])*100)) + "%")
+                    self.parent.value_recovery_rate_directive.setText(str(round(float(self.all_directive_form[key]["dismantling_recovery_rate"])*100)) + "%")
+                    self.parent.value_residual_waste_rate_directive.setText(str(round(float(self.all_directive_form[key]["dismantling_residual_waste_rate"])*100)) + "%")
+                elif(str(self.type_scenario).lower()=="shredding"):
+                    self.parent.value_recycling_rate_directive.setText(str(round(float(self.all_directive_form[key]["shredding_recycling_rate"])*100)) + "%")
+                    self.parent.value_recovery_rate_directive.setText(str(round(float(self.all_directive_form[key]["shredding_recovery_rate"])*100)) + "%")
+                    self.parent.value_residual_waste_rate_directive.setText(str(round(float(self.all_directive_form[key]["shredding_residual_waste_rate"])*100)) + "%")
+                elif(str(self.type_scenario).lower()=="mixed"):
+                    self.parent.value_recycling_rate_directive.setText(str(round(float(self.all_directive_form[key]["mixed_recycling_rate"])*100)) + "%")
+                    self.parent.value_recovery_rate_directive.setText(str(round(float(self.all_directive_form[key]["mixed_recovery_rate"])*100)) + "%")
+                    self.parent.value_residual_waste_rate_directive.setText(str(round(float(self.all_directive_form[key]["mixed_residual_waste_rate"])*100)) + "%")
+                #set
+                self.parent.value_directive_applied.setText(self.all_directive_form[key]["directive_title"])
+                self.parent.call_show_table_component_product(None)
+                            
+    def show_alert_information(self, message):
+        #reply = QMessageBox.information(self, "Info", message)
+        reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
+        if reply == QMessageBox.Ok:
+            self.label.setText("OK")
+
+    def close(self):
+        self.accept()
+        
+    def set_insert_directive(self, value):
+        rbtn = self.sender()
+        if rbtn.isChecked() == True:
+            #self.parent
+            print("set_insert_directive",rbtn)
+            
+            """#signal update_combobox
+            signals.update_combobox.connect(self.update_menu_combobox)
+            signals.update_combobox.emit(self.box_directive)
+            #close form
+            self.close()
+            # show alert
+            self.message = "Product added Successfully"
+            self.show_alert_information(self.message)"""
          
 class Dialog_insert_product(QDialog):
     def __init__(self, box_product, parent=None):
@@ -162,7 +271,7 @@ class Dialog_insert_component(QDialog):
         # The input
         self.edit_name_component = QLineEdit("")
         self.edit_component_weight = QLineEdit("")
-        self.edit_component_numberofpieces = QLineEdit("")
+        self.edit_component_numberofpieces = QLineEdit("1")
         self.edit_component_comments = QLineEdit("")
         self.edit_component_product = QComboBox()
         self.edit_component_isitpollutant = QComboBox()
@@ -333,7 +442,7 @@ class Dialog_insert_component(QDialog):
             material_selected = self.edit_component_material_personalmaterial.currentData()
             id_material = material_selected.__getitem__('id_material')
             
-        if (self.edit_component_product.currentIndex() > 0 and len(self.edit_name_component.text()) > 0 and len(self.edit_component_weight.text()) > 0 and len(self.edit_component_numberofpieces.text()) > 0 and len_type > 0):
+        if (self.edit_component_product.currentIndex() > 0 and len(self.edit_name_component.text()) > 0 and len(self.edit_component_weight.text()) > 0 and len(self.edit_component_numberofpieces.text()) > 0 and int(self.edit_component_numberofpieces.text()) > 0 and len_type > 0):
             product_selected = self.edit_component_product.currentData()
             new_component = {
                 "id_product": product_selected.__getitem__('id_product'),
@@ -546,6 +655,9 @@ class Dialog_insert_material(QDialog):
         """ Residual waste = 100 - energy_recovery_rate  """
         rate = str(100 - (int(self.edit_recshr_material.text()) + int(self.edit_enershr_material.text())))
         self.edit_wasteshr_material.setText(rate)
+        
+        
+        
         
     
 class Dialog(QDialog):

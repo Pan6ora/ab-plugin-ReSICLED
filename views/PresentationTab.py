@@ -37,7 +37,7 @@ class PresentationTab(QTabWidget):
         # setting geometry of button
         self.button.setGeometry(200, 100+int(base_height), 100, 40)
         # changing color of button
-        self.button.setStyleSheet("background-color : yellow")
+        self.button.setStyleSheet("background-color : #9bbb59;")
         # adding action to a button
         self.button.clicked.connect(self.open_tab)
     

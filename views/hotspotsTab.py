@@ -1,11 +1,16 @@
+from PySide2 import QtCore
+from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
-    QVBoxLayout, QTabWidget, QFrame, QLabel, QComboBox,
+    QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
+    QStyle, QVBoxLayout, QTabWidget, QFrame, QLabel, QGridLayout, QComboBox,
     QWidget, QTableView, QWidget
 )
 from PySide2.QtGui import QFont 
+from PySide2.QtCore import Qt
 from .icon import Icon
 from .form import Form
 from .style import Style
+from ..controllers.signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
@@ -13,100 +18,134 @@ from ..databases.database import DatabaseManager
 databasemanager = DatabaseManager()
 
 class HotspotsTab(QTabWidget):
-    def __init__(self,parent = None):
-        super(HotspotsTab,self).__init__(parent)
+    def __init__(self, parent=None):
+        super(HotspotsTab, self).__init__(parent)
+        
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
-
+        self.combo_scenario = dict()
+        
+        # --- title ---
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title.setText('<h1 style=""> HOTSPOTS </h1>')
         self.title.move(10, 50)
-
-        self.all_products = databasemanager.productdatabase.get_all_product()
+        
+        
+        # --- title select product---
+        self.title = QLabel(self)
+        self.title.setText('Select a product to view its hotspots')
+        self.title.move(10, 100)
+        #---product to select
+        self.all_product = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
         self.edit_component_product.addItem("Select a product", userData=None)
-        for _, value in self.all_products.items():
-            self.edit_component_product.addItem(str(value["name_product"]), userData = value)
-        self.edit_component_product.move(250, 100)
+        for key_product, value_product in self.all_product.items():
+            self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
+        #self.edit_component_product.setGeometry(10, 120, 120, 30)
+        self.edit_component_product.move(10, 120)
         self.edit_component_product.setFrame(False)
+        
+        
+        # --- title product selected ---
+        self.title_component_product = QLabel(self)
+        self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.title_component_product.setText('')
+        self.title_component_product.setGeometry(10, 140, 800, 30)
+        
+        #add signal
         self.edit_component_product.currentIndexChanged.connect(
-            self.call_show_hotspots_product
+            self.call_show_table_component_product
         )
-
-        self.datamodel = Datamodel()
-        self.data_list1 = self.datamodel.getdata_product()
-        self.header1 = self.datamodel.header_database_product
-        self.table_model1 = TableModel(self,self.data_list1,self.header1)
-        self.tableview1 = QTableView()
-        self.tableview1.setModel(self.table_model1)
-        self.font = QFont("Courrier New", 10)
-        self.tableview1.setFont(self.font)
-        self.tableview1.resizeColumnsToContents()
-        self.tableview_widget1 = QWidget(self)
-        self.tableview_layout1 = QVBoxLayout(self)
-        self.tableview_layout1.addWidget(self.tableview1)
-        self.tableview_widget1.setLayout(self.tableview_layout1)
-        self.tableview_widget1.setGeometry(10,170,500,500)
-        self.tableview_widget1.show()
-        self.title_product=QLabel(self)
-        self.title_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.title_product.setText("")
-        self.title_product.setGeometry(10,140,800,30)
-
-        self.data_list2 = self.datamodel.getdata_product()
-        self.header2 = self.datamodel.header_database_product
-        self.table_model2 = TableModel(self,self.data_list2,self.header2)
-        self.tableview2 = QTableView()
-        self.tableview2.setModel(self.table_model2)
-        self.font = QFont("Courrier New", 10)
-        self.tableview2.setFont(self.font)
-        self.tableview2.resizeColumnsToContents()
-        self.tableview_widget2 = QWidget(self)
-        self.tableview_layout2 = QVBoxLayout(self)
-        self.tableview_layout2.addWidget(self.tableview2)
-        self.tableview_widget2.setLayout(self.tableview_layout2)
-        self.tableview_widget2.setGeometry(510,170,500,500)
-        self.tableview_widget2.show()
-
-    def open_tab(self, parent):
-        parent.tabwidget.setCurrentIndex(8)
-
-    def call_show_hotspots_product(self):
-        selected_product = self.edit_component_product.currentData()
-        self.title_product.setText('<h1 style=""> ' + selected_product["name_product"] + ' hotspots tables </h1>')
-        self.datamodel = Datamodel()
-        self.data_list1 = self.datamodel.get_hotspot1_data(selected_product["id_product"])
-        self.header1 = self.datamodel.header_hotspots_1
-        self.table_model1 = TableModel(self,self.data_list1,self.header1)
-        self.tableview1 = QTableView()
-        self.tableview1.setModel(self.table_model1)
-        self.font = QFont("Courrier New", 10)
-        self.tableview1.setFont(self.font)
-        self.tableview1.resizeColumnsToContents()
-        self.widget_table_view_1 = QWidget(self)
-        self.layout_table_view_1 = QVBoxLayout(self)
-        self.layout_table_view_1.addWidget(self.tableview1)
-        self.widget_table_view_1.setLayout(self.layout_table_view_1)
-        self.widget_table_view_1.setGeometry(10,170,500,500)
-        self.widget_table_view_1.show()
-
-        self.datamodel = Datamodel()
-        self.data_list2 = self.datamodel.get_hotspot2_data(selected_product["id_product"])
-        self.header2 = self.datamodel.header_hotspots_2
-        self.table_model2 = TableModel(self,self.data_list2,self.header2)
-        self.tableview2 = QTableView()
-        self.tableview2.setModel(self.table_model2)
-        self.font = QFont("Courrier New", 10)
-        self.tableview2.setFont(self.font)
-        self.tableview2.resizeColumnsToContents()
+        
+        #signal update_combobox
+        signals.update_combobox.connect(self.update_menu_combobox)
+        signals.update_combobox.emit(self.edit_component_product)
+        
+    @Slot(object)
+    def update_menu_combobox(self, box: QComboBox):
+        box = self.edit_component_product
+        #---product to select
+        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        box.clear()
+        box.addItem("Select a product")
+        for key, value in self.all_product_form.items():
+            box.addItem(str(value['name_product']), userData=value)
+        
+    def call_show_dialog_insert_directive(self):
+        self.form.show_dialog_insert_directive(self, "shredding")
+        
+        
+    def call_show_table_component_product(self,index):
+        # --- title Parts presenting the most interesting potential for dismantling ---
+        self.title_table = QLabel(self)
+        self.title_table.setText('Parts presenting the most interesting potential for dismantling')
+        self.title_table.move(10, 190)
+        
+        # --- title Parts generating the most residual waste ---
+        self.title_table = QLabel(self)
+        self.title_table.setText('Parts generating the most residual waste')
+        self.title_table.move(10, 520)
+        
+        product_selected = self.edit_component_product.currentData()
+        if (product_selected == None):
+            return None
+        
+        print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
+        self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
+        
+        #for hotspots_1
+        """#get new values"""
+        self.datamodel = Datamodel(self);
+        self.data_list = self.datamodel.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_1") #self.datamodel.getdata_component()
+        self.header = self.datamodel.header_hotspots_1 #self.datamodel.header_component      
+        self.table_model = TableModel(self, self.data_list, self.header)
+        self.table_view = QTableView()
+        self.table_view.setModel(self.table_model)
+        # set font
+        self.font = QFont("Courier New", 10)
+        self.table_view.setFont(self.font)
+        # set column width to fit contents (set font first!)
+        self.table_view.resizeColumnsToContents()
+        # enable sorting
+        self.table_view.setSortingEnabled(True)
+        #display
+        self.widget_table_view = QWidget(self)
+        self.layout_table_view = QVBoxLayout(self)
+        self.layout_table_view.addWidget(self.table_view)
+        self.widget_table_view.setLayout(self.layout_table_view)
+        self.widget_table_view.setGeometry(10, 210, 800, 300)
+        self.widget_table_view.show()
+        self.table_model.sort(5, order=Qt.DescendingOrder) #Order column ref
+        
+        #for hotspots_2
+        """#get new values"""
+        self.datamodel_2 = Datamodel(self);
+        self.data_list_2 = self.datamodel_2.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_2") #self.datamodel_2.getdata_component()
+        self.header_2 = self.datamodel_2.header_hotspots_2 #self.datamodel_2.header_2_component      
+        self.table_model_2 = TableModel(self, self.data_list_2, self.header_2)
+        self.table_view_2 = QTableView()
+        self.table_view_2.setModel(self.table_model_2)
+        # set font
+        self.font = QFont("Courier New", 10)
+        self.table_view_2.setFont(self.font)
+        # set column width to fit contents (set font first!)
+        self.table_view_2.resizeColumnsToContents()
+        # enable sorting
+        self.table_view_2.setSortingEnabled(True)
+        #display
         self.widget_table_view_2 = QWidget(self)
         self.layout_table_view_2 = QVBoxLayout(self)
-        self.layout_table_view_2.addWidget(self.tableview2)
+        self.layout_table_view_2.addWidget(self.table_view_2)
         self.widget_table_view_2.setLayout(self.layout_table_view_2)
-        self.widget_table_view_2.setGeometry(510,170,500,500)
+        self.widget_table_view_2.setGeometry(10, 550, 800, 300)
         self.widget_table_view_2.show()
-
-
-    
+        self.table_model_2.sort(3, order=Qt.DescendingOrder) #Order column ref
+        
+                
+        
+        
+        
+        
+        

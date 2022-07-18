@@ -49,11 +49,11 @@ class InputTab(QTabWidget):
         self.button_add_component.clicked.connect(
             self.form.show_dialog_insert_component
         )
-        
+    
         #---product to select
         self.all_product = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
-        self.edit_component_product.addItem("Select a product", userData=None)
+        self.edit_component_product.addItem("Select a product to view its components", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
         #self.edit_component_product.setGeometry(260, 100, 120, 30)
@@ -70,7 +70,7 @@ class InputTab(QTabWidget):
         #self.ligne_local.move(10, 110)
         
         #--- table
-        self.datamodel = Datamodel()
+        self.datamodel = Datamodel();
         self.data_list = self.datamodel.getdata_product() #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_product #self.datamodel.header_component
         self.table_model = TableModel(self, self.data_list, self.header)
@@ -123,10 +123,9 @@ class InputTab(QTabWidget):
     def call_show_table_component_product(self,index):
         product_selected = self.edit_component_product.currentData()
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
-        self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' component list  </h1>' )
+        self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         """#get new values"""
-        self.datamodel = Datamodel()
-        print(self.datamodel.getDismantling_data(product_selected))
+        self.datamodel = Datamodel();
         self.data_list = self.datamodel.getdata_component(product_selected.__getitem__('id_product')) #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_component #self.datamodel.header_component
         self.table_model = TableModel(self, self.data_list, self.header)

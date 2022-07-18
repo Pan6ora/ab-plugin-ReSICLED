@@ -11,7 +11,7 @@ class Icon():
         self.delete = QIcon(self.get_path_image_base('delete.png'))
         self.edit = QIcon(self.get_path_image_base('edit.png'))
         #get logo
-        self.logo = QPixmap(self.get_path_image_logo('logo_resicled.png'))
+        self.logo = QPixmap(self.get_path_image_logo('logo_resicled_transparent.png'))
     
     def get_path_image(self) -> str:
         return str(PATH_IMAGES.joinpath('views','images'))
