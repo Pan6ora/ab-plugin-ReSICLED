@@ -31,10 +31,10 @@ class ResicledTab(QTabWidget):
             "Mixed": MixedTab(self),
             "HotSpots": HotspotsTab(self),
             "Database": DatabaseTab(self),
-            "Guidelines": QPushButton("button 7"),
-            "Rapport": QPushButton("button 8"),
-            "Pdf": QPushButton("button 9"),
-            "Recyclability Rates": QPushButton("button 10"),
+            #"Guidelines": QPushButton("button 7"),
+            #"Rapport": QPushButton("button 8"),
+            #"Pdf": QPushButton("button 9"),
+            #"Recyclability Rates": QPushButton("button 10"),
 		}
         
         for tab_name, tab_obj in self.tabs.items():

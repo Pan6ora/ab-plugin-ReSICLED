@@ -67,7 +67,8 @@ class Dialog_alert(QDialog):
         #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            self.label.setText("OK")
+            #self.label.setText("OK")
+            print("OK")
         """
         elif reply == QMessageBox.Cancel:
             self.label.setText("CANCEL")
@@ -156,7 +157,8 @@ class Dialog_insert_directive(QDialog):
         #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            self.label.setText("OK")
+            #self.label.setText("OK")
+            print("OK")
 
     def close(self):
         self.accept()
@@ -232,7 +234,8 @@ class Dialog_insert_product(QDialog):
         #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            self.label.setText("OK")
+            #self.label.setText("OK")
+            print("OK")
 
     def close(self):
         self.accept()
@@ -421,7 +424,8 @@ class Dialog_insert_component(QDialog):
         #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            self.label.setText("OK")
+            #self.label.setText("OK")
+            print("OK")
     
     def close(self):
         self.accept()
@@ -580,7 +584,8 @@ class Dialog_insert_material(QDialog):
         #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            self.label.setText("OK")
+            #self.label.setText("OK")
+            print("OK")
     
     def close(self):
         self.accept()

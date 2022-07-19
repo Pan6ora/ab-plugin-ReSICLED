@@ -52,7 +52,7 @@ class HotspotsTab(QTabWidget):
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 140, 800, 30)
+        self.title_component_product.setGeometry(10, 140, 1200, 30)
         
         #add signal
         self.edit_component_product.currentIndexChanged.connect(
@@ -86,7 +86,7 @@ class HotspotsTab(QTabWidget):
         # --- title Parts generating the most residual waste ---
         self.title_table = QLabel(self)
         self.title_table.setText('Parts generating the most residual waste')
-        self.title_table.move(10, 520)
+        self.title_table.move(10, 530)
         
         product_selected = self.edit_component_product.currentData()
         if (product_selected == None):
@@ -115,7 +115,7 @@ class HotspotsTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 210, 800, 300)
+        self.widget_table_view.setGeometry(10, 210, 1200, 300)
         self.widget_table_view.show()
         self.table_model.sort(5, order=Qt.DescendingOrder) #Order column ref
         
@@ -139,7 +139,7 @@ class HotspotsTab(QTabWidget):
         self.layout_table_view_2 = QVBoxLayout(self)
         self.layout_table_view_2.addWidget(self.table_view_2)
         self.widget_table_view_2.setLayout(self.layout_table_view_2)
-        self.widget_table_view_2.setGeometry(10, 550, 800, 300)
+        self.widget_table_view_2.setGeometry(10, 550, 1200, 300)
         self.widget_table_view_2.show()
         self.table_model_2.sort(3, order=Qt.DescendingOrder) #Order column ref
         

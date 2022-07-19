@@ -28,7 +28,9 @@ class Componentdatabase:
     def get_one_component(self, key):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
-        return dico.__getitem__((self.name_database, str(key)))
+        key = (self.name_database, str(key))
+        if(dico != None and dico.__contains__(key)):
+            return dico.__getitem__(key)
 
     def get_all_material_of_component(self, id_component_param):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
@@ -38,7 +40,19 @@ class Componentdatabase:
         value_attrib_param = dict_component.__getitem__('id_material')
         return self.materialdatabase.get_material_by_attrib(name_attrib_param, value_attrib_param)
         """
-        return self.materialdatabase.get_one_material(dict_component.__getitem__("id_material"))
+        if(dict_component != None and dict_component.__contains__("id_material")):
+            return self.materialdatabase.get_one_material(dict_component.__getitem__("id_material"))
+    
+    def get_all_component_of_material(self, id_material_param):
+        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        result_dict = dict()
+        dico = self.db.load()
+        for key, value in dico.items():
+            str_id_component = str(value["id_component"])
+            str_id_material = str(value["id_material"])
+            if str_id_material == str(id_material_param):
+                result_dict[key] = value
+        return result_dict
 
     def insert_one_component(self, dict_component: dict):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
@@ -72,9 +86,17 @@ class Componentdatabase:
 
     def delete_one_component(self, id_component_param):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
-        # delete all referenced compose
-        #self.composedatabase.delete_all_compose_of_component(id_component_param)
         # delete component
         dico = self.db.load()
-        dico.__delitem__((self.name_database, str(id_component_param)))
-        self.db.write(dico)
+        key = (self.name_database, str(id_component_param))
+        if(dico != None and dico.__contains__(key)):
+            dico.__delitem__(key)
+            self.db.write(dico)
+        
+    def delete_one_material(self, id_material_param):
+        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        self.materialdatabase.delete_one_material(id_material_param)
+        
+        
+        
+        

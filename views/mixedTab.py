@@ -122,7 +122,7 @@ class MixedTab(QTabWidget):
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 140, 800, 30)
+        self.title_component_product.setGeometry(10, 140, 1200, 30)
         
         #add signal
         self.edit_component_product.currentIndexChanged.connect(
@@ -192,14 +192,15 @@ class MixedTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 800, 500)
+        self.widget_table_view.setGeometry(10, 320, 1200, 500)
         self.widget_table_view.show()
         #set combo scenario
         self.table_model.sort(0, order=Qt.AscendingOrder) #Order column ref
-        self.table_view.setSortingEnabled(False) # disable sorting because column ref isn't sortable
+        self.table_view.setSortingEnabled(False) # disable sorting because column scenario isn't sortable
         for key_ligne, widget_obj in self.combo_scenario.items():
             ligne_table = key_ligne
-            column_table = 6
+            column_table = 7
+            self.table_view.setColumnWidth(column_table, 150)
             #self.table_view.setIndexWidget(self.table_model.index(int(ligne_table),column_table),widget_obj)
             #print("data ligne ", ligne_table," == ",self.table_model.index(int(ligne_table),4).data()," currentdata_selected==",currentdata_selected)
             currentdata_selected = widget_obj.currentData()

@@ -121,7 +121,7 @@ class ShreddingTab(QTabWidget):
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 140, 800, 30)
+        self.title_component_product.setGeometry(10, 140, 1200, 30)
         
         #add signal
         self.edit_component_product.currentIndexChanged.connect(
@@ -161,6 +161,7 @@ class ShreddingTab(QTabWidget):
         product_selected = self.edit_component_product.currentData()
         if (product_selected == None):
             return None
+        
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         """#get new values"""
@@ -187,7 +188,7 @@ class ShreddingTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 800, 500)
+        self.widget_table_view.setGeometry(10, 320, 1200, 500)
         self.widget_table_view.show()
         #update rate
         self.value_recycling_rate_status.setText("")

@@ -42,7 +42,9 @@ class Directivedatabase():
     def get_one_directive(self, key):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
-        return dico.__getitem__((self.name_database, str(key)))
+        key = (self.name_database, str(key))
+        if(dico != None and dico.__contains__(key)):
+            return dico.__getitem__(key)
     
     def get_directive_by_attrib(self, name_attrib_param, value_attrib_param):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
@@ -94,8 +96,10 @@ class Directivedatabase():
     def delete_one_directive(self, id_directive_param):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
-        dico.__delitem__((self.name_database, str(id_directive_param)))
-        self.db.write(dico)
+        key = (self.name_database, str(id_directive_param))
+        if(dico != None and dico.__contains__(key)):
+            dico.__delitem__(key)
+            self.db.write(dico)
             
         
         
