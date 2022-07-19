@@ -4,6 +4,7 @@ class Fixture():
     def __init__(self):
          self.db_material = self.get_db_material()
          self.db_directive = self.get_db_directive()
+         self.db_guidelines = self.get_db_guidelines()
          
     def get_db_material(self):
         self.material = {
@@ -664,4 +665,360 @@ class Fixture():
         }
         return self.directive 
     
-    
+    def get_db_guidelines(self):
+        self.guidelines = {
+            ("resicled_guidelines","1") : {
+                "guideline_number": 1,
+                "guideline_name": "Minimise number of different types of materials (including additives for polymers and alloys for metals)",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","2") :{
+                "guideline_number": 2,
+                "guideline_name": "If possible (if size and shape of part allows it), mark plastic and metal parts according to ISO 11469",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "P&M"
+            },
+            ("resicled_guidelines","3") :{
+                "guideline_number": 3,
+                "guideline_name": "\"Think of other marking technologies for parts (e.g. bar codes, colour, chemical \"\"traceur\"\", etc.)\"",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","4") :{
+                "guideline_number": 4,
+                "guideline_name": "Use recycled materials",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","5") :{
+                "guideline_number": 5,
+                "guideline_name": "Use the most recyclable materials",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","6") :{
+                "guideline_number": 6,
+                "guideline_name": "Avoid sticks and metal inserts on plastic parts",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","7") :{
+                "guideline_number": 7,
+                "guideline_name": "If a charge is to be added to a polymer, verify with recycler that te charge does not hinder the recycling activity",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","8") :{
+                "guideline_number": 8,
+                "guideline_name": "If different types of polymers have to be closely associated, prefer types of plastics that could be easely separated after shredding ",
+                "recovery_strategy": "Recycle / recover after shredding (RAS)",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","9") :{
+                "guideline_number": 9,
+                "guideline_name": "If different types of polymers or of metals have to be closely associated, and if they are not separable, prefer types of polymers or of metals that are compatible",
+                "recovery_strategy": "Recycle / recover after shredding (RAS)",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "P&M"
+            },
+            ("resicled_guidelines","10") :{
+                "guideline_number": 10,
+                "guideline_name": "Design metallic parts and assemblies so that the liberation of pure material particles during shredding is facilitated",
+                "recovery_strategy": "Recycle / recover after shredding (RAS)",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","11") :{
+                "guideline_number": 11,
+                "guideline_name": "Prefer clear colour to dark colour",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","12") :{
+                "guideline_number": 12,
+                "guideline_name": "Use inoffensive materials when incinerated",
+                "recovery_strategy": "Energy recovery",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","13") :{
+                "guideline_number": 13,
+                "guideline_name": "Minimise number of fasteners",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "Links",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","14") :{
+                "guideline_number": 14,
+                "guideline_name": "Minimise number of types of fasteners / number of tools",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "Links",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","15") :{
+                "guideline_number": 15,
+                "guideline_name": "Prefer fasteners easy to remove",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "Links",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","16") :{
+                "guideline_number": 16,
+                "guideline_name": "Make sure that fasteners that will have to be unlocked are easely accessible / visible",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "L&A",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","17") :{
+                "guideline_number": 17,
+                "guideline_name": "Think of fasteners that can be broken instead of dismantled",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "Links",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","18") :{
+                "guideline_number": 18,
+                "guideline_name": "Minimise number of parts",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","19") :{
+                "guideline_number": 19,
+                "guideline_name": "Focus on a limited number of parts whose caracteristics (mass, material, position, etc.) bring good recyclability performances",
+                "recovery_strategy": "Recycle / recover after shredding (RAS)",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","20") :{
+                "guideline_number": 20,
+                "guideline_name": "Make design modular",
+                "recovery_strategy": "Re-use / remanufacture / repair",
+                "design_parameters": "Architecture",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","21") :{
+                "guideline_number": 21,
+                "guideline_name": "Make high value parts easely accessible",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "Architecture",
+                "assembly_position": "Deep",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","22") :{
+                "guideline_number": 22,
+                "guideline_name": "Reduce the number / the weight of pollutants",
+                "recovery_strategy": "Depollution",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","23") :{
+                "guideline_number": 23,
+                "guideline_name": "Make pollutant (battery, fluids, some PWB, CRT, etc.) easely accessible and clearly marked",
+                "recovery_strategy": "Depollution",
+                "design_parameters": "Architecture",
+                "assembly_position": "Deep",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","24") :{
+                "guideline_number": 24,
+                "guideline_name": "Put pollutants in the same location",
+                "recovery_strategy": "Depollution",
+                "design_parameters": "Architecture",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","25") :{
+                "guideline_number": 25,
+                "guideline_name": "Make draining points for fluids accessible and visible ",
+                "recovery_strategy": "Depollution",
+                "design_parameters": "Architecture",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","26") :{
+                "guideline_number": 26,
+                "guideline_name": "Think of uniforming disassembly direction",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "Architecture",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","27") :{
+                "guideline_number": 27,
+                "guideline_name": "Design products for stability during disassembly",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "Architecture",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","28") :{
+                "guideline_number": 28,
+                "guideline_name": "Think of central unlocking mechanism ",
+                "recovery_strategy": "Recycle / recover after dismantling (RAD)",
+                "design_parameters": "L&A",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","29") :{
+                "guideline_number": 29,
+                "guideline_name": "Think of Disassembly Embedded Design solutions where triggered  elements turns disassembly easy",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "M&L",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","30") :{
+                "guideline_number": 30,
+                "guideline_name": "Think of Disassembly Embedded Design solutions where material with sufficient thermal expansion coefficient are chosen for snap-fits",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "M&L",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","31") :{
+                "guideline_number": 31,
+                "guideline_name": "Think of Active Disassembly techniques where all fasteners can be activated by external triggers",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "M&L",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","32") :{
+                "guideline_number": 32,
+                "guideline_name": "Promote longer life for products (through product quality, repairability, etc.)  especially for products with most disgnificant impact out of use phase",
+                "recovery_strategy": "Reduce",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","33") :{
+                "guideline_number": 33,
+                "guideline_name": "Think of repairability/remanucturability of product",
+                "recovery_strategy": "Re-use / remanufacture / repair",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","34") :{
+                "guideline_number": 34,
+                "guideline_name": "Think of re-use of parts",
+                "recovery_strategy": "Re-use / remanufacture / repair",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","35") :{
+                "guideline_number": 35,
+                "guideline_name": "Think of overdimensioning some parts so that it is possible to machine them during remanufacturing process.",
+                "recovery_strategy": "Re-use / remanufacture / repair",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","36") :{
+                "guideline_number": 36,
+                "guideline_name": "Use standards parts as far as possible",
+                "recovery_strategy": "Re-use / remanufacture / repair",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","37") :{
+                "guideline_number": 37,
+                "guideline_name": "Minimise weight of the product",
+                "recovery_strategy": "All",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","38") :{
+                "guideline_number": 38,
+                "guideline_name": "Use renewable materials (ex: natural fibers)",
+                "recovery_strategy": "Energy recovery",
+                "design_parameters": "Material / composant / substance",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            },
+            ("resicled_guidelines","39") :{
+                "guideline_number": 39,
+                "guideline_name": "\"Think of filling-in a \"\"recycling profile\"\" (or end-of-life treatment manual)  for the product to be communicated to treatment facilities\"",
+                "recovery_strategy": "Depollution",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","40") :{
+                "guideline_number": 40,
+                "guideline_name": "Think of mentioning procedures to be followed at end-of-life in the technical leaflet of the product",
+                "recovery_strategy": "All",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","41") :{
+                "guideline_number": 41,
+                "guideline_name": "Think of safety of treatment operators: beware of mechanical components that store mechanical energy (i.e. springs)",
+                "recovery_strategy": "D&RAD",
+                "design_parameters": "Architecture",
+                "assembly_position": "All",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","42") :{
+                "guideline_number": 42,
+                "guideline_name": "Think of marking the product as covered by WEEE Directive",
+                "recovery_strategy": "All",
+                "design_parameters": "Architecture",
+                "assembly_position": "Superficial",
+                "part_type": "All"
+            },
+            ("resicled_guidelines","43") :{
+                "guideline_number": 43,
+                "guideline_name": "Avoid coating (e.g. painting, varnish) on metallic parts",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "Metal"
+            },
+            ("resicled_guidelines","44") :{
+                "guideline_number": 44,
+                "guideline_name": "Avoid coating (metal, plastic film, paiting, textile, film, etc.) on plastics parts",
+                "recovery_strategy": "RAD&RAS",
+                "design_parameters": "All",
+                "assembly_position": "All",
+                "part_type": "Polymer"
+            }
+
+        }
+        return self.guidelines

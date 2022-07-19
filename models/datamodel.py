@@ -423,6 +423,11 @@ class Datamodel(QAbstractTableModel):
 
         return self.data_list_hotspots
        
+    def get_data_guidelines(self):
+        data_list=[]
+        for _, item in databasemanager.guidelinesdatabase.get_all_guidelines().items():
+            data_list.append((item["guideline_number"],item["guideline_name"]))
+        return [(elem[1],) for elem in sorted(data_list,key = lambda x:x[0])]
         
     def getdata_component_test(self):
         # use numbers for numeric data to sort properly
