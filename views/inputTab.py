@@ -89,14 +89,18 @@ class InputTab(QTabWidget):
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
         #self.widget_table_view.move(10, 170)
-        self.widget_table_view.setGeometry(10, 170, 800, 500)
+        self.widget_table_view.setGeometry(10, 170, 1200, 500)
         self.widget_table_view.show()
         
         # --- title ---
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 140, 800, 30)
+        self.title_component_product.setGeometry(10, 140, 1200, 30)
+        
+        #signal update_combobox
+        signals.update_combobox.connect(self.update_menu_combobox)
+        signals.update_combobox.emit(self.edit_component_product)
              
         
         """#--- QGridLayout grid placement ---
@@ -122,6 +126,9 @@ class InputTab(QTabWidget):
         
     def call_show_table_component_product(self,index):
         product_selected = self.edit_component_product.currentData()
+        if(product_selected==None):
+            return None
+        
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         """#get new values"""
@@ -143,7 +150,7 @@ class InputTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 170, 800, 500)
+        self.widget_table_view.setGeometry(10, 170, 1200, 500)
         self.widget_table_view.show()
         """#signal update table
         signals.update_table_component_product.connect(self.update_table_component_product)
@@ -154,5 +161,15 @@ class InputTab(QTabWidget):
         #---product to select
         self.header = header_param
         self.data_list = data_list_param
+        
+    @Slot(object)
+    def update_menu_combobox(self, box: QComboBox):
+        box = self.edit_component_product
+        #---product to select
+        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        box.clear()
+        box.addItem("Select a product to view its components")
+        for key, value in self.all_product_form.items():
+            box.addItem(str(value['name_product']), userData=value)
             
             

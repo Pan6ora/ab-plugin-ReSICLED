@@ -54,7 +54,7 @@ class DatabaseTab(QTabWidget):
         self.title_database = QLabel(self)
         self.title_database.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_database.setText('')
-        self.title_database.setGeometry(10, 140, 800, 30)
+        self.title_database.setGeometry(10, 140, 1200, 30)
         
         #add signal
         self.edit_database.currentIndexChanged.connect(
@@ -95,7 +95,7 @@ class DatabaseTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 180, 800, 500)
+        self.widget_table_view.setGeometry(10, 180, 1200, 500)
         self.widget_table_view.show()
         #set Action for each ligne
         self.button_edit_ligne = dict()
@@ -103,7 +103,7 @@ class DatabaseTab(QTabWidget):
         self.widget_action = dict()
         self.layout_action = dict()
         self.table_model.sort(0, order=Qt.AscendingOrder) #Order column ref
-        self.table_view.setSortingEnabled(False) # disable sorting because column ref isn't sortable
+        self.table_view.setSortingEnabled(False) # disable sorting because column Action isn't sortable
         for key_ligne, widget_obj in self.dict_ligne_database.items():
             ligne_table = key_ligne
             column_table = len(self.header)-1
@@ -169,10 +169,11 @@ class DatabaseTab(QTabWidget):
             id_element = widget_obj['id_material']
             name_element = widget_obj['name_material']
             type_material = widget_obj['type_material']
-            text_question = "Do you want to delete the material << "+name_element+" >>  ("+type_material+") ? "
+            id_element = widget_obj['id_material']
+            text_question = "Do you want to delete the material << "+name_element+" >>  ("+type_material+") ? All its components linked will also be deleted ! "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
-                self.all_product = databasemanager.materialdatabase.delete_one_material(id_element)
+                self.all_product = databasemanager.composedatabase.delete_one_material(id_element)
         if(database_selected.lower()=="directive"):
             #show confirm dialog
             id_element = widget_obj['directive_number']

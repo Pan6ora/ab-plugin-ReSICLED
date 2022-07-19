@@ -28,7 +28,9 @@ class Composedatabase:
 
     def get_one_compose(self, key):
         dico = self.db.load()
-        return dico.__getitem__((self.name_database, str(key)))
+        key = (self.name_database, str(key))
+        if(dico != None and dico.__contains__(key)):
+            return dico.__getitem__(key)
 
     def get_compose_by_product(self, id_product_param):
         result_dict = dict()
@@ -109,8 +111,10 @@ class Composedatabase:
 
     def delete_one_compose(self, id_compose_param):
         dico = self.db.load()
-        dico.__delitem__((self.name_database, str(id_compose_param)))
-        self.db.write(dico)
+        key = (self.name_database, str(id_compose_param))
+        if(dico != None and dico.__contains__(key)):
+            dico.__delitem__(key)
+            self.db.write(dico)
 
     def delete_all_component_of_product(self, id_product_param):
         # get all referenced component
@@ -120,7 +124,7 @@ class Composedatabase:
             # delete component
             self.componentdatabase.delete_one_component(self.id_component)
             # delete compose
-            self.id_compose = str(id_product_param) + str(dict_compose["id_component"])
+            self.id_compose = str(id_product_param) + str(self.id_component)
             self.delete_one_compose(self.id_compose)
 
     def delete_all_compose_of_component(self, id_component_param):
@@ -142,4 +146,13 @@ class Composedatabase:
         self.delete_all_compose_of_component(id_component_param)
         # delete component
         self.componentdatabase.delete_one_component(id_component_param)
+        
+    def delete_one_material(self, id_material_param):
+        dict_component = self.componentdatabase.get_all_component_of_material(id_material_param)
+        # delete all referenced component
+        for key, value in dict_component.items():
+            self.id_component = value["id_component"]
+            self.delete_one_component(self.id_component)
+        # delete material
+        self.componentdatabase.delete_one_material(id_material_param)
         

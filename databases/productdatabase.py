@@ -26,7 +26,9 @@ class Productdatabase():
     def get_one_product(self, key):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
-        return dico.__getitem__((self.name_database, str(key)))
+        key = (self.name_database, str(key))
+        if(dico != None and dico.__contains__(key)):
+            return dico.__getitem__(key)
         
     def insert_one_product(self, dict_product: dict):
         print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
@@ -52,8 +54,10 @@ class Productdatabase():
         #self.composedatabase.delete_all_component_of_product(id_product_param)
         # delete product
         dico = self.db.load()
-        dico.__delitem__((self.name_database, str(id_product_param)))
-        self.db.write(dico)
+        key = (self.name_database, str(id_product_param))
+        if(dico != None and dico.__contains__(key)):
+            dico.__delitem__(key)
+            self.db.write(dico)
         
         
         
