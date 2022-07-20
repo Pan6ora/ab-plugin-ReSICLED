@@ -35,8 +35,7 @@ class HotspotsTab(QTabWidget):
         
         # --- title select product---
         self.title = QLabel(self)
-        self.title.setText('Select a product to view its hotspots')
-        self.title.move(10, 100)
+        self.title.setText('Select a product to view its hotspots : ')
         #---product to select
         self.all_product = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
@@ -44,8 +43,15 @@ class HotspotsTab(QTabWidget):
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
         #self.edit_component_product.setGeometry(10, 120, 120, 30)
-        self.edit_component_product.move(10, 120)
         self.edit_component_product.setFrame(False)
+        self.product_selection_widget = QWidget(self)
+        self.product_selection_layout = QHBoxLayout(self)
+        self.product_selection_layout.addWidget(self.title)
+        self.product_selection_layout.addWidget(self.edit_component_product)
+        self.product_selection_widget.setLayout(self.product_selection_layout)
+        self.product_selection_widget.move(10,100)
+        
+
         
         
         # --- title product selected ---
@@ -108,8 +114,7 @@ class HotspotsTab(QTabWidget):
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        self.table_view.setSortingEnabled(True)
+        
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
@@ -117,11 +122,11 @@ class HotspotsTab(QTabWidget):
         self.widget_table_view.setLayout(self.layout_table_view)
         self.widget_table_view.setGeometry(10, 210, 1200, 300)
         self.widget_table_view.show()
-        self.table_model.sort(5, order=Qt.DescendingOrder) #Order column ref
+        
         
         #for hotspots_2
         """#get new values"""
-        self.datamodel_2 = Datamodel(self);
+        self.datamodel_2 = Datamodel(self)
         self.data_list_2 = self.datamodel_2.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_2") #self.datamodel_2.getdata_component()
         self.header_2 = self.datamodel_2.header_hotspots_2 #self.datamodel_2.header_2_component      
         self.table_model_2 = TableModel(self, self.data_list_2, self.header_2)
@@ -131,9 +136,7 @@ class HotspotsTab(QTabWidget):
         self.font = QFont("Courier New", 10)
         self.table_view_2.setFont(self.font)
         # set column width to fit contents (set font first!)
-        self.table_view_2.resizeColumnsToContents()
-        # enable sorting
-        self.table_view_2.setSortingEnabled(True)
+        self.table_view_2.resizeColumnsToContents()        
         #display
         self.widget_table_view_2 = QWidget(self)
         self.layout_table_view_2 = QVBoxLayout(self)
@@ -141,7 +144,6 @@ class HotspotsTab(QTabWidget):
         self.widget_table_view_2.setLayout(self.layout_table_view_2)
         self.widget_table_view_2.setGeometry(10, 550, 1200, 300)
         self.widget_table_view_2.show()
-        self.table_model_2.sort(3, order=Qt.DescendingOrder) #Order column ref
         
                 
         

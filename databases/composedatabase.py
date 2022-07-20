@@ -92,11 +92,13 @@ class Composedatabase:
         self.id_product = dict_compose["id_product"]
         self.id_component = dict_compose["id_component"]
         self.piecenumber_component = dict_compose["piecenumber_component"]
+        self.strategy_component = dict_compose["strategy_component"]
         # new product
         self.new_compose = {
             "id_product": self.id_product,
             "id_component": self.id_component,
             "piecenumber_component": self.piecenumber_component,
+            "strategy_component" : self.strategy_component
         }
         # save data
         dico = self.db.load()
@@ -156,3 +158,9 @@ class Composedatabase:
         # delete material
         self.componentdatabase.delete_one_material(id_material_param)
         
+    def change_strategy_one_compose(self,key,new_strategy):
+        dico = self.db.load()
+        old_strategy = dico[(self.name_database,str(key))]["strategy_component"]
+        if old_strategy!=new_strategy:
+            dico[(self.name_database,str(key))]["strategy_component"]=new_strategy
+        self.db.write(dico)

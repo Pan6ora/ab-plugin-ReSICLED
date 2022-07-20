@@ -1,5 +1,5 @@
 import sys
-from PySide2 import QtCore
+from PySide2.QtCore import QAbstractTableModel
 
 import operator
 from PySide2.QtCore import *
@@ -29,8 +29,8 @@ class Datamodel(QAbstractTableModel):
         self.header_component_test = ['Solvent Name', ' BP (deg C)', ' MP (deg C)', ' Density (g/ml)']
         self.header_database_product = ['Name product', 'Name author product', 'Firstname author product']
         self.header_database_component = ['Name component','Name material','Type material', 'Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
-        self.header_database_component_scenario_rate = ['Name component','Recycle Weight (grams/piece)','Energy recovery Weight (grams/piece)', 'Residual waste Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
-        self.header_database_component_scenario_rate_mixed = ['Ref','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Residual waste Weight', 'Is it pollutant ?','Scenario','Dismantling - Recycle Weight (grams/piece)','Dismantling - Energy recovery Weight (grams/piece)', 'Dismantling - Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
+        self.header_database_component_scenario_rate = ['Ref','Name component','Recycle Weight (grams/piece)','Energy recovery Weight (grams/piece)', 'Residual waste Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
+        self.header_database_component_scenario_rate_mixed = ['Ref','id_comp','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Residual waste Weight', 'Is it pollutant ?','Scenario','Dismantling - Recycle Weight (grams/piece)','Dismantling - Energy recovery Weight (grams/piece)', 'Dismantling - Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
         self.header_hotspots_1 = ['Ref','Name component','Is it pollutant ?','Gain 1','Relative weight','Gain 1 * Relative weight']
         self.header_hotspots_2 = ['Ref', 'Name component', 'Is it pollutant ?', 'Residual waste Weight','Dismantling - Residual waste Weight (grams/piece)','Shredding - Residual waste Weight (grams/piece)','Number of pieces']
         self.header_database_product_manage = ['Ref','Name product', 'Name author product', 'Firstname author product','Action']
@@ -39,8 +39,11 @@ class Datamodel(QAbstractTableModel):
         self.header_database_directive_manage = ['Ref','Directive title','Directive comment','Dismantling recycling rate','Dismantling recovery rate','Dismantling residual waste rate','Shredding recycling rate','Shredding recovery rate','Shredding residual waste rate','Mixed recycling rate','Mixed recovery rate','Mixed residual waste rate','Action']
     
     def getdata_database(self,type_database):
+        """
+        Makes the datamodels for the databases tab (tab that makes us see what we can display in the tab
+        """
         self.data_list = []
-        ref_cmp = 0;
+        ref_cmp = 0
         dict_ligne_database = dict()
         if(type_database.lower()=="product"):
             #--- select
@@ -95,6 +98,9 @@ class Datamodel(QAbstractTableModel):
         return self.data_list
         
     def getdata_product(self):
+        """
+        gets the data list of all products
+        """
         self.data_list = []
         #---product to select
         self.all_product_form = databasemanager.productdatabase.get_all_product()
@@ -102,11 +108,11 @@ class Datamodel(QAbstractTableModel):
             self.data_list.append((value['name_product'],value['nameauthor_product'],value['firstname_product']))
         return self.data_list
     
-    def getdata_component(self,id_product):
+    def getdata_component(self,id_product): #Unused
         self.data_list = []
         #---product component of product selected
         self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
-        print("getdata_component",self.all_component_form)
+        #print("getdata_component",self.all_component_form)
         """
         eg. result self.all_component_form:
         {
@@ -176,7 +182,7 @@ class Datamodel(QAbstractTableModel):
         self.data_list = []
         #---product component of product selected
         self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
-        print("getdata_component",self.all_component_form)
+        #print("getdata_component",self.all_component_form)
         """
         eg. result self.all_component_form:
         {
@@ -185,6 +191,7 @@ class Datamodel(QAbstractTableModel):
                     "id_product": 1657178236.944683,
                     "id_component": 1657206274.284218,
                     "piecenumber_component": "6",
+                    "strategy_component" : "Dismantling",
                     "database": "resicled_compose",
                     "code": "1657178236.9446831657206274.284218",
                     "exchanges": [],
@@ -240,7 +247,7 @@ class Datamodel(QAbstractTableModel):
         
         #init
         combo_scenario = dict() 
-        cmp_index = 0;       
+        cmp_index = 0
         Recycle_weight = 0
         Energy_recovery_weight = 0
         Residual_waste_weight = 0
@@ -285,6 +292,7 @@ class Datamodel(QAbstractTableModel):
             recshr_material = str(value['material_of_component']['recshr_material']).replace(",", ".")
             enershr_material = str(value['material_of_component']['enershr_material']).replace(",", ".")
             wasteshr_material = str(value['material_of_component']['wasteshr_material']).replace(",", ".")
+            scenario = value["one_compose"]["strategy_component"]
             
             if(type_scenario.lower()=="dismantling"): # case dismantling
                 Recycle_weight = ((float(recdis_material) * float(Weight)) / 100)
@@ -321,48 +329,42 @@ class Datamodel(QAbstractTableModel):
                     Recycle_weight = ((float(recdis_material) * float(Weight)) / 100)
                     Energy_recovery_weight = ((float(enerdis_material) * float(Weight)) / 100)
                     Residual_waste_weight = ((float(wastedis_material) * float(Weight)) / 100)
+                    gain_1=0
+                    gain_2=0
                 else:
                     Recycle_weight = ((float(recshr_material) * float(Weight)) / 100)
                     Energy_recovery_weight = ((float(enershr_material) * float(Weight)) / 100)
                     Residual_waste_weight = ((float(wasteshr_material) * float(Weight)) / 100)
+                    gain_1 = (float(recdis_material) - float(recshr_material))/100
+                    gain_2 = ((float(recdis_material) + float(enerdis_material)) - (float(recshr_material) + float(enershr_material)))/100
+                
+                    
                 #set values for shredding
                 Recycle_weight_shredding = Recycle_weight
                 Energy_recovery_weight_shredding = Energy_recovery_weight
                 Residual_waste_weight_shredding = Residual_waste_weight
-                # --- get value of gain 1 ---
-                gain_1 = (float(recdis_material) - float(recshr_material))/100
-                # --- get value of gain 2 ---
-                gain_2 = ((float(recdis_material) + float(enerdis_material)) - (float(recshr_material) + float(enershr_material)))/100
                 # --- get value of relative weight
                 relative_weight = 0
                 if(float(self.sum_weight_mixed)>0):
-                    relative_weight = round(float(Weight)/float(self.sum_weight_mixed) * 100)
+                    relative_weight = round(float(Weight)/float(self.sum_weight_mixed) * 100,1)
                 relative_weight = str(relative_weight)+"%"
-                #--- set Combobox for scenario ---
-                combo_scenario[cmp_index] = QComboBox()
-                combo_scenario[cmp_index].addItem("dismantling", userData=value)
-                combo_scenario[cmp_index].addItem("shredding", userData=value)
+                
                 #by default select the best scenario or applied scenario selected
-                type_scenario_mixed = ""
-                if(component_code in dict_scenario_mixed):
-                        type_scenario_mixed = str(dict_scenario_mixed[component_code])
-                if((gain_1 >= gain_2 and type_scenario_mixed=="") or (type_scenario_mixed.lower()=="dismantling")): 
+                if scenario == "Dismantling":
                     Residual_waste_Weight_most = Residual_waste_weight_dismantling
-                    combo_scenario[cmp_index].setCurrentText("dismantling")
                     self.sum_weight = float(self.sum_weight) + float(Weight)
                     self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight_dismantling)
                     self.sum_Energy_recovery_weight = float(self.sum_Energy_recovery_weight) + float(Energy_recovery_weight_dismantling)
                     self.sum_Residual_waste_weight = float(self.sum_Residual_waste_weight) + float(Residual_waste_weight_dismantling)
                 else:
                     Residual_waste_Weight_most = Residual_waste_weight_shredding
-                    combo_scenario[cmp_index].setCurrentText("shredding")
+            
                     self.sum_weight = float(self.sum_weight) + float(Weight)
                     self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight_shredding)
                     self.sum_Energy_recovery_weight = float(self.sum_Energy_recovery_weight) + float(Energy_recovery_weight_shredding)
                     self.sum_Residual_waste_weight = float(self.sum_Residual_waste_weight) + float(Residual_waste_weight_shredding)
                     
-                #set value combo_scenario
-                self.parent.combo_scenario = combo_scenario
+            
                 """
                 self.sum_weight = float(self.sum_weight) + float(Weight)
                 self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight)
@@ -372,9 +374,9 @@ class Datamodel(QAbstractTableModel):
             
             #add data 
             if(type_scenario.lower()=="dismantling" or type_scenario.lower()=="shredding"): #for dismantling and shredding
-                self.data_list.append((Name_component, Recycle_weight, Energy_recovery_weight, Residual_waste_weight, Pollutant, Number_of_pieces, Comment_component))
+                self.data_list.append((component_code,Name_component, Recycle_weight, Energy_recovery_weight, Residual_waste_weight, Pollutant, Number_of_pieces, Comment_component))
             elif(type_scenario.lower()=="mixed"): #for mixed
-                self.data_list.append((cmp_index,Name_component, gain_1, gain_2, relative_weight,Residual_waste_Weight_most, Pollutant,'Scenario', Recycle_weight_dismantling, Energy_recovery_weight_dismantling, Residual_waste_weight_dismantling, Recycle_weight_shredding, Energy_recovery_weight_shredding, Residual_waste_weight_shredding, Number_of_pieces, Comment_component))
+                self.data_list.append((component_code,Name_component, gain_1, gain_2, relative_weight,Residual_waste_Weight_most, Pollutant,scenario, Recycle_weight_dismantling, Energy_recovery_weight_dismantling, Residual_waste_weight_dismantling, Recycle_weight_shredding, Energy_recovery_weight_shredding, Residual_waste_weight_shredding, Number_of_pieces, Comment_component))
             #increment    
             cmp_index = cmp_index + 1
             
@@ -386,7 +388,9 @@ class Datamodel(QAbstractTableModel):
             self.recycling_rate = 0
             self.recovery_rate = 0
             self.residual_rate = 0
-            
+
+         
+        self.data_list = [(i+1,)+x for i,x in enumerate(sorted(self.data_list, key = lambda u : u[0]))]
         return self.data_list
     
     
@@ -394,34 +398,54 @@ class Datamodel(QAbstractTableModel):
         #['Ref','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Is it pollutant ?','Scenario','Dismantling - Recycle Weight (grams/piece)','Dismantling - Energy recovery Weight (grams/piece)', 'Dismantling - Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
         self.data_list_hotspots = []
         data_list_mixed = self.getdata_component_scenario_rate(id_product,"mixed")
+        dlhs11=[]
+        dlhs12=[]
         for tuple_mixed in data_list_mixed:
-            Ref = tuple_mixed[0]
-            Name_component = tuple_mixed[1]
-            Gain_1 = tuple_mixed[2]
-            Gain_2 = tuple_mixed[3]
-            Relative_Weight = tuple_mixed[4]
-            Residual_waste_Weight = tuple_mixed[5]
-            Is_it_pollutant = tuple_mixed[6]
-            Scenario = tuple_mixed[7]
-            Dismantling_Recycle_Weight = tuple_mixed[8]
-            Dismantling_Energy_recovery_Weight = tuple_mixed[9]
-            Dismantling_Residual_waste_Weight = tuple_mixed[10]
-            Shredding_Recycle_Weight = tuple_mixed[11]
-            Shredding_Energy_recovery_Weight = tuple_mixed[12]
-            Shredding_Residual_waste_Weight = tuple_mixed[13]
-            Number_of_pieces = tuple_mixed[14]
-            Comment_component = tuple_mixed[15]
+            Ref = int(tuple_mixed[0])
+            id_comp = tuple_mixed[1]
+            Name_component = tuple_mixed[2]
+            Gain_1 = tuple_mixed[3]
+            Gain_2 = tuple_mixed[4]
+            Relative_Weight = tuple_mixed[5]
+            Residual_waste_Weight = tuple_mixed[6]
+            Is_it_pollutant = tuple_mixed[7]
+            Scenario = tuple_mixed[8]
+            Dismantling_Recycle_Weight = tuple_mixed[9]
+            Dismantling_Energy_recovery_Weight = tuple_mixed[10]
+            Dismantling_Residual_waste_Weight = tuple_mixed[11]
+            Shredding_Recycle_Weight = tuple_mixed[12]
+            Shredding_Energy_recovery_Weight = tuple_mixed[13]
+            Shredding_Residual_waste_Weight = tuple_mixed[14]
+            Number_of_pieces = tuple_mixed[15]
+            Comment_component = tuple_mixed[16]
             
             #case hotspots_1
             if(type_hotspots.lower()=="hotspots_1"): #["Id","Name component","Is it pollutant ?","Gain 1","Relative weight","Gain 1 * Relative weight"]
-                Gain_1_Relative_weight = str(round(float(Gain_1) * float(int(str(Relative_Weight).replace("%", "")))))+"%"
-                self.data_list_hotspots.append((Ref, Name_component, Is_it_pollutant, Gain_1, Relative_Weight, Gain_1_Relative_weight))
+                Gain_1_Relative_weight = round(float(Gain_1) * float(str(Relative_Weight).replace("%", "")),2)
+                if Is_it_pollutant=="Yes":
+                    dlhs12.append((Ref, Name_component, Is_it_pollutant, Gain_1, Relative_Weight, Gain_1_Relative_weight))
+                else:
+                    dlhs11.append((Ref, Name_component, Is_it_pollutant, Gain_1, Relative_Weight, Gain_1_Relative_weight))
             elif(type_hotspots.lower()=="hotspots_2"): #["Ref", "Name component", "Is it pollutant ?","Residual waste Weight (grams/piece)","Number of pieces"]
-                if(float(Dismantling_Residual_waste_Weight) > float(Shredding_Residual_waste_Weight)):
+                if Is_it_pollutant=="Yes":
                     Residual_waste_Weight = Dismantling_Residual_waste_Weight
                 else:
-                    Residual_waste_Weight = Shredding_Residual_waste_Weight
+                    current_compose = list(databasemanager.composedatabase.get_compose_by_component(id_comp).values())[0]
+                    if current_compose["strategy_component"]=="Shredding":
+                        Residual_waste_Weight = Shredding_Residual_waste_Weight
+                    else:
+                        Residual_waste_Weight = Dismantling_Residual_waste_Weight
                 self.data_list_hotspots.append((Ref, Name_component, Is_it_pollutant, Residual_waste_Weight, Dismantling_Residual_waste_Weight, Shredding_Residual_waste_Weight, Number_of_pieces))
+
+        # sorting the data
+        if type_hotspots.lower()=="hotspots_1":
+            #hotspots 1 => sorting by decreasing order of the gain1*rel weight
+            dlhs11 = sorted(dlhs11, key = lambda x : (-x[-1],x[0]))
+            dlhs12 = sorted(dlhs12, key = lambda x : x[0])
+            self.data_list_hotspots= dlhs11+dlhs12
+            self.data_list_hotspots = [x[:-1]+(str(x[-1])+"%",) for x in self.data_list_hotspots]
+        elif type_hotspots.lower()=="hotspots_2":
+            self.data_list_hotspots = sorted(self.data_list_hotspots, key = lambda x : x[3], reverse=True)
 
         return self.data_list_hotspots
        

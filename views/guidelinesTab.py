@@ -209,5 +209,5 @@ class GuidelinesTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 800, 500)
+        self.widget_table_view.setGeometry(10, 150, 800, 500)
         self.widget_table_view.show()

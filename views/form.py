@@ -448,6 +448,12 @@ class Dialog_insert_component(QDialog):
             
         if (self.edit_component_product.currentIndex() > 0 and len(self.edit_name_component.text()) > 0 and len(self.edit_component_weight.text()) > 0 and len(self.edit_component_numberofpieces.text()) > 0 and int(self.edit_component_numberofpieces.text()) > 0 and len_type > 0):
             product_selected = self.edit_component_product.currentData()
+            # Adding the initial result entry
+            if material_selected["pollutant_material"]=="true":
+                self.strategy = "Dismantling"
+            elif material_selected["pollutant_material"]=="false":
+                self.strategy = "Shredding"
+
             new_component = {
                 "id_product": product_selected.__getitem__('id_product'),
                 "id_material": id_material,
@@ -455,6 +461,7 @@ class Dialog_insert_component(QDialog):
                 "weight_component": self.edit_component_weight.text(),
                 "comment_component": str(self.edit_component_comments.text()),
                 "piecenumber_component": self.edit_component_numberofpieces.text(),
+                "strategy_component" : self.strategy
                 }
             #insert in database
             databasemanager.composedatabase.insert_one_component(new_component)

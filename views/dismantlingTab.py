@@ -181,8 +181,6 @@ class DismantlingTab(QTabWidget):
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
@@ -199,13 +197,30 @@ class DismantlingTab(QTabWidget):
         self.value_residual_waste_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.text_good = "GOOD"
         self.text_bad = "BAD"
-        self.int_value_recycling_rate_product = int(self.value_recycling_rate_product.text().replace("%", ""))
-        self.int_value_recovery_rate_product = int(self.value_recovery_rate_product.text().replace("%", ""))
-        self.int_value_residual_waste_rate_product = int(self.value_residual_waste_rate_product.text().replace("%", ""))
-        self.int_value_recycling_rate_directive = int(self.value_recycling_rate_directive.text().replace("%", ""))
-        self.int_value_recovery_rate_directive = int(self.value_recovery_rate_directive.text().replace("%", ""))
-        self.int_value_residual_waste_rate_directive = int(self.value_residual_waste_rate_directive.text().replace("%", ""))
-        
+        if self.value_recycling_rate_product.text()!="":
+            self.int_value_recycling_rate_product = int(self.value_recycling_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_recycling_rate_product = 0
+        if self.value_recovery_rate_product.text()!="":
+            self.int_value_recovery_rate_product = int(self.value_recovery_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_recovery_rate_product = 0
+        if self.value_residual_waste_rate_product.text()!="":
+            self.int_value_residual_waste_rate_product = int(self.value_residual_waste_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_residual_waste_rate_product= 0
+        if self.value_recycling_rate_directive.text()!="":
+            self.int_value_recycling_rate_directive = int(self.value_recycling_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_recycling_rate_directive = 0
+        if self.value_recovery_rate_directive.text()!="":
+            self.int_value_recovery_rate_directive = int(self.value_recovery_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_recovery_rate_directive = 0
+        if self.value_residual_waste_rate_directive.text()!="":
+            self.int_value_residual_waste_rate_directive = int(self.value_residual_waste_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_residual_waste_rate_directive = 0
         if(self.int_value_recycling_rate_directive > 0 or self.int_value_recovery_rate_directive > 0 or self.int_value_residual_waste_rate_directive > 0):
             #for self.value_recycling_rate_status
             if(self.int_value_recycling_rate_product >= self.int_value_recycling_rate_directive):

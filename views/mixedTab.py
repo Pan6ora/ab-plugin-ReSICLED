@@ -1,3 +1,4 @@
+from binascii import a2b_hex
 from PySide2 import QtCore
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
@@ -169,7 +170,7 @@ class MixedTab(QTabWidget):
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         #get new values
-        self.datamodel = Datamodel(self);
+        self.datamodel = Datamodel(self)
         self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"mixed") #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_component_scenario_rate_mixed #self.datamodel.header_component
         
@@ -180,43 +181,22 @@ class MixedTab(QTabWidget):
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
+        self.table_view.doubleClicked.connect(self.change_component_strategy)
         # set font
         self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        self.table_view.setSortingEnabled(True)
+        self.table_view.hideColumn(1)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 1200, 500)
+        self.widget_table_view.setGeometry(10, 320, 1000, 500)
+        
         self.widget_table_view.show()
-        #set combo scenario
-        self.table_model.sort(0, order=Qt.AscendingOrder) #Order column ref
-        self.table_view.setSortingEnabled(False) # disable sorting because column scenario isn't sortable
-        for key_ligne, widget_obj in self.combo_scenario.items():
-            ligne_table = key_ligne
-            column_table = 7
-            self.table_view.setColumnWidth(column_table, 150)
-            #self.table_view.setIndexWidget(self.table_model.index(int(ligne_table),column_table),widget_obj)
-            #print("data ligne ", ligne_table," == ",self.table_model.index(int(ligne_table),4).data()," currentdata_selected==",currentdata_selected)
-            currentdata_selected = widget_obj.currentData()
-            Pollutant = str(currentdata_selected['material_of_component']['pollutant_material'])
-            if(Pollutant.lower()=="false"):
-                #Pollutant = "No"
-                self.table_view.setIndexWidget(self.table_model.index(int(ligne_table),column_table),widget_obj)
-            else:
-                #Pollutant = "Yes"
-                index_to_remove = widget_obj.findText("shredding")
-                widget_obj.removeItem(index_to_remove) #remove shredding
-                self.table_view.setIndexWidget(self.table_model.index(int(ligne_table),column_table),widget_obj)
-            #add signal
-            widget_obj.currentIndexChanged.connect(
-                self.call_show_table_component_product_mixed
-            )
+        
             
         #update rate
         self.value_recycling_rate_status.setText("")
@@ -227,12 +207,30 @@ class MixedTab(QTabWidget):
         self.value_residual_waste_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.text_good = "GOOD"
         self.text_bad = "BAD"
-        self.int_value_recycling_rate_product = int(self.value_recycling_rate_product.text().replace("%", ""))
-        self.int_value_recovery_rate_product = int(self.value_recovery_rate_product.text().replace("%", ""))
-        self.int_value_residual_waste_rate_product = int(self.value_residual_waste_rate_product.text().replace("%", ""))
-        self.int_value_recycling_rate_directive = int(self.value_recycling_rate_directive.text().replace("%", ""))
-        self.int_value_recovery_rate_directive = int(self.value_recovery_rate_directive.text().replace("%", ""))
-        self.int_value_residual_waste_rate_directive = int(self.value_residual_waste_rate_directive.text().replace("%", ""))
+        if self.value_recycling_rate_product.text()!="":
+            self.int_value_recycling_rate_product = int(self.value_recycling_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_recycling_rate_product = 0
+        if self.value_recovery_rate_product.text()!="":
+            self.int_value_recovery_rate_product = int(self.value_recovery_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_recovery_rate_product = 0
+        if self.value_residual_waste_rate_product.text()!="":
+            self.int_value_residual_waste_rate_product = int(self.value_residual_waste_rate_product.text().replace("%", ""))
+        else:
+            self.int_value_residual_waste_rate_product= 0
+        if self.value_recycling_rate_directive.text()!="":
+            self.int_value_recycling_rate_directive = int(self.value_recycling_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_recycling_rate_directive = 0
+        if self.value_recovery_rate_directive.text()!="":
+            self.int_value_recovery_rate_directive = int(self.value_recovery_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_recovery_rate_directive = 0
+        if self.value_residual_waste_rate_directive.text()!="":
+            self.int_value_residual_waste_rate_directive = int(self.value_residual_waste_rate_directive.text().replace("%", ""))
+        else:
+            self.int_value_residual_waste_rate_directive = 0
         
         if(self.int_value_recycling_rate_directive > 0 or self.int_value_recovery_rate_directive > 0 or self.int_value_residual_waste_rate_directive > 0):
             #for self.value_recycling_rate_status
@@ -261,4 +259,31 @@ class MixedTab(QTabWidget):
     def call_show_table_component_product_mixed(self,index): 
         self.call_show_table_component_product(None)   
         
+    def change_component_strategy(self,item):
+        print(item.row(),item.column())
+        if item.column()==8:
+            #Forcing ppl to click on the Scenario column
+            clicked_pollutant_status = self.table_view.model().data(self.table_view.model().index(item.row(),7),Qt.DisplayRole)
+            if clicked_pollutant_status.lower()=="no":
+                # we can change the value of the scenario, os we do it
+                id_comp = self.table_view.model().data(self.table_view.model().index(item.row(),1),Qt.DisplayRole)
+                current_compose_key = list(databasemanager.composedatabase.get_compose_by_component(id_comp).keys())[0][1]
+                current_compose = list(databasemanager.composedatabase.get_compose_by_component(id_comp).values())[0]
+                # changing the strategy:
+                if current_compose["strategy_component"].lower()=="shredding":
+                    new_strategy = "Dismantling"
+                else:
+                    new_strategy = "Shredding"
+                databasemanager.composedatabase.change_strategy_one_compose(current_compose_key,new_strategy)
+        self.call_show_table_component_product_mixed(None)
+                
+                
+            
+            
+            # TODO
+            # Regarder la valeur du polluant, si le materiau en question est considere polluant, on met un message d'alerte comme quoi c'est pas possible
+        #sinon on fait pop un form de justification (qui ne serivra à rien pour le moment)
+        # ensuite on fait le chgmt dans la bdd compose
+        # puis on maj le tableau
+
         
