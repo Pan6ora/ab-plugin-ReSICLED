@@ -29,8 +29,8 @@ class Datamodel(QAbstractTableModel):
         self.header_component_test = ['Solvent Name', ' BP (deg C)', ' MP (deg C)', ' Density (g/ml)']
         self.header_database_product = ['Name product', 'Name author product', 'Firstname author product']
         self.header_database_component = ['Name component','Name material','Type material', 'Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
-        self.header_database_component_scenario_rate = ['Ref','Name component','Recycle Weight (grams/piece)','Energy recovery Weight (grams/piece)', 'Residual waste Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
-        self.header_database_component_scenario_rate_mixed = ['Ref','id_comp','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Residual waste Weight', 'Is it pollutant ?','Scenario','Dismantling - Recycle Weight (grams/piece)','Dismantling - Energy recovery Weight (grams/piece)', 'Dismantling - Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
+        self.header_database_component_scenario_rate = ['Ref','id_comp','Name component','Recycle Weight (grams/piece)','Energy recovery Weight (grams/piece)', 'Residual waste Weight (grams/piece)','Is it pollutant ?','Number of pieces', 'Comment component']
+        self.header_database_component_scenario_rate_mixed = ['Ref','id_comp','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Residual waste Weight', 'Is it pollutant ?','Scenario','Recycle Weight (grams/piece)','Energy recovery Weight (grams/piece)', 'Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
         self.header_hotspots_1 = ['Ref','Name component','Is it pollutant ?','Gain 1','Relative weight','Gain 1 * Relative weight']
         self.header_hotspots_2 = ['Ref', 'Name component', 'Is it pollutant ?', 'Residual waste Weight','Dismantling - Residual waste Weight (grams/piece)','Shredding - Residual waste Weight (grams/piece)','Number of pieces']
         self.header_database_product_manage = ['Ref','Name product', 'Name author product', 'Firstname author product','Action']
@@ -351,19 +351,20 @@ class Datamodel(QAbstractTableModel):
                 
                 #by default select the best scenario or applied scenario selected
                 if scenario == "Dismantling":
-                    Residual_waste_Weight_most = Residual_waste_weight_dismantling
-                    self.sum_weight = float(self.sum_weight) + float(Weight)
-                    self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight_dismantling)
-                    self.sum_Energy_recovery_weight = float(self.sum_Energy_recovery_weight) + float(Energy_recovery_weight_dismantling)
-                    self.sum_Residual_waste_weight = float(self.sum_Residual_waste_weight) + float(Residual_waste_weight_dismantling)
-                else:
-                    Residual_waste_Weight_most = Residual_waste_weight_shredding
-            
-                    self.sum_weight = float(self.sum_weight) + float(Weight)
-                    self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight_shredding)
-                    self.sum_Energy_recovery_weight = float(self.sum_Energy_recovery_weight) + float(Energy_recovery_weight_shredding)
-                    self.sum_Residual_waste_weight = float(self.sum_Residual_waste_weight) + float(Residual_waste_weight_shredding)
+                    Recycle_weight = ((float(recdis_material) * float(Weight)) / 100)
+                    Energy_recovery_weight = ((float(enerdis_material) * float(Weight)) / 100)
+                    Residual_waste_weight = ((float(wastedis_material) * float(Weight)) / 100)
                     
+                else:
+                    Recycle_weight = ((float(recshr_material) * float(Weight)) / 100)
+                    Energy_recovery_weight = ((float(enershr_material) * float(Weight)) / 100)
+                    Residual_waste_weight = ((float(wasteshr_material) * float(Weight)) / 100)
+                
+                Residual_waste_Weight_most = Residual_waste_weight
+                self.sum_weight = float(self.sum_weight) + float(Weight)
+                self.sum_Recycle_weight = float(self.sum_Recycle_weight) + float(Recycle_weight)
+                self.sum_Energy_recovery_weight = float(self.sum_Energy_recovery_weight) + float(Energy_recovery_weight)
+                self.sum_Residual_waste_weight = float(self.sum_Residual_waste_weight) + float(Residual_waste_weight)
             
                 """
                 self.sum_weight = float(self.sum_weight) + float(Weight)
@@ -376,7 +377,7 @@ class Datamodel(QAbstractTableModel):
             if(type_scenario.lower()=="dismantling" or type_scenario.lower()=="shredding"): #for dismantling and shredding
                 self.data_list.append((component_code,Name_component, Recycle_weight, Energy_recovery_weight, Residual_waste_weight, Pollutant, Number_of_pieces, Comment_component))
             elif(type_scenario.lower()=="mixed"): #for mixed
-                self.data_list.append((component_code,Name_component, gain_1, gain_2, relative_weight,Residual_waste_Weight_most, Pollutant,scenario, Recycle_weight_dismantling, Energy_recovery_weight_dismantling, Residual_waste_weight_dismantling, Recycle_weight_shredding, Energy_recovery_weight_shredding, Residual_waste_weight_shredding, Number_of_pieces, Comment_component))
+                self.data_list.append((component_code,Name_component, gain_1, gain_2, relative_weight,Residual_waste_Weight_most, Pollutant,scenario, Recycle_weight, Energy_recovery_weight, Residual_waste_weight, Recycle_weight_shredding, Energy_recovery_weight_shredding, Residual_waste_weight_shredding, Number_of_pieces, Comment_component))
             #increment    
             cmp_index = cmp_index + 1
             
@@ -427,15 +428,8 @@ class Datamodel(QAbstractTableModel):
                 else:
                     dlhs11.append((Ref, Name_component, Is_it_pollutant, Gain_1, Relative_Weight, Gain_1_Relative_weight))
             elif(type_hotspots.lower()=="hotspots_2"): #["Ref", "Name component", "Is it pollutant ?","Residual waste Weight (grams/piece)","Number of pieces"]
-                if Is_it_pollutant=="Yes":
-                    Residual_waste_Weight = Dismantling_Residual_waste_Weight
-                else:
-                    current_compose = list(databasemanager.composedatabase.get_compose_by_component(id_comp).values())[0]
-                    if current_compose["strategy_component"]=="Shredding":
-                        Residual_waste_Weight = Shredding_Residual_waste_Weight
-                    else:
-                        Residual_waste_Weight = Dismantling_Residual_waste_Weight
-                self.data_list_hotspots.append((Ref, Name_component, Is_it_pollutant, Residual_waste_Weight, Dismantling_Residual_waste_Weight, Shredding_Residual_waste_Weight, Number_of_pieces))
+    
+                self.data_list_hotspots.append((Ref, Name_component, Is_it_pollutant, Dismantling_Residual_waste_Weight, Dismantling_Residual_waste_Weight, Shredding_Residual_waste_Weight, Number_of_pieces))
 
         # sorting the data
         if type_hotspots.lower()=="hotspots_1":

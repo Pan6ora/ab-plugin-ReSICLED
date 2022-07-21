@@ -8,9 +8,9 @@ import activity_browser as ab
 infos = {
     'id': 'ReSICLED',
     'name': 'ReSICLED',
-    'version': '0.0.2',
-    'author': 'Rémy Le Calloch',
-    'author_email': 'remy@lecalloch.net',
+    'version': '1.0.0',
+    'author': 'Rémy Le Calloch, Brice Notario Bourgade, Elysée Tchassem Noukimi',
+    'author_email': '',
     'url': 'https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop-demo/ab-plugins/resicled',
     'description': 'Evaluate the recyclability of product Electr(on)ic for improving product design'
 }

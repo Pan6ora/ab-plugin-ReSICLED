@@ -132,6 +132,8 @@ class HotspotsTab(QTabWidget):
         self.table_model_2 = TableModel(self, self.data_list_2, self.header_2)
         self.table_view_2 = QTableView()
         self.table_view_2.setModel(self.table_model_2)
+        self.table_view_2.hideColumn(4)
+        self.table_view_2.hideColumn(5)
         # set font
         self.font = QFont("Courier New", 10)
         self.table_view_2.setFont(self.font)

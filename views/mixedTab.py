@@ -188,6 +188,10 @@ class MixedTab(QTabWidget):
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
         self.table_view.hideColumn(1)
+        self.table_view.hideColumn(6)
+        self.table_view.hideColumn(12)
+        self.table_view.hideColumn(13)
+        self.table_view.hideColumn(14)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)

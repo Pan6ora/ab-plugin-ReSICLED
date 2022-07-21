@@ -165,7 +165,7 @@ class DismantlingTab(QTabWidget):
         print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         """#get new values"""
-        self.datamodel = Datamodel();
+        self.datamodel = Datamodel()
         self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"dismantling") #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_component_scenario_rate #self.datamodel.header_component
         
@@ -180,6 +180,7 @@ class DismantlingTab(QTabWidget):
         self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
+        self.table_view.hideColumn(1)
         self.table_view.resizeColumnsToContents()
         #display
         self.widget_table_view = QWidget(self)

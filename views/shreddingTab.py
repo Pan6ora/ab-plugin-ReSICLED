@@ -179,10 +179,9 @@ class ShreddingTab(QTabWidget):
         # set font
         self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
+        self.table_view.hideColumn(1)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
