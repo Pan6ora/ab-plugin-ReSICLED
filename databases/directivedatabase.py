@@ -10,7 +10,7 @@ from .fixtures import Fixture
 
 class Directivedatabase():
     def __init__(self, parent=None):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
         self.fixture = Fixture()
@@ -36,18 +36,18 @@ class Directivedatabase():
             self.db = bw.Database(self.name_database)
         
     def get_all_directive(self):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         return self.db.load()
     
     def get_one_directive(self, key):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
         key = (self.name_database, str(key))
         if(dico != None and dico.__contains__(key)):
             return dico.__getitem__(key)
     
     def get_directive_by_attrib(self, name_attrib_param, value_attrib_param):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         result_dict = dict()
         str_name_attrib_param = str(name_attrib_param)
         str_value_attrib_param = str(value_attrib_param)
@@ -59,7 +59,7 @@ class Directivedatabase():
         return result_dict
     
     def insert_one_directive(self, dict_directive: dict):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         self.dt = datetime.now()
         self.id_directive = dict_directive["id_directive"] #datetime.timestamp(self.dt)
         self.directive_title = dict_directive["directive_title"]
@@ -94,7 +94,7 @@ class Directivedatabase():
         self.db.write(dico)
         
     def delete_one_directive(self, id_directive_param):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
         key = (self.name_database, str(id_directive_param))
         if(dico != None and dico.__contains__(key)):

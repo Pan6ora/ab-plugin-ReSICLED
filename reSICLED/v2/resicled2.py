@@ -20,18 +20,18 @@ def getFileByName(directory):
 
 def selectDirective(directiveFile):
     os.system("clear")
-    print("List of all Directives to apply to the product : \n")
-    print("1 - large household appliances")
-    print("2 - Small household appliance")
-    print("3 - IT/Telecom equipment")
-    print("4 - Consumer equipment")
-    print("5A - Lighting equipment : Gas discharge lamps")
-    print("5B - Lighting Equipment - Other")
-    print("6 - Electrical / Electronical tools")
-    print("7 - Toys, leisure, sports equipment")
-    print("8 - Medical devices")
-    print("9 - Monitoring and control equipments")
-    print("10 - Automatic dispensers")
+    #print("List of all Directives to apply to the product : \n")
+    #print("1 - large household appliances")
+    #print("2 - Small household appliance")
+    #print("3 - IT/Telecom equipment")
+    #print("4 - Consumer equipment")
+    #print("5A - Lighting equipment : Gas discharge lamps")
+    #print("5B - Lighting Equipment - Other")
+    #print("6 - Electrical / Electronical tools")
+    #print("7 - Toys, leisure, sports equipment")
+    #print("8 - Medical devices")
+    #print("9 - Monitoring and control equipments")
+    #print("10 - Automatic dispensers")
     selected = input("Which directive do you choose ?")
     if selected == '5A':
         selected=5
@@ -47,9 +47,9 @@ def selectDirective(directiveFile):
 def main():
     directive = None
     os.system("clear")
-    print(os.getcwd())
-    print("Welcome to ReSICLED")
-    print("Current version : 1.2\n")
+    #print(os.getcwd())
+    #print("Welcome to ReSICLED")
+    #print("Current version : 1.2\n")
     a = input("Type 'begin' to start a new product, or 'quit' to quit the app : ")
     bw.projects.set_current("reSICLED")
     if "Materials" not in bw.databases:
@@ -57,7 +57,7 @@ def main():
         if getFileByName(os.getcwd()) is not None:
             BW2Package().import_file(os.path.join(os.getcwd(),getFileByName(os.getcwd())))
         else:
-            print("There is no Materials data inserted in the parent directoty")
+            #print("There is no Materials data inserted in the parent directoty")
             sys.exit(1)
     materials=bw.Database("Materials")
     while a != "quit":
@@ -67,7 +67,7 @@ def main():
             productName = input("What's your product's name ? ")
             while productName in list(bw.databases):
                 os.system("clear")
-                print("This name is already used !")
+                #print("This name is already used !")
                 productName = input("What's your product's name ? ")
             productDatabase = bw.Database(productName)
 
@@ -99,13 +99,13 @@ def main():
                 zeb=input("No directive selected yet : Press enter to select a directive ")
                 directive = selectDirective("directives.txt")
             else:
-                print("the current directive selected is  : ",directive)
+                #print("the current directive selected is  : ",directive)
                 a = input("Type 'shred' to go to shredding part, or 'quit' to quit the app : ")
 
         elif a == "shred":
             os.system("clear")
             displayShreddingTable(piecesList,materialsList)
-            print("the current directive selected is  : ",directive)
+            #print("the current directive selected is  : ",directive)
             a = input("Type 'mixed' to get  to the next step, or 'quit' to quit the app : ")
         
         elif a == "mixed":

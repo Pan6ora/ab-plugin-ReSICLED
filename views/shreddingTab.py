@@ -162,7 +162,7 @@ class ShreddingTab(QTabWidget):
         if (product_selected == None):
             return None
         
-        print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
+        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         """#get new values"""
         self.datamodel = Datamodel();

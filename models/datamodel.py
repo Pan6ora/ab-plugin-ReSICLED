@@ -112,7 +112,7 @@ class Datamodel(QAbstractTableModel):
         self.data_list = []
         #---product component of product selected
         self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
-        #print("getdata_component",self.all_component_form)
+        ##print("getdata_component",self.all_component_form)
         """
         eg. result self.all_component_form:
         {
@@ -182,7 +182,7 @@ class Datamodel(QAbstractTableModel):
         self.data_list = []
         #---product component of product selected
         self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
-        #print("getdata_component",self.all_component_form)
+        ##print("getdata_component",self.all_component_form)
         """
         eg. result self.all_component_form:
         {

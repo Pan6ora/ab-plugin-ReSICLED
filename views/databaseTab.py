@@ -66,7 +66,7 @@ class DatabaseTab(QTabWidget):
         if (index == 0):
             return None
         
-        print("call_show_table_database",database_selected)
+        #print("call_show_table_database",database_selected)
         self.title_database.setText('<h1 style=""> '+ database_selected +' data list  </h1>' )
         #get new values
         self.datamodel = Datamodel(self);
@@ -133,7 +133,7 @@ class DatabaseTab(QTabWidget):
             
             
     def call_show_dialog_action_edit_database(self, database_selected):
-        print("database_selected==",database_selected)
+        #print("database_selected==",database_selected)
         
     def call_show_dialog_action_delete_database(self, database_selected):
         widget_obj = None

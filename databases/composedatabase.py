@@ -12,7 +12,7 @@ from .componentdatabase import Componentdatabase
 
 class Composedatabase:
     def __init__(self, parent=None):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         # --init
         self.tool = Tool()
         self.fixture = Fixture()

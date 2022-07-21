@@ -49,19 +49,19 @@ def getMaterialByName(materialname,materialsList):
 
 def mainMenu(pieceList,materialList):
     os.system("clear")
-    print("Main Menu\n\n")
+    #print("Main Menu\n\n")
     select=input("Type 'add' to add a new piece, 'next' to step forward to Dismantling Part, or 'quit' to quit the application : ")
     if select=='quit':
         return "EXIT_SUCCESS"
     elif select=='add':
         AddPieceForm(pieceList,materialList)
     elif select=='next':
-        print(computeDismantlingScores(pieceList))
+        #print(computeDismantlingScores(pieceList))
     else:
         mainMenu(pieceList,materialList)
 
 def AddPieceForm(pieceList,materialList):
-    print("New Piece : \n")
+    #print("New Piece : \n")
     name = input("Piece Name : ")
     weight = float(input("Piece's weight (in grams) : "))
     material_type = input("Piece's Material Class (Polymer, Metal, Component, Other) : ")
@@ -104,18 +104,18 @@ def computeDismantlingScores(piecesList):
 
 def selectDirective(directiveFile):
     os.system("clear")
-    print("List of all Directives to apply to the product : \n")
-    print("1 - large household appliances")
-    print("2 - Small household appliance")
-    print("3 - IT/Telecom equipment")
-    print("4 - Consumer equipment")
-    print("5A - Lighting equipment : Gas discharge lamps")
-    print("5B - Lighting Equipment - Other")
-    print("6 - Electrical / Electronical tools")
-    print("7 - Toys, leisure, sports equipment")
-    print("8 - Medical devices")
-    print("9 - Monitoring and control equipments")
-    print("10 - Automatic dispensers")
+    #print("List of all Directives to apply to the product : \n")
+    #print("1 - large household appliances")
+    #print("2 - Small household appliance")
+    #print("3 - IT/Telecom equipment")
+    #print("4 - Consumer equipment")
+    #print("5A - Lighting equipment : Gas discharge lamps")
+    #print("5B - Lighting Equipment - Other")
+    #print("6 - Electrical / Electronical tools")
+    #print("7 - Toys, leisure, sports equipment")
+    #print("8 - Medical devices")
+    #print("9 - Monitoring and control equipments")
+    #print("10 - Automatic dispensers")
     selected = input("Which directive do you choose ?")
     if selected == '5A':
         selected=5
@@ -146,7 +146,7 @@ if __name__=='__main__':
     while not main_selector=="quit":
         if main_selector=="add":
             os.system("clear")
-            print("Current list of all added pieces")
+            #print("Current list of all added pieces")
             displayPiecesList(pieceList)
             #adding a new piece to the full list :
             AddPieceForm(pieceList, materialList)
@@ -155,17 +155,17 @@ if __name__=='__main__':
         elif main_selector=="dism":
             #stepping forward to Dismantling scenario
             os.system("clear")
-            print("Recyclability rates in case we follow the full demantling scenario (best scenario possible yet impossible because of money reasons)")
+            #print("Recyclability rates in case we follow the full demantling scenario (best scenario possible yet impossible because of money reasons)")
             displayDismantlingTable(pieceList, arrond_const)
-            print("Current Recycling Rates for the whole product are : ")
+            #print("Current Recycling Rates for the whole product are : ")
             a=computeDismantlingScores(pieceList)
-            print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*arrondi(a[0],arrond_const),100*arrondi(a[1],arrond_const),100*arrondi(a[2],arrond_const)))
+            #print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*arrondi(a[0],arrond_const),100*arrondi(a[1],arrond_const),100*arrondi(a[2],arrond_const)))
             if directive_objectives is None:
                 main_selector=input("No Recovery objective has been selected, please type 'select' to select one among the list available : ")
             else:
-                print("The current objectives to be reached are : ")
-                print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*directive_objectives[0],100*directive_objectives[1],100*directive_objectives[2]))
-                print("Since the full demantling scenario is the one with the best results, we need to seek on scenarios that are possible but less efficient")
+                #print("The current objectives to be reached are : ")
+                #print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*directive_objectives[0],100*directive_objectives[1],100*directive_objectives[2]))
+                #print("Since the full demantling scenario is the one with the best results, we need to seek on scenarios that are possible but less efficient")
                 main_selector = input("Type 'shred' to take a look at the worst possible scenario, or 'quit' to quit reSICLED.")
 
         elif main_selector=="select":
@@ -176,20 +176,20 @@ if __name__=='__main__':
         elif main_selector == "shred":
             # Shredding scenario
             os.system("clear")
-            print("Recyclability rates, in case we follow the full Shredding scenario : ")
+            #print("Recyclability rates, in case we follow the full Shredding scenario : ")
             displayShreddingTable(pieceList, arrond_const)
-            print("Current Recycling Rates for the whole product are : ")
+            #print("Current Recycling Rates for the whole product are : ")
             b = computeShreddingScores(pieceList)
-            print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(arrondi(100*b[0],arrond_const),arrondi(100*b[1],arrond_const),arrondi(100*b[2],arrond_const)))
-            print("The Recovery objectives to reach are the following :")
-            print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*directive_objectives[0],100*directive_objectives[1],100*directive_objectives[2]))
+            #print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(arrondi(100*b[0],arrond_const),arrondi(100*b[1],arrond_const),arrondi(100*b[2],arrond_const)))
+            #print("The Recovery objectives to reach are the following :")
+            #print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(100*directive_objectives[0],100*directive_objectives[1],100*directive_objectives[2]))
             if b[0]>=directive_objectives[0] and b[1]>=directive_objectives[1]:
                 #All objectives are reached with htis scenario
-                print("All the recovery objectives defined by the directives are reached, hence the design of the product is sufficient to respect these rules.")
+                #print("All the recovery objectives defined by the directives are reached, hence the design of the product is sufficient to respect these rules.")
                 zeli=input("Press enter to quit the software")
                 main_selector="quit"
             else:
-                print("One of the objectives is not reached so far, since Full Shredding is the worst scenario possible, we'll have to change some strategies in a mixed Scenario")
+                #print("One of the objectives is not reached so far, since Full Shredding is the worst scenario possible, we'll have to change some strategies in a mixed Scenario")
                 zefn = input("Press Enter to get to Mixed Scenario ")
                 main_selector = "mixed"
 
@@ -200,20 +200,20 @@ if __name__=='__main__':
             while not mixed_selector=="quit_mixed":
                 if mixed_selector=="main":
                     #main entrance, displaying the mixed table, which is updated everytime we go back to this "tab"
-                    print("Mixed scenario : you can change the outcome of each piece (as long as it's not pollutant)")
+                    #print("Mixed scenario : you can change the outcome of each piece (as long as it's not pollutant)")
                     displayMixedTable(pieceList,arrond_const,strategyDict)
-                    print("The current recycling objectives are :")
+                    #print("The current recycling objectives are :")
                     c = getMixedRates(pieceList,strategyDict,arrond_const)
-                    print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(arrondi(100*c[0],arrond_const),arrondi(100*c[1],arrond_const),arrondi(100*c[2],arrond_const)))
+                    #print("Recovery Rate : {} %\n Energy Recovery Rate : {} %\n Residual Waste Rate : {} %".format(arrondi(100*c[0],arrond_const),arrondi(100*c[1],arrond_const),arrondi(100*c[2],arrond_const)))
                     if c[0]>=directive_objectives[0] and c[1]>=directive_objectives[1]:
-                        print("The recovery objectives are reached, you can now quit the app")
+                        #print("The recovery objectives are reached, you can now quit the app")
                     else:
-                        print("Recovery objectives are not reached so far, you shall change some pieces's recovery status")
+                        #print("Recovery objectives are not reached so far, you shall change some pieces's recovery status")
                     mixed_selector=input("Type 'hotspots' to see the hotspots, 'change' to change some piece's strategy or 'quit_mixed' to quit the app")
                 
                 elif mixed_selector=="hotspots":
                     os.system("clear")
-                    print("These are the hotspots tables, presenting the most relevant pieces to change strategy and reach the objective")
+                    #print("These are the hotspots tables, presenting the most relevant pieces to change strategy and reach the objective")
                     displayFirstHotspotsTable(pieceList,arrond_const)
                     displaySecondHotspotsTable(pieceList,arrond_const)
                     ekjrge=input("Type Enter to go back to the mixed scenario tab and change some pieces outcomes")
@@ -224,17 +224,17 @@ if __name__=='__main__':
                     displayMixedTable(pieceList,arrond_const,strategyDict)
                     choice=int(input("Which piece do you want to change the recovery strategy : "))
                     if strategyDict[pieceList[choice-1]][1]==False:
-                        print("Sorry, but due to its polluting status, this piece has to be dismantled")
+                        #print("Sorry, but due to its polluting status, this piece has to be dismantled")
                         rechoice = input("Do you still want to change a piece's strategy [Y/N] ?")
                         if rechoice=="N":
                             mixed_selector=="quit_mixed"
                     else:
-                        print("This piece's can be changed.")
+                        #print("This piece's can be changed.")
                         if strategyDict[pieceList[choice-1]][0]=="Dismantling":
                             strategyDict[pieceList[choice-1]]=("Shredding",True)
                         else:
                             strategyDict[pieceList[choice-1]]=("Dismantling",True)
-                        print("The piece's status has been updated, you'll be redirected to the Mixed table tab.")
+                        #print("The piece's status has been updated, you'll be redirected to the Mixed table tab.")
                         mixed_selector="main"
 
 

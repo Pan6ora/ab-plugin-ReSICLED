@@ -10,7 +10,7 @@ from .fixtures import Fixture
 
 class Productdatabase():
     def __init__(self, parent=None):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
         self.fixture = Fixture()
@@ -20,18 +20,18 @@ class Productdatabase():
         self.db = bw.Database(self.name_database)
             
     def get_all_product(self):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         return self.db.load()
         
     def get_one_product(self, key):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
         key = (self.name_database, str(key))
         if(dico != None and dico.__contains__(key)):
             return dico.__getitem__(key)
         
     def insert_one_product(self, dict_product: dict):
-        print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
+        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         self.dt = datetime.now()
         self.id_product = datetime.timestamp(self.dt)
         self.name_product = dict_product['name_product']

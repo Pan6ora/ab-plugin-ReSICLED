@@ -167,7 +167,7 @@ class MixedTab(QTabWidget):
         if (product_selected == None):
             return None
         
-        print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
+        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         #get new values
         self.datamodel = Datamodel(self)
@@ -264,7 +264,7 @@ class MixedTab(QTabWidget):
         self.call_show_table_component_product(None)   
         
     def change_component_strategy(self,item):
-        print(item.row(),item.column())
+        #print(item.row(),item.column())
         if item.column()==8:
             #Forcing ppl to click on the Scenario column
             clicked_pollutant_status = self.table_view.model().data(self.table_view.model().index(item.row(),7),Qt.DisplayRole)
