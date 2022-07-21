@@ -15,8 +15,18 @@ To be fixed
 Upcoming
 --------
 
+ - removing debug printings
+ - improving updates between tabs
+ - PDF Report
+ - removing useless lines (comments)
+ - Remove ReSICLED CL version from the repo
+ - make a doc
+
 Under consideration
 -------------------
+
+- make a proper doc (eg. docstrings...)
+- lint
 
 [0.1.0] - 2022-21-07
 ====================
@@ -24,5 +34,10 @@ Under consideration
 Fixed
 -----
 
+ - Hotspots calculations
+ - Improved tables display
+
 Added
 -----
+
+ - Guidelines tab (and database)
