@@ -12,7 +12,7 @@ infos = {
     'version': '1.0.0',
     'author': 'Rémy Le Calloch, Brice Notario Bourgade, Elysée Tchassem Noukimi',
     'author_email': '',
-    'url': 'https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop-demo/ab-plugins/resicled',
+    'url': 'https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled',
     'description': 'Evaluate the recyclability of product Electr(on)ic for improving product design'
 }
 
