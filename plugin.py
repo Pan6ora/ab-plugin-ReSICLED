@@ -1,5 +1,6 @@
 from .tabs import LeftTab, RightTab
 import activity_browser as ab 
+from .databases.database import DatabaseManager
 
 ######################
 # PLUGIN DESCRIPTION #
@@ -24,4 +25,5 @@ class Plugin(ab.Plugin):
         self.mainTab = RightTab(self)
         self.leftTab = LeftTab(self)
         self.tabs = [self.mainTab, self.leftTab]
+        databasemanager = DatabaseManager()
     
