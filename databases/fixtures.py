@@ -550,7 +550,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.75,
                 "mixed_residual_waste_rate": 0.25,
             },
-            ("resicled_directive", "51"): {
+            ("resicled_directive", "5"): {
                 "directive_number": 51,
                 "directive_title": "Lighting equipment - Gas discharge lamps",
                 "directive_comment": "Gas discharge lamps -   Luminaires for fluorescent lamps with the exception of luminaires in\n  households\n-   Straight fluorescenct lamps\n-   Compact fluorescent lamps\n-   High intensity discharge lamps, including pressure sodium lamps and\n  metal halide lamps\n-   Low pressure sodium lamps\n-   Other ligthing or equipment for the purpose of spreading or\n  controlling light with the exception of filament bulbs",
@@ -564,7 +564,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.8,
                 "mixed_residual_waste_rate": 0.2,
             },
-            ("resicled_directive", "52"): {
+            ("resicled_directive", "6"): {
                 "directive_number": 52,
                 "directive_title": "Lighting equipment - Other",
                 "directive_comment": "Other -   Luminaires for fluorescent lamps with the exception of luminaires in\n  households\n-   Straight fluorescenct lamps\n-   Compact fluorescent lamps\n-   High intensity discharge lamps, including pressure sodium lamps and\n  metal halide lamps\n-   Low pressure sodium lamps\n-   Other ligthing or equipment for the purpose of spreading or\n  controlling light with the exception of filament bulbs",
@@ -578,7 +578,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.7,
                 "mixed_residual_waste_rate": 0.3,
             },
-            ("resicled_directive", "6"): {
+            ("resicled_directive", "7"): {
                 "directive_number": 6,
                 "directive_title": "Electrical and electronic tools (with the exception of large-scale stationary industrial tools)",
                 "directive_comment": "-   Drills\n-   Saws\n-   Sewing machines\n-   Equipment for turning, milling, sanding, grinding, sawing, cutting,\n  shearing, drilling, making holes, punching, folding, bending or similar\n  processing of wood, metal and other materials\n-   Tools for riveting, nailing or screwing or removing rivets, nails, \n  screws or similar uses\n-   Tools for welding, soldering or similar use\n-   Equipment for spraying, spreading, dispersing or other treatment of\n  liquid or gaseous substances by other means\n-   Tools for mowing or other gardening activities",
@@ -592,7 +592,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.7,
                 "mixed_residual_waste_rate": 0.3,
             },
-            ("resicled_directive", "7"): {
+            ("resicled_directive", "8"): {
                 "directive_number": 7,
                 "directive_title": "Toys, leisure and sports equiment",
                 "directive_comment": "-   Electric trains or car racing sets\n-   Hand-held video games consoles\n-   Video games\n-   Computer for biking, diving, running, rowing, etc.\n-   Sports equipment with electric or electronic components\n-   Coin slot machines",
@@ -606,7 +606,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.7,
                 "mixed_residual_waste_rate": 0.3,
             },
-            ("resicled_directive", "8"): {
+            ("resicled_directive", "9"): {
                 "directive_number": 8,
                 "directive_title": "Medical devices (with the exception of all implanted and infected products)",
                 "directive_comment": "-   Radiotherapy equipment\n-   Cardiology\n-   Dyalisis\n-   Pulmonary ventilators\n-   Nuclear medicine\n-   Laboratory equipment for in-vitro diagnosis\n-   Analysers\n-   Freezers\n-   Fertilization tests\n-   Other appliances for detecting, preventing, monitoring, treating,\n  alleviating illness, injury or disability",
@@ -620,7 +620,7 @@ class Fixture():
                 "mixed_recovery_rate": 0,
                 "mixed_residual_waste_rate": 1,
             },
-            ("resicled_directive", "9"): {
+            ("resicled_directive", "10"): {
                 "directive_number": 9,
                 "directive_title": "Monitoring and control instruments",
                 "directive_comment": "-   Smoke detector\n-   Heating regulators\n-   Thermostats\n-   Measuring, weighing or adjusting appliances for households or as\n  laboratory equipment\n-   Other monitoring and control instruments used in industrial \n  installations (e. g. in control panels)",
@@ -634,7 +634,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.7,
                 "mixed_residual_waste_rate": 0.3,
             },
-            ("resicled_directive", "10"): {
+            ("resicled_directive", "11"): {
                 "directive_number": 10,
                 "directive_title": "Automatic dispensers",
                 "directive_comment": "-   Automatic dispensers for hot drinks\n-   Automatic dispensers for hot or cold bottles or cans\n-   Automatic dispensers for solid products\n-   Automatic dispensers for money\n-   All appliances which deliver automatically all kind of products",
@@ -648,7 +648,7 @@ class Fixture():
                 "mixed_recovery_rate": 0.8,
                 "mixed_residual_waste_rate": 0.2,
             },
-            ("resicled_directive", "11"): {
+            ("resicled_directive", "12"): {
                 "directive_number": 11,
                 "directive_title": "No comparison with categories",
                 "directive_comment": "",

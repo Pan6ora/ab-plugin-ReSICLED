@@ -1,4 +1,6 @@
+from ctypes import alignment
 import sys
+from xml.etree.ElementTree import indent
 from PySide2 import QtCore
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
@@ -40,8 +42,7 @@ class Form(QDialog):
         dialog_insert_material.exec_()
         
     def show_dialog_alert(self, message):
-        dialog_dialog_alert = Dialog_alert()
-        dialog_dialog_alert.show_alert_information(message)
+        dialog_dialog_alert = Dialog_alert(message)
         dialog_dialog_alert.exec_()
         
     def show_dialog_insert_directive(self, parent_class, type_scenario):
@@ -57,24 +58,105 @@ class Form(QDialog):
             #self.label.setText("I Dont Like Pyside2")
             return False
 
+    def show_dialog_add_directive(self, parent):
+        dialog_add_directive = Dialog_add_directive(parent)
+        dialog_add_directive.exec_()
+
+    def show_dialog_change_strategy(self,parent2,item):
+        dialog_change_strategy = Dialog_change_strategy(item,parent2)
+        dialog_change_strategy.exec_()
+
+
 
 class Dialog_alert(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, message, parent=None):
         QDialog.__init__(self, parent)
-        
-    @Slot(str)
-    def show_alert_information(self, message):
-        #reply = QMessageBox.information(self, "Info", message)
-        reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
-        if reply == QMessageBox.Ok:
-            #self.label.setText("OK")
-            print("OK")
-        """
-        elif reply == QMessageBox.Cancel:
-            self.label.setText("CANCEL")
-        """
+        self.info_label = QLabel(message)
+        self.ok_button = QPushButton("Ok")
+        self.ok_button.clicked.connect(self.close)
+        self.main_layout = QVBoxLayout(self)
+        self.main_layout.addWidget(self.info_label)
+        self.main_layout.addWidget(self.ok_button, alignment= Qt.AlignRight)
+        self.setLayout(self.main_layout)
+        self.setWindowTitle("Info")
+
+    def close(self):
+        self.accept()
                  
-        
+class Dialog_change_strategy(QDialog):
+    def __init__(self, item, parent = None):
+        # item est l'index du component cliqué dans la bdd compose
+        QDialog.__init__(self,parent)
+        self.item = item
+        style = Style()
+
+        self.strategy_change_widget = QWidget(self)
+        self.buttons_widget = QWidget(self)
+
+        # Buttons layout 
+        close_button = QPushButton("Cancel")
+        ok_button = QPushButton("Ok")
+        close_button.clicked.connect(self.close)
+        ok_button.clicked.connect(self.set_change_strategy)
+        self.buttons_layout = QHBoxLayout(self)
+        self.buttons_layout.addWidget(close_button)
+        self.buttons_layout.addWidget(ok_button)
+        self.buttons_widget.setLayout(self.buttons_layout)
+
+        self.strategy_change_layout = QVBoxLayout()
+        self.presentation_widget = QLabel("The responsibilitiy to change the strategy is for the designers.\n At least one of the following options should be checked to\n confirm why this element will be dismantled.")
+        self.strategy_change_layout.addWidget(self.presentation_widget)
+        self.checkbox1_widget = QCheckBox("Sufficient mass",self)
+        self.checkbox2_widget = QCheckBox("Easily accessible (superficial)", self)
+        self.checkbox3_widget = QCheckBox("Easily dismantled for obtaining mono-materials\n (reversible assembly)",self)
+        self.checkbox4_widget = QCheckBox("Compensation of cost (Cost dismantling versus profit of\n the resale of recycled materials)",self)
+        self.checkbox5_widget = QCheckBox("Dismantling done anyway (extraction of pollutants)",self)
+        self.checkbox6_widget = QCheckBox("Signed agreement with recycler",self)
+        self.checkbox7_widget = QWidget(self)
+        self.checkbox7_layout = QHBoxLayout(self)
+        self.cb7 = QCheckBox("Other",self)
+        self.cb7_lineEdit = QLineEdit(self)
+        self.checkbox7_layout.addWidget(self.cb7)
+        self.checkbox7_layout.addWidget(self.cb7_lineEdit)
+        self.checkbox7_widget.setLayout(self.checkbox7_layout)
+        self.strategy_change_layout.addWidget(self.checkbox1_widget)
+        self.strategy_change_layout.addWidget(self.checkbox2_widget)
+        self.strategy_change_layout.addWidget(self.checkbox3_widget)
+        self.strategy_change_layout.addWidget(self.checkbox4_widget)
+        self.strategy_change_layout.addWidget(self.checkbox5_widget)
+        self.strategy_change_layout.addWidget(self.checkbox6_widget)
+        self.strategy_change_layout.addWidget(self.checkbox7_widget)
+        self.comment_widget = QWidget(self)
+        self.comment_layout = QHBoxLayout(self)
+        self.comment_label = QLabel("Comment")
+        self.comment_lineEdit = QLineEdit(self)
+        self.comment_layout.addWidget(self.comment_label)
+        self.comment_layout.addWidget(self.comment_lineEdit)
+        self.comment_widget.setLayout(self.comment_layout)
+        self.strategy_change_layout.addWidget(self.comment_widget)
+        self.strategy_change_layout.setAlignment(Qt.AlignLeft)
+        self.strategy_change_widget.setLayout(self.strategy_change_layout)
+
+        self.main_layout = QVBoxLayout(self)
+        self.main_layout.addWidget(self.strategy_change_widget)
+        self.main_layout.addWidget(self.buttons_widget)
+        self.setLayout(self.main_layout)
+        self.setWindowTitle("Change of strategy")
+
+
+    def set_change_strategy(self):
+        current_compose = list(databasemanager.composedatabase.get_compose_by_component(self.item).values())[0]
+        current_compose_key = list(databasemanager.composedatabase.get_compose_by_component(self.item).keys())[0][1]
+        if current_compose["strategy_component"].lower()=="shredding":
+            new_strategy = "Dismantling"
+        else:
+            new_strategy = "Shredding"
+        databasemanager.composedatabase.change_strategy_one_compose(current_compose_key,new_strategy)
+        self.close()
+
+    def close(self):
+        self.accept()
+
 class Dialog_insert_directive(QDialog):
     def __init__(self, type_scenario, parent=None):
         QDialog.__init__(self,parent)
@@ -703,3 +785,64 @@ class Dialog(QDialog):
         self.__layoutPrincipal.addLayout(self.__layoutPrix)
         self.__layoutPrincipal.addLayout(self.__layoutBoutons)
         self.setLayout(self.__layoutPrincipal)    
+
+class Dialog_add_directive(QDialog):
+    def __init__(self,parent = None):
+        QDialog.__init__(self,parent)
+        self.cancel_button = QPushButton("Cancel")
+        self.ok_button = QPushButton("Save")
+        self.cancel_button.clicked.connect(self.close)
+        self.ok_button.clicked.connect(self.save_inserted_directive)
+        self.buttons_layout = QHBoxLayout()
+        self.buttons_layout.addWidget(self.cancel_button)
+        self.buttons_layout.addWidget(self.ok_button)
+        self.buttons_widget = QWidget(self)
+        self.buttons_widget.setLayout(self.buttons_layout)
+
+        rate_validator = QDoubleValidator(0.,100.,2,parent = self)
+        self.edit_directive_title = QLineEdit("")
+        self.edit_directive_comment = QLineEdit("")
+        self.edit_recycling_rate = QLineEdit("")
+        self.edit_recycling_rate.setValidator(rate_validator)
+        self.edit_energy_recovery_rate = QLineEdit("")
+        self.edit_energy_recovery_rate.setValidator(rate_validator)
+        self.directive_add_layout = QFormLayout()
+        self.directive_add_layout.addRow("Directive title : (*)",self.edit_directive_title)
+        self.directive_add_layout.addRow("Directive comment : ",self.edit_directive_comment)
+        self.directive_add_layout.addRow("Recycling rate (in %) : ", self.edit_recycling_rate)
+        self.directive_add_layout.addRow("Energy recovery rate (in %) : ", self.edit_energy_recovery_rate)
+        self.form_widget = QWidget(self)
+        self.form_widget.setLayout(self.directive_add_layout)
+
+        self.mainLayout = QVBoxLayout()
+        self.mainLayout.addWidget(self.form_widget)
+        self.mainLayout.addWidget(self.buttons_widget)
+        self.setLayout(self.mainLayout)
+        self.setWindowTitle("Insert new directive")
+
+        #besoins : 4 champs (dont 2 pour rentrer)
+
+    def save_inserted_directive(self):
+        nb_directives = len(list(databasemanager.directivedatabase.get_all_directive().keys()))
+        recycling_rate = float(self.edit_recycling_rate.text().replace(",","."))
+        energy_recovery_rate = float(self.edit_energy_recovery_rate.text().replace(",","."))
+        residual_waste_rate = 100. - (recycling_rate+energy_recovery_rate)
+        saved_directive_dict = {
+            "id_directive" : nb_directives+1,
+            "directive_title" : str(self.edit_directive_title.text()),
+            "directive_comment" : str(self.edit_directive_comment.text()),
+            "dismantling_recycling_rate": recycling_rate/100.,
+            "dismantling_recovery_rate": (100.-residual_waste_rate)/100.,
+            "dismantling_residual_waste_rate": residual_waste_rate/100.,
+            "shredding_recycling_rate": recycling_rate/100.,
+            "shredding_recovery_rate": (100.-residual_waste_rate)/100.,
+            "shredding_residual_waste_rate": residual_waste_rate/100.,
+            "mixed_recycling_rate": recycling_rate/100.,
+            "mixed_recovery_rate": (100.-residual_waste_rate)/100.,
+            "mixed_residual_waste_rate": residual_waste_rate/100.
+        }
+        databasemanager.directivedatabase.insert_one_directive(saved_directive_dict)       
+        self.close()
+
+    def close(self):
+        self.accept()

@@ -14,6 +14,7 @@ from ..controllers.signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
+from ..controllers.signals import signals
 
 databasemanager = DatabaseManager()
 
@@ -38,7 +39,6 @@ class DatabaseTab(QTabWidget):
         # --- title select database---
         self.title = QLabel(self)
         self.title.setText('Select a database to view its data')
-        self.title.move(10, 100)
         #---database to select
         self.edit_database = QComboBox(self)
         self.edit_database.addItem("Select a database", userData=None)
@@ -47,7 +47,15 @@ class DatabaseTab(QTabWidget):
         self.edit_database.addItem("Material", userData=None)
         self.edit_database.addItem("Directive", userData=None)
         #self.edit_database.setGeometry(10, 120, 120, 30)
-        self.edit_database.move(10, 120)
+        self.add_entry_button = QPushButton(self.icon.add,"Add new Database entry", self)
+        self.add_entry_button.clicked.connect(self.call_show_dialog_action_add_database)
+        self.edit_database_widget = QWidget(self)
+        self.edit_database_layout = QHBoxLayout(self)
+        self.edit_database_layout.addWidget(self.title)
+        self.edit_database_layout.addWidget(self.edit_database)
+        self.edit_database_layout.addWidget(self.add_entry_button)
+        self.edit_database_widget.setLayout(self.edit_database_layout)
+        self.edit_database_widget.move(10, 100)
         self.edit_database.setFrame(False)
         
         # --- title database selected ---
@@ -60,7 +68,7 @@ class DatabaseTab(QTabWidget):
         self.edit_database.currentIndexChanged.connect(
             self.call_show_table_database
         )
-        
+  
     def call_show_table_database(self,index):
         database_selected = self.edit_database.currentText()
         if (index == 0):
@@ -69,7 +77,7 @@ class DatabaseTab(QTabWidget):
         #print("call_show_table_database",database_selected)
         self.title_database.setText('<h1 style=""> '+ database_selected +' data list  </h1>' )
         #get new values
-        self.datamodel = Datamodel(self);
+        self.datamodel = Datamodel(self)
         self.data_list = self.datamodel.getdata_database(database_selected)
         if(database_selected.lower()=="product"):
             self.header = self.datamodel.header_database_product_manage
@@ -123,17 +131,17 @@ class DatabaseTab(QTabWidget):
             #--- set QGridLayout in widget ---
             self.widget_action[ligne_table] = QWidget(self)
             self.layout_action[ligne_table] = QGridLayout()
-            self.layout_action[ligne_table].addWidget(self.button_edit_ligne[ligne_table], 0 ,0)
-            self.layout_action[ligne_table].addWidget(self.button_delete_ligne[ligne_table], 0 ,1)
+            self.layout_action[ligne_table].addWidget(self.button_edit_ligne[ligne_table], 0, 0)
+            self.layout_action[ligne_table].addWidget(self.button_delete_ligne[ligne_table], 0, 1)
             self.widget_action[ligne_table].setLayout(self.layout_action[ligne_table])
             self.table_view.setColumnWidth(column_table, 200)
             self.table_view.setRowHeight(ligne_table, 50)
-            self.table_view.setIndexWidget(self.table_model.index(int(ligne_table),column_table),self.widget_action[ligne_table])
+            self.table_view.setIndexWidget(self.table_model.index(int(ligne_table), column_table), self.widget_action[ligne_table])
             #self.widget_action[ligne_table].show()
             
             
     def call_show_dialog_action_edit_database(self, database_selected):
-        #print("database_selected==",database_selected)
+        print("database_selected==",database_selected)
         
     def call_show_dialog_action_delete_database(self, database_selected):
         widget_obj = None
@@ -164,17 +172,17 @@ class DatabaseTab(QTabWidget):
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
                 self.all_product = databasemanager.composedatabase.delete_one_component(id_element)
-        if(database_selected.lower()=="material"):
+        if(database_selected.lower() == "material"):
             #show confirm dialog
             id_element = widget_obj['id_material']
             name_element = widget_obj['name_material']
             type_material = widget_obj['type_material']
             id_element = widget_obj['id_material']
-            text_question = "Do you want to delete the material << "+name_element+" >>  ("+type_material+") ? All its components linked will also be deleted ! "
+            text_question = "Do you want to delete the material << "+name_element+" >>  (" + type_material + ") ? All its components linked will also be deleted ! "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
                 self.all_product = databasemanager.composedatabase.delete_one_material(id_element)
-        if(database_selected.lower()=="directive"):
+        if(database_selected.lower() == "directive"):
             #show confirm dialog
             id_element = widget_obj['directive_number']
             name_element = widget_obj['directive_title']
@@ -188,4 +196,15 @@ class DatabaseTab(QTabWidget):
         #update table view
         self.call_show_table_database(None)  
         
+    def call_show_dialog_action_add_database(self):
+        if self.edit_database.currentText().lower()=="product":
+            self.form.show_dialog_insert_product(QComboBox())
+        elif self.edit_database.currentText().lower()=="component":
+            self.form.show_dialog_insert_component()
+        elif self.edit_database.currentText().lower()=="material":
+            self.form.show_dialog_insert_material()
+        elif self.edit_database.currentText().lower()=="directive":
+            self.form.show_dialog_add_directive(self)
+        self.call_show_table_database(None)
+            
         

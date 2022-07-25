@@ -182,6 +182,7 @@ class MixedTab(QTabWidget):
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
         self.table_view.doubleClicked.connect(self.change_component_strategy)
+        signals.update_component_scenario.emit(self.table_view)
         # set font
         self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
@@ -268,17 +269,13 @@ class MixedTab(QTabWidget):
         if item.column()==8:
             #Forcing ppl to click on the Scenario column
             clicked_pollutant_status = self.table_view.model().data(self.table_view.model().index(item.row(),7),Qt.DisplayRole)
+            #self.form.show_dialog_change_strategy(self,item)
             if clicked_pollutant_status.lower()=="no":
                 # we can change the value of the scenario, os we do it
                 id_comp = self.table_view.model().data(self.table_view.model().index(item.row(),1),Qt.DisplayRole)
-                current_compose_key = list(databasemanager.composedatabase.get_compose_by_component(id_comp).keys())[0][1]
-                current_compose = list(databasemanager.composedatabase.get_compose_by_component(id_comp).values())[0]
-                # changing the strategy:
-                if current_compose["strategy_component"].lower()=="shredding":
-                    new_strategy = "Dismantling"
-                else:
-                    new_strategy = "Shredding"
-                databasemanager.composedatabase.change_strategy_one_compose(current_compose_key,new_strategy)
+                self.form.show_dialog_change_strategy(self,id_comp)
+            else:
+                self.form.show_dialog_alert("This element is pollutant according to the european directive. No change is allowed.")
         self.call_show_table_component_product_mixed(None)
                 
                 

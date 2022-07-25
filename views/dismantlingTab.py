@@ -1,12 +1,10 @@
-from PySide2 import QtCore
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
-    QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
-    QStyle, QVBoxLayout, QTabWidget, QFrame, QLabel, QGridLayout, QComboBox,
+    QHBoxLayout, QPushButton, QVBoxLayout, QTabWidget,
+    QFrame, QLabel, QGridLayout, QComboBox,
     QWidget, QTableView, QWidget
 )
-from PySide2.QtGui import QFont 
-from PySide2.QtCore import Qt
+from PySide2.QtGui import QFont
 from .icon import Icon
 from .form import Form
 from .style import Style
@@ -18,36 +16,40 @@ from ..databases.database import DatabaseManager
 databasemanager = DatabaseManager()
 
 class DismantlingTab(QTabWidget):
+    """
+    The class that runs the Dismantling tab in the plugin (and its dependencies)
+    """
     def __init__(self, parent=None):
+        """
+        Initializing the tab and building the main widgets 
+        """
         super(DismantlingTab, self).__init__(parent)
-        
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
-        
-        # --- title ---
+        # Title
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title.setText('<h1 style=""> DISMANTLING </h1>')
-        self.title.move(10, 50)
-        
-        
-        # --- title select product---
+        self.title.move(10, 10)
+        # Product selection combobox's label
         self.title = QLabel(self)
         self.title.setText('Select a product to view its dismantling rates')
-        self.title.move(10, 100)
-        #---product to select
+        # Product Selection Combobox
         self.all_product = databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
         self.edit_component_product.addItem("Select a product", userData=None)
-        for key_product, value_product in self.all_product.items():
+        for _, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
-        #self.edit_component_product.setGeometry(10, 120, 120, 30)
-        self.edit_component_product.move(10, 120)
+        # Creating the product selection layout
         self.edit_component_product.setFrame(False)
-        
-        
-        # --- title rate result ---
+        self.component_edit_widget = QWidget(self)
+        self.component_edit_layout = QHBoxLayout(self)
+        self.component_edit_layout.addWidget(self.title)
+        self.component_edit_layout.addWidget(self.edit_component_product)
+        self.component_edit_widget.setLayout(self.component_edit_layout)
+        self.component_edit_widget.move(10,50)
+        # Full product and directive rates table
         self.title_recycling_rate = QLabel("Recycling rate")
         self.title_recovery_rate = QLabel("Recovery rate")
         self.title_residual_waste_rate = QLabel("Residual waste rate")
@@ -65,8 +67,7 @@ class DismantlingTab(QTabWidget):
         self.value_residual_waste_rate_status = QLabel(self) #GOOD or BAD
         self.value_directive_applied = QLabel("None")
         self.value_directive_applied.wordWrap()
-        
-        #---style
+        # Rates table style
         self.title_recycling_rate.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.title_recovery_rate.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.title_residual_waste_rate.setStyleSheet(self.style.style_table_rate_border_bottom)
@@ -83,15 +84,10 @@ class DismantlingTab(QTabWidget):
         self.value_recovery_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.value_residual_waste_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.value_directive_applied.setStyleSheet(self.style.style_table_rate_border_bottom)
-        
-        #---button directive
+        # Directive selection PushButton
         self.button_directive = QPushButton(self.icon.add, "Apply directive", self)
-        #add signal
-        self.button_directive.clicked.connect(
-            self.call_show_dialog_insert_directive
-        )
-        
-        #---display
+        self.button_directive.clicked.connect(self.call_show_dialog_insert_directive)
+        # Displaying the Rate's table
         self.widget_rate_view = QWidget(self)
         self.layout_rate = QGridLayout()
         self.layout_rate.addWidget(self.title_product, 0, 1)
@@ -112,27 +108,24 @@ class DismantlingTab(QTabWidget):
         self.layout_rate.addWidget(self.value_residual_waste_rate_directive, 3, 2)
         self.layout_rate.addWidget(self.value_residual_waste_rate_status, 3, 3)
         self.widget_rate_view.setLayout(self.layout_rate)
-        self.widget_rate_view.move(10, 180)
-        #self.widget_rate_view.setGeometry(10, 180, 420, 220)
+        self.widget_rate_view.move(10, 100)
         self.widget_rate_view.setStyleSheet(self.style.style_table_rate)
         self.widget_rate_view.show()
-        
-        # --- title product selected ---
+        # Selected product's table title
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 140, 1200, 30)
-        
-        #add signal
-        self.edit_component_product.currentIndexChanged.connect(
-            self.call_show_table_component_product
-        )
+        self.title_component_product.setGeometry(10, 225, 1000, 30)
+        self.edit_component_product.currentIndexChanged.connect(self.call_show_table_component_product)
         #signal update_combobox
         signals.update_combobox.connect(self.update_menu_combobox)
         signals.update_combobox.emit(self.edit_component_product)
         
     @Slot(object)
     def update_menu_combobox(self, box: QComboBox):
+        """
+        Updates the product selection combobox
+        """
         box = self.edit_component_product
         #---product to select
         self.all_product_form = databasemanager.productdatabase.get_all_product()
@@ -142,9 +135,15 @@ class DismantlingTab(QTabWidget):
             box.addItem(str(value['name_product']), userData=value)
         
     def call_show_dialog_insert_directive(self):
+        """
+        Displays the Dismantling choice wizard
+        """
         self.form.show_dialog_insert_directive(self, "dismantling")
         
     def call_show_table_component_product(self,index):
+        """
+        Displays the dismantling scenario table in the tab
+        """
         if(index==0):
             self.title_component_product.setText("")
             self.value_recycling_rate_status.setText("")
@@ -157,22 +156,17 @@ class DismantlingTab(QTabWidget):
             self.value_recovery_rate_directive.setText("")
             self.value_residual_waste_rate_directive.setText("")
             self.value_directive_applied.setText("None")
-            
         product_selected = self.edit_component_product.currentData()
         if (product_selected == None):
             return None
-        
-        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
-        self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
+        self.title_component_product.setText('<h1 style=""> '+product_selected['name_product']+' (components list)  </h1>' )
         """#get new values"""
         self.datamodel = Datamodel()
-        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"dismantling") #self.datamodel.getdata_component()
+        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected['id_product'],"dismantling") #self.datamodel.getdata_component()
         self.header = self.datamodel.header_database_component_scenario_rate #self.datamodel.header_component
-        
         self.value_recycling_rate_product.setText(str(self.datamodel.recycling_rate) + "%")
         self.value_recovery_rate_product.setText(str(self.datamodel.recovery_rate) + "%")
-        self.value_residual_waste_rate_product.setText(str(self.datamodel.residual_rate) + "%")
-                
+        self.value_residual_waste_rate_product.setText(str(self.datamodel.residual_rate) + "%")  
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
@@ -187,7 +181,7 @@ class DismantlingTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 1200, 500)
+        self.widget_table_view.setGeometry(3, 247, 1000, 500)
         self.widget_table_view.show()
         #update rate
         self.value_recycling_rate_status.setText("")
@@ -198,27 +192,27 @@ class DismantlingTab(QTabWidget):
         self.value_residual_waste_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
         self.text_good = "GOOD"
         self.text_bad = "BAD"
-        if self.value_recycling_rate_product.text()!="":
+        if self.value_recycling_rate_product.text() != "":
             self.int_value_recycling_rate_product = int(self.value_recycling_rate_product.text().replace("%", ""))
         else:
             self.int_value_recycling_rate_product = 0
-        if self.value_recovery_rate_product.text()!="":
+        if self.value_recovery_rate_product.text() != "":
             self.int_value_recovery_rate_product = int(self.value_recovery_rate_product.text().replace("%", ""))
         else:
             self.int_value_recovery_rate_product = 0
-        if self.value_residual_waste_rate_product.text()!="":
+        if self.value_residual_waste_rate_product.text() != "":
             self.int_value_residual_waste_rate_product = int(self.value_residual_waste_rate_product.text().replace("%", ""))
         else:
-            self.int_value_residual_waste_rate_product= 0
-        if self.value_recycling_rate_directive.text()!="":
+            self.int_value_residual_waste_rate_product = 0
+        if self.value_recycling_rate_directive.text() != "":
             self.int_value_recycling_rate_directive = int(self.value_recycling_rate_directive.text().replace("%", ""))
         else:
             self.int_value_recycling_rate_directive = 0
-        if self.value_recovery_rate_directive.text()!="":
+        if self.value_recovery_rate_directive.text() != "":
             self.int_value_recovery_rate_directive = int(self.value_recovery_rate_directive.text().replace("%", ""))
         else:
             self.int_value_recovery_rate_directive = 0
-        if self.value_residual_waste_rate_directive.text()!="":
+        if self.value_residual_waste_rate_directive.text() != "":
             self.int_value_residual_waste_rate_directive = int(self.value_residual_waste_rate_directive.text().replace("%", ""))
         else:
             self.int_value_residual_waste_rate_directive = 0
@@ -244,9 +238,3 @@ class DismantlingTab(QTabWidget):
             else:
                 self.value_residual_waste_rate_status.setText(self.text_bad)
                 self.value_residual_waste_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
-                
-        
-        
-        
-        
-        

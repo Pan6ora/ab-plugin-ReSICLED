@@ -33,9 +33,6 @@ class ResicledTab(QTabWidget):
             "HotSpots": HotspotsTab(self),
             "Database": DatabaseTab(self),
             "Guidelines": GuidelinesTab(self),
-            "Rapport": QPushButton("button 8"),
-            "Pdf": QPushButton("button 9"),
-            "Recyclability Rates": QPushButton("button 10"),
 		}
         
         for tab_name, tab_obj in self.tabs.items():
