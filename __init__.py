@@ -3,22 +3,7 @@ import activity_browser as ab
 from .plugin.layouts.tabs import LeftTab, RightTab
 from .plugin.databases.database import DatabaseManager
 from .plugin.signals import signals
-
-######################
-# PLUGIN DESCRIPTION #
-######################
-
-infos = {
-    'id': 'ReSICLED',
-    'name': 'ReSICLED',
-    'version': '1.0.0',
-    'author': 'Rémy Le Calloch, Brice Notario Bourgade, Elysée Tchassem Noukimi',
-    'author_email': '',
-    'url': 'https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled',
-    'description': 'Evaluate the recyclability of product Electr(on)ic for improving product design'
-}
-
-#######################
+from .setup import infos
 
 class Plugin(ab.Plugin):
 
