@@ -4,16 +4,19 @@ import sys
 import brightway2 as bw
 from brightway2 import *
 from bw2data import *
+from bw2io.package import BW2Package
+
+from ...metadata import infos
 from datetime import datetime
 from ..tools.tool import Tool
-from .fixtures import Fixture
+
+
 
 class Directivedatabase():
     def __init__(self, parent=None):
         ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
-        self.fixture = Fixture()
         
         #database name
         self.name_database = self.tool.prefix_name_database + "directive"
@@ -29,11 +32,10 @@ class Directivedatabase():
             #Creating/accessing the project
             bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
-            self.db = Database(self.name_database)    
-            #write it into an instantiated database
-            self.db.write(self.fixture.db_directive)
-        else:
-            self.db = bw.Database(self.name_database)
+            path = bw.projects.request_directory("plugins")
+            print(path)
+            BW2Package().import_file(path+"/{}/plugins/includes/bw2package/directives.bw2package".format(infos["name"]))
+        self.db = bw.Database(self.name_database)
         
     def get_all_directive(self):
         ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)

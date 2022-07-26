@@ -6,7 +6,6 @@ from brightway2 import *
 from bw2data import *
 from datetime import datetime
 from ..tools.tool import Tool
-from .fixtures import Fixture
 from .productdatabase import Productdatabase
 from .componentdatabase import Componentdatabase
 
@@ -15,7 +14,7 @@ class Composedatabase:
         ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         # --init
         self.tool = Tool()
-        self.fixture = Fixture()
+        
         self.componentdatabase = Componentdatabase()
         self.productdatabase = Productdatabase()
         # database name

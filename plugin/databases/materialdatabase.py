@@ -4,16 +4,17 @@ import sys
 import brightway2 as bw
 from brightway2 import *
 from bw2data import *
+from bw2io.package import BW2Package 
+
 from datetime import datetime
 from ..tools.tool import Tool
-from .fixtures import Fixture
+
 
 class Materialdatabase():
     def __init__(self, parent=None):
         #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
-        self.fixture = Fixture()
         
         #database name
         self.name_database = self.tool.prefix_name_database + "material"
@@ -29,11 +30,8 @@ class Materialdatabase():
             #Creating/accessing the project
             bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
-            self.db = Database(self.name_database)    
-            #write it into an instantiated database
-            self.db.write(self.fixture.db_material)
-        else:
-            self.db = bw.Database(self.name_database)
+            BW2Package().import_file("/includes/bw2package/materials.bw2package")
+        self.db = bw.Database(self.name_database)
         
     def get_all_material(self):
         #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)

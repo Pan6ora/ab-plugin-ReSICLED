@@ -1,19 +1,17 @@
 import brightway2 as bw
+from bw2io.package import BW2Package
 from ..tools.tool import Tool
-from .fixtures import Fixture
+
 
 class GuidelinesDatabase:
     def __init__(self,parent = None):
         self.tool = Tool()
-        self.fixture = Fixture()
 
         self.name_database = self.tool.prefix_name_database+"guidelines"
         if self.name_database not in bw.databases:
             bw.projects.set_current(self.tool.projects_name_database)
-            self.db = bw.Database(self.name_database)
-            self.db.write(self.fixture.db_guidelines)
-        else:
-            self.db = bw.Database(self.name_database)
+            BW2Package().import_file("/includes/bw2package/guidelines.bw2package")
+        self.db = bw.Database(self.name_database)
 
     def get_all_guidelines(self):
         return self.db.load()

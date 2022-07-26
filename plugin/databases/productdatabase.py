@@ -6,14 +6,12 @@ from brightway2 import *
 from bw2data import *
 from datetime import datetime
 from ..tools.tool import Tool
-from .fixtures import Fixture
 
 class Productdatabase():
     def __init__(self, parent=None):
         #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
-        self.fixture = Fixture()
         #database name
         self.name_database = self.tool.prefix_name_database + "product"
        # instance of database
