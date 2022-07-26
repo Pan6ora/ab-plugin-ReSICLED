@@ -12,5 +12,5 @@ class Plugin(ab.Plugin):
         self.mainTab = RightTab(self)
         self.leftTab = LeftTab(self)
         self.tabs = [self.mainTab, self.leftTab]
-        databasemanager = DatabaseManager()
+        DatabaseManager()
         signals.databases_changed.emit()
