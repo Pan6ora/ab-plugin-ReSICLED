@@ -13,7 +13,7 @@ from PySide2.QtGui import QIntValidator, QDoubleValidator
 from .icon import Icon
 from .style import Style
 from ..databases.database import DatabaseManager
-from ..controllers.signals import signals
+from ..signals import signals
 
 databasemanager = DatabaseManager()
 

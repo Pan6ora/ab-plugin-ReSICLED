@@ -1,3 +1,4 @@
+from binascii import a2b_hex
 from PySide2 import QtCore
 from PySide2.QtCore import Slot
 from PySide2.QtWidgets import (
@@ -10,31 +11,32 @@ from PySide2.QtCore import Qt
 from .icon import Icon
 from .form import Form
 from .style import Style
-from ..controllers.signals import signals
+from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 
 databasemanager = DatabaseManager()
 
-class ShreddingTab(QTabWidget):
+class MixedTab(QTabWidget):
     def __init__(self, parent=None):
-        super(ShreddingTab, self).__init__(parent)
+        super(MixedTab, self).__init__(parent)
         
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
+        self.combo_scenario = dict()
         
         # --- title ---
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
-        self.title.setText('<h1 style=""> SHREDDING </h1>')
+        self.title.setText('<h1 style=""> MIXED </h1>')
         self.title.move(10, 50)
         
         
         # --- title select product---
         self.title = QLabel(self)
-        self.title.setText('Select a product to view its shredding rates')
+        self.title.setText('Select a product to view its mixed rates')
         self.title.move(10, 100)
         #---product to select
         self.all_product = databasemanager.productdatabase.get_all_product()
@@ -142,7 +144,7 @@ class ShreddingTab(QTabWidget):
             box.addItem(str(value['name_product']), userData=value)
         
     def call_show_dialog_insert_directive(self):
-        self.form.show_dialog_insert_directive(self, "shredding")
+        self.form.show_dialog_insert_directive(self, "mixed")
         
     def call_show_table_component_product(self,index):
         if(index==0):
@@ -158,16 +160,19 @@ class ShreddingTab(QTabWidget):
             self.value_residual_waste_rate_directive.setText("")
             self.value_directive_applied.setText("None")
             
+        if (index != None):
+            self.combo_scenario = dict()
+            
         product_selected = self.edit_component_product.currentData()
         if (product_selected == None):
             return None
         
         #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
-        """#get new values"""
-        self.datamodel = Datamodel();
-        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"shredding") #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_component_scenario_rate #self.datamodel.header_component
+        #get new values
+        self.datamodel = Datamodel(self)
+        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"mixed") #self.datamodel.getdata_component()
+        self.header = self.datamodel.header_database_component_scenario_rate_mixed #self.datamodel.header_component
         
         self.value_recycling_rate_product.setText(str(self.datamodel.recycling_rate) + "%")
         self.value_recovery_rate_product.setText(str(self.datamodel.recovery_rate) + "%")
@@ -176,19 +181,28 @@ class ShreddingTab(QTabWidget):
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
+        self.table_view.doubleClicked.connect(self.change_component_strategy)
+        signals.update_component_scenario.emit(self.table_view)
         # set font
         self.font = QFont("Courier New", 10)
         self.table_view.setFont(self.font)
-        self.table_view.hideColumn(1)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
+        self.table_view.hideColumn(1)
+        self.table_view.hideColumn(6)
+        self.table_view.hideColumn(12)
+        self.table_view.hideColumn(13)
+        self.table_view.hideColumn(14)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(10, 320, 1200, 500)
+        self.widget_table_view.setGeometry(10, 320, 1000, 500)
+        
         self.widget_table_view.show()
+        
+            
         #update rate
         self.value_recycling_rate_status.setText("")
         self.value_recycling_rate_status.setStyleSheet(self.style.style_table_rate_border_bottom)
@@ -246,8 +260,31 @@ class ShreddingTab(QTabWidget):
                 self.value_residual_waste_rate_status.setText(self.text_bad)
                 self.value_residual_waste_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
                 
+            
+    def call_show_table_component_product_mixed(self,index): 
+        self.call_show_table_component_product(None)   
         
-        
-        
-        
+    def change_component_strategy(self,item):
+        #print(item.row(),item.column())
+        if item.column()==8:
+            #Forcing ppl to click on the Scenario column
+            clicked_pollutant_status = self.table_view.model().data(self.table_view.model().index(item.row(),7),Qt.DisplayRole)
+            #self.form.show_dialog_change_strategy(self,item)
+            if clicked_pollutant_status.lower()=="no":
+                # we can change the value of the scenario, os we do it
+                id_comp = self.table_view.model().data(self.table_view.model().index(item.row(),1),Qt.DisplayRole)
+                self.form.show_dialog_change_strategy(self,id_comp)
+            else:
+                self.form.show_dialog_alert("This element is pollutant according to the european directive. No change is allowed.")
+        self.call_show_table_component_product_mixed(None)
+                
+                
+            
+            
+            # TODO
+            # Regarder la valeur du polluant, si le materiau en question est considere polluant, on met un message d'alerte comme quoi c'est pas possible
+        #sinon on fait pop un form de justification (qui ne serivra à rien pour le moment)
+        # ensuite on fait le chgmt dans la bdd compose
+        # puis on maj le tableau
+
         

@@ -4,7 +4,7 @@ from PySide2.QtWidgets import (
     QCheckBox, QFileDialog, QHBoxLayout, QMessageBox, QPushButton, QToolBar,
     QStyle, QVBoxLayout, QTabWidget, QComboBox
 )
-from ..controllers.signals import signals
+from ..signals import signals
 from .PresentationTab import PresentationTab
 from .inputTab import InputTab
 from .dismantlingTab import DismantlingTab

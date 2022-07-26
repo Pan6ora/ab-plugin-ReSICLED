@@ -10,7 +10,7 @@ from PySide2.QtCore import Qt
 from .icon import Icon
 from .form import Form
 from .style import Style
-from ..controllers.signals import signals
+from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
