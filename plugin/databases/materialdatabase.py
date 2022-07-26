@@ -8,7 +8,7 @@ from bw2io.package import BW2Package
 
 from datetime import datetime
 from ..tools.tool import Tool
-
+from ...metadata import infos
 
 class Materialdatabase():
     def __init__(self, parent=None):
@@ -30,7 +30,8 @@ class Materialdatabase():
             #Creating/accessing the project
             bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
-            BW2Package().import_file("/includes/bw2package/materials.bw2package")
+            path = bw.projects.request_directory("plugins")
+            BW2Package().import_file(path+"/{}/plugin/includes/bw2package/materials.bw2package".format(infos["name"]))
         self.db = bw.Database(self.name_database)
         
     def get_all_material(self):

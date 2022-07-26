@@ -33,8 +33,7 @@ class Directivedatabase():
             bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
             path = bw.projects.request_directory("plugins")
-            print(path)
-            BW2Package().import_file(path+"/{}/plugins/includes/bw2package/directives.bw2package".format(infos["name"]))
+            BW2Package().import_file(path+"/{}/plugin/includes/bw2package/directives.bw2package".format(infos["name"]))
         self.db = bw.Database(self.name_database)
         
     def get_all_directive(self):
