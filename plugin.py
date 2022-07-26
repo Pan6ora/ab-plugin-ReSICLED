@@ -1,6 +1,7 @@
 from .tabs import LeftTab, RightTab
 import activity_browser as ab 
 from .databases.database import DatabaseManager
+from activity_browser.signals import signals
 
 ######################
 # PLUGIN DESCRIPTION #
@@ -26,4 +27,6 @@ class Plugin(ab.Plugin):
         self.leftTab = LeftTab(self)
         self.tabs = [self.mainTab, self.leftTab]
         databasemanager = DatabaseManager()
+        signals.databases_changed.emit()
+
     
