@@ -3,7 +3,7 @@ import activity_browser as ab
 from .plugin.layouts.tabs import LeftTab, RightTab
 from .plugin.databases.database import DatabaseManager
 from .plugin.signals import signals
-from .setup import infos
+from .metadata import infos
 
 class Plugin(ab.Plugin):
 
