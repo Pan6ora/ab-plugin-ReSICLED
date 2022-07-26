@@ -16,12 +16,12 @@ from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 from ..signals import signals
 
-databasemanager = DatabaseManager()
+
 
 class DatabaseTab(QTabWidget):
     def __init__(self, parent=None):
         super(DatabaseTab, self).__init__(parent)
-        
+        self.databasemanager = DatabaseManager()
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
@@ -162,7 +162,7 @@ class DatabaseTab(QTabWidget):
             text_question = "Do you want to delete the product << "+name_element+" >> ? All its components will also be deleted !"
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
-                self.all_product = databasemanager.composedatabase.delete_one_product(id_element)
+                self.all_product = self.databasemanager.composedatabase.delete_one_product(id_element)
         if(database_selected.lower()=="component"):
             #show confirm dialog
             id_element = widget_obj['one_component']['id_component']
@@ -171,7 +171,7 @@ class DatabaseTab(QTabWidget):
             text_question = "Do you want to delete the component << "+name_element+" >> of product << "+Name_Product+" >> ? "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
-                self.all_product = databasemanager.composedatabase.delete_one_component(id_element)
+                self.all_product = self.databasemanager.composedatabase.delete_one_component(id_element)
         if(database_selected.lower() == "material"):
             #show confirm dialog
             id_element = widget_obj['id_material']
@@ -181,7 +181,7 @@ class DatabaseTab(QTabWidget):
             text_question = "Do you want to delete the material << "+name_element+" >>  (" + type_material + ") ? All its components linked will also be deleted ! "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
-                self.all_product = databasemanager.composedatabase.delete_one_material(id_element)
+                self.all_product = self.databasemanager.composedatabase.delete_one_material(id_element)
         if(database_selected.lower() == "directive"):
             #show confirm dialog
             id_element = widget_obj['directive_number']
@@ -189,7 +189,7 @@ class DatabaseTab(QTabWidget):
             text_question = "Do you want to delete the directive << "+name_element+" >> ? "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):
-                self.all_product = databasemanager.directivedatabase.delete_one_directive(id_element)
+                self.all_product = self.databasemanager.directivedatabase.delete_one_directive(id_element)
             
         #emit signal   
         signals.update_combobox.emit(QComboBox())    

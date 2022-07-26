@@ -15,7 +15,7 @@ from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 
-databasemanager = DatabaseManager()
+
 
 class InputTab(QTabWidget):
     def __init__(self, parent=None):
@@ -24,7 +24,7 @@ class InputTab(QTabWidget):
         self.icon = Icon()
         self.form = Form()
         style = Style()
-        
+        self.databasemanager = DatabaseManager()
         # --- title ---
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
@@ -51,7 +51,7 @@ class InputTab(QTabWidget):
         )
     
         #---product to select
-        self.all_product = databasemanager.productdatabase.get_all_product()
+        self.all_product = self.databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
         self.edit_component_product.addItem("Select a product to view its components", userData=None)
         for key_product, value_product in self.all_product.items():
@@ -166,7 +166,7 @@ class InputTab(QTabWidget):
     def update_menu_combobox(self, box: QComboBox):
         box = self.edit_component_product
         #---product to select
-        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        self.all_product_form = self.databasemanager.productdatabase.get_all_product()
         box.clear()
         box.addItem("Select a product to view its components")
         for key, value in self.all_product_form.items():

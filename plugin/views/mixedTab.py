@@ -16,7 +16,6 @@ from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 
-databasemanager = DatabaseManager()
 
 class MixedTab(QTabWidget):
     def __init__(self, parent=None):
@@ -26,6 +25,7 @@ class MixedTab(QTabWidget):
         self.form = Form()
         self.style = Style()
         self.combo_scenario = dict()
+        self.databasemanager = DatabaseManager()
         
         # --- title ---
         self.title = QLabel(self)
@@ -39,7 +39,7 @@ class MixedTab(QTabWidget):
         self.title.setText('Select a product to view its mixed rates')
         self.title.move(10, 100)
         #---product to select
-        self.all_product = databasemanager.productdatabase.get_all_product()
+        self.all_product = self.databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
         self.edit_component_product.addItem("Select a product", userData=None)
         for key_product, value_product in self.all_product.items():
@@ -137,7 +137,7 @@ class MixedTab(QTabWidget):
     def update_menu_combobox(self, box: QComboBox):
         box = self.edit_component_product
         #---product to select
-        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        self.all_product_form = self.databasemanager.productdatabase.get_all_product()
         box.clear()
         box.addItem("Select a product")
         for key, value in self.all_product_form.items():

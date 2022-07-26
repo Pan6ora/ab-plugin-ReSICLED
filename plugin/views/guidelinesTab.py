@@ -15,7 +15,7 @@ from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 
-databasemanager = DatabaseManager()
+
 
 class GuidelinesTab(QTabWidget):
     def __init__(self, parent= None):
@@ -23,6 +23,7 @@ class GuidelinesTab(QTabWidget):
         self.icon = Icon()
         self.form=Form()
         self.style= Style()
+        self.databasemanager = DatabaseManager()
 
         # --- comboboxes ---
         self.cb1_items = ["All", "Reduce", "Depollution", "Re-use / remanufacture / repair", "Recycle / recover after dismantling (RAD)", 'Recycle / recover after shredding (RAS)', "Energy recovery"]
@@ -125,7 +126,7 @@ class GuidelinesTab(QTabWidget):
         # Updating the list visibility based on if we want to see any guideline or not
         self.criteria_1 = self.cb1.currentData()
         for i in range(self.table_model.rowCount(self)):
-            value = databasemanager.guidelinesdatabase.get_one_guideline(i+1)
+            value = self.databasemanager.guidelinesdatabase.get_one_guideline(i+1)
             if self.criteria_1=="All":
                 pass
             elif self.criteria_1=="Reduce":
@@ -152,7 +153,7 @@ class GuidelinesTab(QTabWidget):
     def update_guidelines_cb2(self):
         self.criteria_2 = self.cb2.currentData()
         for i in range(self.table_model.rowCount(self)):
-            value =databasemanager.guidelinesdatabase.get_one_guideline(i+1)
+            value =self.databasemanager.guidelinesdatabase.get_one_guideline(i+1)
             if self.criteria_2=="All":
                 pass
             elif self.criteria_2=="Material / composant / substance":
@@ -168,7 +169,7 @@ class GuidelinesTab(QTabWidget):
     def update_guidelines_cb3(self): 
         self.criteria_3 = self.cb3.currentData()
         for i in range(self.table_model.rowCount(self)):
-            value =databasemanager.guidelinesdatabase.get_one_guideline(i+1)
+            value =self.databasemanager.guidelinesdatabase.get_one_guideline(i+1)
             if self.criteria_3=="All":
                 pass
             elif self.criteria_3=="Superficial":
@@ -181,7 +182,7 @@ class GuidelinesTab(QTabWidget):
     def update_guidelines_cb4(self):
         self.criteria_4 = self.cb4.currentData()
         for i in range(self.table_model.rowCount(self)):
-            value =databasemanager.guidelinesdatabase.get_one_guideline(i+1)
+            value =self.databasemanager.guidelinesdatabase.get_one_guideline(i+1)
             if self.criteria_4=="All":
                 pass
             elif self.criteria_4 =="Polymer":

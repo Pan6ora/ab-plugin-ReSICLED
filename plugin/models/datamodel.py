@@ -2,13 +2,14 @@ from PySide2.QtCore import QAbstractTableModel
 from PySide2.QtCore import *
 from ..databases.database import DatabaseManager
 
-databasemanager = DatabaseManager()
+
 
 class Datamodel(QAbstractTableModel):
     def __init__(self, parent=None):
         QAbstractTableModel.__init__(self, parent)
         #sum calculation
         self.parent = parent
+        self.databasemanager = DatabaseManager()
         self.sum_weight = 0
         self.sum_recycle_weight = 0
         self.sum_energy_recovery_weight = 0
@@ -39,14 +40,14 @@ class Datamodel(QAbstractTableModel):
         dict_ligne_database = dict()
         if(type_database.lower() == "product"):
             #--- select
-            self.all_product_form = databasemanager.productdatabase.get_all_product()
+            self.all_product_form = self.databasemanager.productdatabase.get_all_product()
             for _, value in self.all_product_form.items():
                 self.data_list.append((ref_cmp,value['name_product'],value['nameauthor_product'],value['firstname_product'],' '))
                 dict_ligne_database[ref_cmp] = value
                 ref_cmp = ref_cmp + 1
         elif(type_database.lower() == "component"):
             #--- select
-            self.all_component_form = databasemanager.composedatabase.get_all_component_and_product()
+            self.all_component_form = self.databasemanager.composedatabase.get_all_component_and_product()
             for _, value in self.all_component_form.items():
                 name_component = value['one_component']['name_component']
                 name_material = value['material_of_component']['name_material']
@@ -65,7 +66,7 @@ class Datamodel(QAbstractTableModel):
                 ref_cmp = ref_cmp + 1                
         elif(type_database.lower() == "material"):
             #--- select
-            self.all_material_form = databasemanager.materialdatabase.get_all_material()
+            self.all_material_form = self.databasemanager.materialdatabase.get_all_material()
             for _, value in self.all_material_form.items():
                 if(value['pollutant_material'].lower() == "false"):
                     pollutant = "No"
@@ -76,7 +77,7 @@ class Datamodel(QAbstractTableModel):
                 ref_cmp = ref_cmp + 1
         elif(type_database.lower()=="directive"):
             #--- select
-            self.all_directive_form = databasemanager.directivedatabase.get_all_directive()
+            self.all_directive_form = self.databasemanager.directivedatabase.get_all_directive()
             for _, value in self.all_directive_form.items():
                 self.data_list.append((ref_cmp,value['directive_title'],value['directive_comment'],value['dismantling_recycling_rate'],value['dismantling_recovery_rate'],value['dismantling_residual_waste_rate'],value['shredding_recycling_rate'],value['shredding_recovery_rate'],value['shredding_residual_waste_rate'],value['mixed_recycling_rate'],value['mixed_recovery_rate'],value['mixed_residual_waste_rate'],' '))
                 dict_ligne_database[ref_cmp] = value
@@ -93,7 +94,7 @@ class Datamodel(QAbstractTableModel):
         """
         self.data_list = []
         #---product to select
-        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        self.all_product_form = self.databasemanager.productdatabase.get_all_product()
         for key, value in self.all_product_form.items():
             self.data_list.append((value['name_product'],value['nameauthor_product'],value['firstname_product']))
         return self.data_list
@@ -101,7 +102,7 @@ class Datamodel(QAbstractTableModel):
     def getdata_component(self,id_product): #Unused
         self.data_list = []
         #---product component of product selected
-        self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
+        self.all_component_form = self.databasemanager.composedatabase.get_component_by_product(id_product)
         ##print("getdata_component",self.all_component_form)        
         for _, value in self.all_component_form.items():
             name_component = value['one_component']['name_component']
@@ -121,7 +122,7 @@ class Datamodel(QAbstractTableModel):
     def getdata_component_scenario_rate(self,id_product,type_scenario: str):
         self.data_list = []
         #---product component of product selected
-        self.all_component_form = databasemanager.composedatabase.get_component_by_product(id_product)
+        self.all_component_form = self.databasemanager.composedatabase.get_component_by_product(id_product)
         #init 
         cmp_index = 0
         recycle_weight = 0
@@ -286,6 +287,6 @@ class Datamodel(QAbstractTableModel):
        
     def get_data_guidelines(self):
         data_list = []
-        for _, item in databasemanager.guidelinesdatabase.get_all_guidelines().items():
+        for _, item in self.databasemanager.guidelinesdatabase.get_all_guidelines().items():
             data_list.append((item["guideline_number"], item["guideline_name"]))
         return [(elem[1], ) for elem in sorted(data_list, key = lambda x:x[0])]

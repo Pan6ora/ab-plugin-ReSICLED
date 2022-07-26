@@ -13,7 +13,7 @@ from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
 from ..databases.database import DatabaseManager
 
-databasemanager = DatabaseManager()
+
 
 class DismantlingTab(QTabWidget):
     """
@@ -24,6 +24,7 @@ class DismantlingTab(QTabWidget):
         Initializing the tab and building the main widgets 
         """
         super(DismantlingTab, self).__init__(parent)
+        self.databasemanager = DatabaseManager()
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
@@ -36,7 +37,7 @@ class DismantlingTab(QTabWidget):
         self.title = QLabel(self)
         self.title.setText('Select a product to view its dismantling rates')
         # Product Selection Combobox
-        self.all_product = databasemanager.productdatabase.get_all_product()
+        self.all_product = self.databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
         self.edit_component_product.addItem("Select a product", userData=None)
         for _, value_product in self.all_product.items():
@@ -128,7 +129,7 @@ class DismantlingTab(QTabWidget):
         """
         box = self.edit_component_product
         #---product to select
-        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        self.all_product_form = self.databasemanager.productdatabase.get_all_product()
         box.clear()
         box.addItem("Select a product")
         for key, value in self.all_product_form.items():

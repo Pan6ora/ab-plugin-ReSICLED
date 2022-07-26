@@ -15,7 +15,7 @@ from .style import Style
 from ..databases.database import DatabaseManager
 from ..signals import signals
 
-databasemanager = DatabaseManager()
+
 
 class Form(QDialog):
     
@@ -89,7 +89,7 @@ class Dialog_change_strategy(QDialog):
         QDialog.__init__(self,parent)
         self.item = item
         style = Style()
-
+        self.databasemanager = DatabaseManager()
         self.strategy_change_widget = QWidget(self)
         self.buttons_widget = QWidget(self)
 
@@ -145,13 +145,13 @@ class Dialog_change_strategy(QDialog):
 
 
     def set_change_strategy(self):
-        current_compose = list(databasemanager.composedatabase.get_compose_by_component(self.item).values())[0]
-        current_compose_key = list(databasemanager.composedatabase.get_compose_by_component(self.item).keys())[0][1]
+        current_compose = list(self.databasemanager.composedatabase.get_compose_by_component(self.item).values())[0]
+        current_compose_key = list(self.databasemanager.composedatabase.get_compose_by_component(self.item).keys())[0][1]
         if current_compose["strategy_component"].lower()=="shredding":
             new_strategy = "Dismantling"
         else:
             new_strategy = "Shredding"
-        databasemanager.composedatabase.change_strategy_one_compose(current_compose_key,new_strategy)
+        self.databasemanager.composedatabase.change_strategy_one_compose(current_compose_key,new_strategy)
         self.close()
 
     def close(self):
@@ -163,6 +163,7 @@ class Dialog_insert_directive(QDialog):
         #-- init
         self.parent = parent
         self.type_scenario = type_scenario
+        self.databasemanager = DatabaseManager()
         #--- style ---
         style = Style()
         #--- QtWidget ---
@@ -172,7 +173,7 @@ class Dialog_insert_directive(QDialog):
         #--- layout 
         self.layout_directive = QVBoxLayout()
         #---directive to select
-        self.all_directive_form = databasemanager.directivedatabase.get_all_directive()
+        self.all_directive_form = self.databasemanager.directivedatabase.get_all_directive()
         self.dict_var = dict()
         for key, value in self.all_directive_form.items():
             # The input
@@ -208,7 +209,7 @@ class Dialog_insert_directive(QDialog):
     @Slot(object)
     def update_menu_combobox(self, box: QComboBox):
         #---directive to select
-        self.all_directive_form = databasemanager.directivedatabase.get_all_directive()
+        self.all_directive_form = self.databasemanager.directivedatabase.get_all_directive()
         box.clear()
         box.addItem("Select a directive")
         for key, value in self.all_directive_form.items():
@@ -270,6 +271,7 @@ class Dialog_insert_product(QDialog):
         #--- QtWidget ---
         self.widget_product = QWidget()
         self.widget_button = QWidget()
+        self.databasemanager = DatabaseManager()
         # The input
         self.edit_name_product = QLineEdit("")
         self.edit_name_autor = QLineEdit("")
@@ -306,7 +308,7 @@ class Dialog_insert_product(QDialog):
     @Slot(object)
     def update_menu_combobox(self, box: QComboBox):
         #---product to select
-        self.all_product_form = databasemanager.productdatabase.get_all_product()
+        self.all_product_form = self.databasemanager.productdatabase.get_all_product()
         box.clear()
         box.addItem("Select a product")
         for key, value in self.all_product_form.items():
@@ -330,7 +332,7 @@ class Dialog_insert_product(QDialog):
                 "firstname_product": str(self.edit_firstname_autor.text())
                 }
             #insert in database
-            databasemanager.productdatabase.insert_one_product(new_product)
+            self.databasemanager.productdatabase.insert_one_product(new_product)
             #signal update_combobox
             signals.update_combobox.connect(self.update_menu_combobox)
             signals.update_combobox.emit(self.box_product)
@@ -347,6 +349,7 @@ class Dialog_insert_component(QDialog):
         QDialog.__init__(self,parent)
         #--- style ---
         style = Style()
+        self.databasemanager = DatabaseManager()
         #--- QtWidget ---
         self.widget_component = QWidget()
         self.widget_component_material = QWidget()
@@ -367,7 +370,7 @@ class Dialog_insert_component(QDialog):
         
         # init input
         #---product to select
-        self.all_product = databasemanager.productdatabase.get_all_product()
+        self.all_product = self.databasemanager.productdatabase.get_all_product()
         self.edit_component_product.addItem("Select a product", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
@@ -375,22 +378,22 @@ class Dialog_insert_component(QDialog):
         self.edit_component_isitpollutant.addItem("Select")
         self.edit_component_isitpollutant.addItems(["Yes","No"])
         #---material_polymer to select
-        self.all_material_polymer = databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
+        self.all_material_polymer = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
         self.edit_component_material_polymer.addItem("Select")
         for key, value in self.all_material_polymer.items():
             self.edit_component_material_polymer.addItem(str(value['name_material']), userData=value)
         #---material_metal to select
-        self.all_material_metal = databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
+        self.all_material_metal = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
         self.edit_component_material_metal.addItem("Select")
         for key, value in self.all_material_metal.items():
             self.edit_component_material_metal.addItem(str(value['name_material']), userData=value)
         #---material_other to select
-        self.all_material_other = databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
+        self.all_material_other = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
         self.edit_component_material_other.addItem("Select")
         for key, value in self.all_material_other.items():
             self.edit_component_material_other.addItem(str(value['name_material']), userData=value)
         #---material_personalmaterial to select
-        self.all_material_personalmaterial = databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
+        self.all_material_personalmaterial = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
         self.edit_component_material_personalmaterial.addItem("Select")
         for key, value in self.all_material_personalmaterial.items():
             self.edit_component_material_personalmaterial.addItem(str(value['name_material']), userData=value)
@@ -546,7 +549,7 @@ class Dialog_insert_component(QDialog):
                 "strategy_component" : self.strategy
                 }
             #insert in database
-            databasemanager.composedatabase.insert_one_component(new_component)
+            self.databasemanager.composedatabase.insert_one_component(new_component)
             """#signal update_combobox
             signals.update_combobox.connect(self.update_menu_combobox)
             signals.update_combobox.emit(self.box_product)"""
@@ -562,6 +565,7 @@ class Dialog_insert_material(QDialog):
         QDialog.__init__(self,parent)
         #--- init
         self.class_dialog_insert_component = parent
+        self.databasemanager = DatabaseManager()
         #--- style ---
         style = Style()
         #--- QtWidget ---
@@ -644,25 +648,25 @@ class Dialog_insert_material(QDialog):
         self.class_dialog_insert_component.edit_component_material_other
         self.class_dialog_insert_component.edit_component_material_personalmaterial"""
         #---material_polymer to select
-        self.all_material_polymer = databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
+        self.all_material_polymer = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
         self.class_dialog_insert_component.edit_component_material_polymer.clear()
         self.class_dialog_insert_component.edit_component_material_polymer.addItem("Select")
         for key, value in self.all_material_polymer.items():
             self.class_dialog_insert_component.edit_component_material_polymer.addItem(str(value['name_material']), userData=value)
         #---material_metal to select
-        self.all_material_metal = databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
+        self.all_material_metal = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
         self.class_dialog_insert_component.edit_component_material_metal.clear()
         self.class_dialog_insert_component.edit_component_material_metal.addItem("Select")
         for key, value in self.all_material_metal.items():
             self.class_dialog_insert_component.edit_component_material_metal.addItem(str(value['name_material']), userData=value)
         #---material_other to select
-        self.all_material_other = databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
+        self.all_material_other = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
         self.class_dialog_insert_component.edit_component_material_other.clear()
         self.class_dialog_insert_component.edit_component_material_other.addItem("Select")
         for key, value in self.all_material_other.items():
             self.class_dialog_insert_component.edit_component_material_other.addItem(str(value['name_material']), userData=value)
         #---material_personalmaterial to select
-        self.all_material_personalmaterial = databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
+        self.all_material_personalmaterial = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
         self.class_dialog_insert_component.edit_component_material_personalmaterial.clear()
         self.class_dialog_insert_component.edit_component_material_personalmaterial.addItem("Select")
         for key, value in self.all_material_personalmaterial.items():
@@ -719,7 +723,7 @@ class Dialog_insert_material(QDialog):
                 "pollutant_material": pollutant_selected,
                 }
             #insert in database
-            databasemanager.componentdatabase.insert_one_material(new_material)
+            self.databasemanager.componentdatabase.insert_one_material(new_material)
             #signal update_combobox
             signals.update_combobox.connect(self.update_menu_combobox_component_material)
             signals.update_combobox.emit(self.class_dialog_insert_component)
@@ -789,6 +793,7 @@ class Dialog(QDialog):
 class Dialog_add_directive(QDialog):
     def __init__(self,parent = None):
         QDialog.__init__(self,parent)
+        self.databasemanager = DatabaseManager()
         self.cancel_button = QPushButton("Cancel")
         self.ok_button = QPushButton("Save")
         self.cancel_button.clicked.connect(self.close)
@@ -823,7 +828,7 @@ class Dialog_add_directive(QDialog):
         #besoins : 4 champs (dont 2 pour rentrer)
 
     def save_inserted_directive(self):
-        nb_directives = len(list(databasemanager.directivedatabase.get_all_directive().keys()))
+        nb_directives = len(list(self.databasemanager.directivedatabase.get_all_directive().keys()))
         recycling_rate = float(self.edit_recycling_rate.text().replace(",","."))
         energy_recovery_rate = float(self.edit_energy_recovery_rate.text().replace(",","."))
         residual_waste_rate = 100. - (recycling_rate+energy_recovery_rate)
@@ -841,7 +846,7 @@ class Dialog_add_directive(QDialog):
             "mixed_recovery_rate": (100.-residual_waste_rate)/100.,
             "mixed_residual_waste_rate": residual_waste_rate/100.
         }
-        databasemanager.directivedatabase.insert_one_directive(saved_directive_dict)       
+        self.databasemanager.directivedatabase.insert_one_directive(saved_directive_dict)       
         self.close()
 
     def close(self):
