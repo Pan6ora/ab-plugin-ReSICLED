@@ -82,7 +82,7 @@ class InputTab(QTabWidget):
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
         # enable sorting
-        self.table_view.setSortingEnabled(True)
+        #self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
@@ -144,7 +144,7 @@ class InputTab(QTabWidget):
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
         # enable sorting
-        self.table_view.setSortingEnabled(True)
+        #self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
