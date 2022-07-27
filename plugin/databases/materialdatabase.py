@@ -27,8 +27,6 @@ class Materialdatabase():
             self.f = open(self.path_database, "r")
             database_string = self.f.read()
             """
-            #Creating/accessing the project
-            bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
             path = bw.projects.request_directory("plugins")
             BW2Package().import_file(path+"/{}/plugin/includes/bw2package/materials.bw2package".format(infos["name"]))
