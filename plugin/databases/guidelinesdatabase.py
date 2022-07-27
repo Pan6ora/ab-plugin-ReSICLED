@@ -9,7 +9,6 @@ class GuidelinesDatabase:
 
         self.name_database = self.tool.prefix_name_database+"guidelines"
         if self.name_database not in bw.databases:
-            bw.projects.set_current(self.tool.projects_name_database)
             #Manually creating a database is to have the data in a separate dictionary
             path = bw.projects.request_directory("plugins")
             BW2Package().import_file(path+"/{}/plugin/includes/bw2package/guidelines.bw2package".format(infos["name"]))          
