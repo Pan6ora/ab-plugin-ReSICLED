@@ -37,7 +37,7 @@ class MixedTab(QTabWidget):
         # --- title select product---
         self.title = QLabel(self)
         self.title.setText('Select a product to view its mixed rates')
-        self.title.move(10, 100)
+        
         #---product to select
         self.all_product = self.databasemanager.productdatabase.get_all_product()
         self.edit_component_product = QComboBox(self)
@@ -45,9 +45,14 @@ class MixedTab(QTabWidget):
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
         #self.edit_component_product.setGeometry(10, 120, 120, 30)
-        self.edit_component_product.move(10, 120)
-        self.edit_component_product.setFrame(False)
         
+        self.edit_component_product.setFrame(False)
+        self.product_editing_widget = QWidget(self)
+        self.product_editing_layout = QHBoxLayout()
+        self.product_editing_layout.addWidget(self.title)
+        self.product_editing_layout.addWidget(self.edit_component_product)
+        self.product_editing_widget.setLayout(self.product_editing_layout)
+        self.product_editing_widget.move(10,100)
         
         # --- title rate result ---
         self.title_recycling_rate = QLabel("Recycling rate")

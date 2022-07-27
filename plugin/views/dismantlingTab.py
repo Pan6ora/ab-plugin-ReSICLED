@@ -32,7 +32,7 @@ class DismantlingTab(QTabWidget):
         self.title = QLabel(self)
         self.title.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title.setText('<h1 style=""> DISMANTLING </h1>')
-        self.title.move(10, 10)
+        self.title.move(10, 50)
         # Product selection combobox's label
         self.title = QLabel(self)
         self.title.setText('Select a product to view its dismantling rates')
@@ -49,7 +49,7 @@ class DismantlingTab(QTabWidget):
         self.component_edit_layout.addWidget(self.title)
         self.component_edit_layout.addWidget(self.edit_component_product)
         self.component_edit_widget.setLayout(self.component_edit_layout)
-        self.component_edit_widget.move(10,50)
+        self.component_edit_widget.move(10,100)
         # Full product and directive rates table
         self.title_recycling_rate = QLabel("Recycling rate")
         self.title_recovery_rate = QLabel("Recovery rate")
@@ -109,14 +109,14 @@ class DismantlingTab(QTabWidget):
         self.layout_rate.addWidget(self.value_residual_waste_rate_directive, 3, 2)
         self.layout_rate.addWidget(self.value_residual_waste_rate_status, 3, 3)
         self.widget_rate_view.setLayout(self.layout_rate)
-        self.widget_rate_view.move(10, 100)
+        self.widget_rate_view.move(10, 180)
         self.widget_rate_view.setStyleSheet(self.style.style_table_rate)
         self.widget_rate_view.show()
         # Selected product's table title
         self.title_component_product = QLabel(self)
         self.title_component_product.setFrameStyle(QFrame.Panel | QFrame.Sunken)
         self.title_component_product.setText('')
-        self.title_component_product.setGeometry(10, 225, 1000, 30)
+        self.title_component_product.setGeometry(10, 140, 1000, 30)
         self.edit_component_product.currentIndexChanged.connect(self.call_show_table_component_product)
         #signal update_combobox
         signals.update_combobox.connect(self.update_menu_combobox)
