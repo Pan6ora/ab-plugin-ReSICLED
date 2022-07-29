@@ -182,7 +182,7 @@ class DismantlingTab(QTabWidget):
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        self.widget_table_view.setGeometry(3, 247, 1000, 500)
+        self.widget_table_view.setGeometry(10, 320, 1200, 500)
         self.widget_table_view.show()
         #update rate
         self.value_recycling_rate_status.setText("")
