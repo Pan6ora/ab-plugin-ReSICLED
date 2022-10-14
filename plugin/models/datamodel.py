@@ -83,7 +83,6 @@ class Datamodel(QAbstractTableModel):
                 dict_ligne_database[ref_cmp] = value
                 ref_cmp = ref_cmp + 1
                 
-        #set value parent.dict_ligne_database
         self.parent.dict_ligne_database = dict_ligne_database
         #return result       
         return self.data_list
@@ -103,7 +102,6 @@ class Datamodel(QAbstractTableModel):
         self.data_list = []
         #---product component of product selected
         self.all_component_form = self.databasemanager.composedatabase.get_component_by_product(id_product)
-        ##print("getdata_component",self.all_component_form)        
         for _, value in self.all_component_form.items():
             name_component = value['one_component']['name_component']
             name_material = value['material_of_component']['name_material']
@@ -251,7 +249,6 @@ class Datamodel(QAbstractTableModel):
         return self.data_list
 
     def getdata_hotspots(self, id_product, type_hotspots: str):
-        #['Ref','Name component', 'Gain 1', 'Gain 2', 'Relative Weight', 'Is it pollutant ?','Scenario','Dismantling - Recycle Weight (grams/piece)','Dismantling - Energy recovery Weight (grams/piece)', 'Dismantling - Residual waste Weight (grams/piece)','Shredding - Recycle Weight (grams/piece)','Shredding - Energy recovery Weight (grams/piece)', 'Shredding - Residual waste Weight (grams/piece)', 'Number of pieces', 'Comment component']
         self.data_list_hotspots = []
         data_list_mixed = self.getdata_component_scenario_rate(id_product,"mixed")
         dlhs11=[]
@@ -266,13 +263,13 @@ class Datamodel(QAbstractTableModel):
             shredding_residual_waste_weight = tuple_mixed[14]
             number_of_pieces = tuple_mixed[15]
             #case hotspots_1
-            if(type_hotspots.lower() == "hotspots_1"): #["Id","Name component","Is it pollutant ?","Gain 1","Relative weight","Gain 1 * Relative weight"]
+            if(type_hotspots.lower() == "hotspots_1"):
                 gain_1_relative_weight = round(float(gain_1) * float(str(relative_weight).replace("%", "")), 2)
                 if is_it_pollutant == "Yes":
                     dlhs12.append((ref, name_component, is_it_pollutant, gain_1, relative_weight, gain_1_relative_weight))
                 else:
                     dlhs11.append((ref, name_component, is_it_pollutant, gain_1, relative_weight, gain_1_relative_weight))
-            elif(type_hotspots.lower() == "hotspots_2"): #["ref", "Name component", "Is it pollutant ?","Residual waste Weight (grams/piece)","Number of pieces"]
+            elif(type_hotspots.lower() == "hotspots_2"):
                 self.data_list_hotspots.append((ref, name_component, is_it_pollutant, dismantling_residual_waste_weight, dismantling_residual_waste_weight, shredding_residual_waste_weight, number_of_pieces))
         # sorting the data
         if type_hotspots.lower() == "hotspots_1":

@@ -161,10 +161,9 @@ class DismantlingTab(QTabWidget):
         if (product_selected == None):
             return None
         self.title_component_product.setText('<h1 style=""> '+product_selected['name_product']+' (components list)  </h1>' )
-        """#get new values"""
         self.datamodel = Datamodel()
-        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected['id_product'],"dismantling") #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_component_scenario_rate #self.datamodel.header_component
+        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected['id_product'],"dismantling")
+        self.header = self.datamodel.header_database_component_scenario_rate
         self.value_recycling_rate_product.setText(str(self.datamodel.recycling_rate) + "%")
         self.value_recovery_rate_product.setText(str(self.datamodel.recovery_rate) + "%")
         self.value_residual_waste_rate_product.setText(str(self.datamodel.residual_rate) + "%")  
@@ -218,21 +217,18 @@ class DismantlingTab(QTabWidget):
         else:
             self.int_value_residual_waste_rate_directive = 0
         if(self.int_value_recycling_rate_directive > 0 or self.int_value_recovery_rate_directive > 0 or self.int_value_residual_waste_rate_directive > 0):
-            #for self.value_recycling_rate_status
             if(self.int_value_recycling_rate_product >= self.int_value_recycling_rate_directive):
                 self.value_recycling_rate_status.setText(self.text_good)
                 self.value_recycling_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)
             else:
                 self.value_recycling_rate_status.setText(self.text_bad)
                 self.value_recycling_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
-            #for self.value_recovery_rate_status
             if(self.int_value_recovery_rate_product >= self.int_value_recovery_rate_directive):
                 self.value_recovery_rate_status.setText(self.text_good)
                 self.value_recovery_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)
             else:
                 self.value_recovery_rate_status.setText(self.text_bad)
                 self.value_recovery_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
-            #for self.value_residual_waste_rate_status
             if(self.int_value_residual_waste_rate_product <= self.int_value_residual_waste_rate_directive):
                 self.value_residual_waste_rate_status.setText(self.text_good)
                 self.value_residual_waste_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)

@@ -7,7 +7,6 @@ PATH_RESICLED = Path(__file__).resolve().parents[1]
 
 class Tool():
     def __init__(self, parent=None):
-        #super(Tool, self).__init__(parent)
         self.path_database_tables = self.get_path_database_tables()
         self.prefix_name_database = "resicled_" #"Database_resicled"
         

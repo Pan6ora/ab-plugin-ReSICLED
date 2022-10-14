@@ -11,7 +11,6 @@ from .componentdatabase import Componentdatabase
 
 class Composedatabase:
     def __init__(self, parent=None):
-        ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         # --init
         self.tool = Tool()
         
@@ -52,7 +51,6 @@ class Composedatabase:
     def get_compose_by_product_and_component(self, id_product_param, id_component_param):
         result_dict = dict()
         dico = self.db.load()
-        # dict_material = dico.__getitem__((self.name_database, str(id_material_param)))
         for key, value in dico.items():
             str_id_product = str(value["id_product"])
             str_id_component = str(value["id_component"])
@@ -65,7 +63,6 @@ class Composedatabase:
     def get_component_by_product(self, id_product_param):
         result_dict = dict()
         dico = self.db.load()
-        # dict_material = dico.__getitem__((self.name_database, str(id_material_param)))
         for key, value in dico.items():
             str_id_product = str(value["id_product"])
             str_id_component = str(value["id_component"])
@@ -77,7 +74,6 @@ class Composedatabase:
     def get_all_component_and_product(self):
         result_dict = dict()
         dico = self.db.load()
-        # dict_material = dico.__getitem__((self.name_database, str(id_material_param)))
         for key, value in dico.items():
             str_id_product = str(value["id_product"])
             str_id_component = str(value["id_component"])
@@ -87,7 +83,7 @@ class Composedatabase:
 
     def insert_one_compose(self, dict_compose: dict):
         self.dt = datetime.now()
-        self.id_compose = str(dict_compose["id_product"]) + str(dict_compose["id_component"])  # datetime.timestamp(self.dt)
+        self.id_compose = str(dict_compose["id_product"]) + str(dict_compose["id_component"])
         self.id_product = dict_compose["id_product"]
         self.id_component = dict_compose["id_component"]
         self.piecenumber_component = dict_compose["piecenumber_component"]

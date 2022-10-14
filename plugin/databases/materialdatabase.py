@@ -12,7 +12,6 @@ from ...metadata import infos
 
 class Materialdatabase():
     def __init__(self, parent=None):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         #--init
         self.tool = Tool()
         
@@ -21,30 +20,21 @@ class Materialdatabase():
         
         #-- check if database exist, create if not exist
         if self.name_database not in bw.databases:
-            """
-            #get table in json file
-            self.path_database = self.tool.get_path_database_tables_file('Database_resicled_material.json')
-            self.f = open(self.path_database, "r")
-            database_string = self.f.read()
-            """
             #Manually creating a database is to have the data in a separate dictionary
             path = bw.projects.request_directory("plugins")
             BW2Package().import_file(path+"/{}/plugin/includes/bw2package/materials.bw2package".format(infos["name"]))
         self.db = bw.Database(self.name_database)
         
     def get_all_material(self):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         return self.db.load()
     
     def get_one_material(self, key):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
         key = (self.name_database, str(key))
         if(dico != None and dico.__contains__(key)):
             return dico.__getitem__(key)
     
     def get_material_by_attrib(self, name_attrib_param, value_attrib_param):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         result_dict = dict()
         str_name_attrib_param = str(name_attrib_param)
         str_value_attrib_param = str(value_attrib_param)
@@ -56,9 +46,8 @@ class Materialdatabase():
         return result_dict
     
     def insert_one_material(self, dict_material: dict):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         self.dt = datetime.now()
-        self.id_material = dict_material["id_material"] #datetime.timestamp(self.dt)
+        self.id_material = dict_material["id_material"]
         self.type_material = dict_material["type_material"]
         self.name_material = dict_material["name"]
         self.recdis_material = dict_material["recdis_material"]
@@ -89,7 +78,6 @@ class Materialdatabase():
         self.db.write(dico)
         
     def delete_one_material(self, id_material_param):
-        #print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         dico = self.db.load()
         key = (self.name_database, str(id_material_param))
         if(dico != None and dico.__contains__(key)):

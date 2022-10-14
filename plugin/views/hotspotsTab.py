@@ -42,7 +42,6 @@ class HotspotsTab(QTabWidget):
         self.edit_component_product.addItem("Select a product", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
-        #self.edit_component_product.setGeometry(10, 120, 120, 30)
         self.edit_component_product.setFrame(False)
         self.product_selection_widget = QWidget(self)
         self.product_selection_layout = QHBoxLayout(self)
@@ -99,14 +98,12 @@ class HotspotsTab(QTabWidget):
         if (product_selected == None):
             return None
         
-        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         
         #for hotspots_1
-        """#get new values"""
         self.datamodel = Datamodel(self);
-        self.data_list = self.datamodel.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_1") #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_hotspots_1 #self.datamodel.header_component      
+        self.data_list = self.datamodel.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_1")
+        self.header = self.datamodel.header_hotspots_1    
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
@@ -126,10 +123,9 @@ class HotspotsTab(QTabWidget):
         
         
         #for hotspots_2
-        """#get new values"""
         self.datamodel_2 = Datamodel(self)
-        self.data_list_2 = self.datamodel_2.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_2") #self.datamodel_2.getdata_component()
-        self.header_2 = self.datamodel_2.header_hotspots_2 #self.datamodel_2.header_2_component      
+        self.data_list_2 = self.datamodel_2.getdata_hotspots(product_selected.__getitem__('id_product'),"hotspots_2")
+        self.header_2 = self.datamodel_2.header_hotspots_2
         self.table_model_2 = TableModel(self, self.data_list_2, self.header_2)
         self.table_view_2 = QTableView()
         self.table_view_2.setModel(self.table_model_2)

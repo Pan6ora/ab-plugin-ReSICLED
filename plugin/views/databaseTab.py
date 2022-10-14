@@ -46,7 +46,6 @@ class DatabaseTab(QTabWidget):
         self.edit_database.addItem("Component", userData=None)
         self.edit_database.addItem("Material", userData=None)
         self.edit_database.addItem("Directive", userData=None)
-        #self.edit_database.setGeometry(10, 120, 120, 30)
         self.add_entry_button = QPushButton(self.icon.add,"Add new Database entry", self)
         self.add_entry_button.clicked.connect(self.call_show_dialog_action_add_database)
         self.edit_database_widget = QWidget(self)
@@ -74,7 +73,6 @@ class DatabaseTab(QTabWidget):
         if (index == 0):
             return None
         
-        #print("call_show_table_database",database_selected)
         self.title_database.setText('<h1 style=""> '+ database_selected +' data list  </h1>' )
         #get new values
         self.datamodel = Datamodel(self)
@@ -137,7 +135,6 @@ class DatabaseTab(QTabWidget):
             self.table_view.setColumnWidth(column_table, 200)
             self.table_view.setRowHeight(ligne_table, 50)
             self.table_view.setIndexWidget(self.table_model.index(int(ligne_table), column_table), self.widget_action[ligne_table])
-            #self.widget_action[ligne_table].show()
             
             
     def call_show_dialog_action_edit_database(self, database_selected):
@@ -155,7 +152,6 @@ class DatabaseTab(QTabWidget):
             return None
             
         if(database_selected.lower()=="product"):
-            #widget_obj== {'id_product': 1657567894.387305, 'name_product': 'procuct 1', 'nameauthor_product': '', 'firstname_product': '', 'database': 'resicled_product', 'code': '1657567894.387305', 'exchanges': []}
             #show confirm dialog
             id_element = widget_obj['id_product']
             name_element = widget_obj['name_product']

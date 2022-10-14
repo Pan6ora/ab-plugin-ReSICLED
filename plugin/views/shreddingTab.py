@@ -42,7 +42,6 @@ class ShreddingTab(QTabWidget):
         self.edit_component_product.addItem("Select a product", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
-        #self.edit_component_product.setGeometry(10, 120, 120, 30)
         
         self.edit_component_product.setFrame(False)
         self.product_editing_widget = QWidget(self)
@@ -118,7 +117,6 @@ class ShreddingTab(QTabWidget):
         self.layout_rate.addWidget(self.value_residual_waste_rate_status, 3, 3)
         self.widget_rate_view.setLayout(self.layout_rate)
         self.widget_rate_view.move(10, 180)
-        #self.widget_rate_view.setGeometry(10, 180, 420, 220)
         self.widget_rate_view.setStyleSheet(self.style.style_table_rate)
         self.widget_rate_view.show()
         
@@ -167,12 +165,10 @@ class ShreddingTab(QTabWidget):
         if (product_selected == None):
             return None
         
-        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
-        """#get new values"""
         self.datamodel = Datamodel();
-        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"shredding") #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_component_scenario_rate #self.datamodel.header_component
+        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"shredding") 
+        self.header = self.datamodel.header_database_component_scenario_rate
         
         self.value_recycling_rate_product.setText(str(self.datamodel.recycling_rate) + "%")
         self.value_recovery_rate_product.setText(str(self.datamodel.recovery_rate) + "%")

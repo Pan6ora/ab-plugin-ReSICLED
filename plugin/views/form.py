@@ -25,7 +25,6 @@ class Form(QDialog):
         self.class_dialog_insert_component = None
         
     def show_dialog(self):
-        #app = QApplication(sys.argv)
         dialog = Dialog()
         dialog.exec_()
         
@@ -52,10 +51,8 @@ class Form(QDialog):
     def show_dialog_question(self, parent, text_question):
         reply = QMessageBox.question(parent, "Question Message", text_question, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
-            #self.label.setText("I Like Pyside2")
             return True
         elif reply == QMessageBox.No:
-            #self.label.setText("I Dont Like Pyside2")
             return False
 
     def show_dialog_add_directive(self, parent):
@@ -85,7 +82,6 @@ class Dialog_alert(QDialog):
                  
 class Dialog_change_strategy(QDialog):
     def __init__(self, item, parent = None):
-        # item est l'index du component cliqué dans la bdd compose
         QDialog.__init__(self,parent)
         self.item = item
         style = Style()
@@ -195,7 +191,6 @@ class Dialog_insert_directive(QDialog):
         #--- button layout --
         self.layout_button = QGridLayout()
         self.layout_button.addWidget(self.bouton_close,0,0)
-        #self.layout_button.addWidget(self.bouton_save,0,1)
         self.widget_button.setLayout(self.layout_button)
         
         #--- Final layout ---
@@ -237,10 +232,8 @@ class Dialog_insert_directive(QDialog):
                 self.parent.call_show_table_component_product(None)
                             
     def show_alert_information(self, message):
-        #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            #self.label.setText("OK")
             print("OK")
 
     def close(self):
@@ -251,15 +244,6 @@ class Dialog_insert_directive(QDialog):
         if rbtn.isChecked() == True:
             #self.parent
             print("set_insert_directive",rbtn)
-            
-            """#signal update_combobox
-            signals.update_combobox.connect(self.update_menu_combobox)
-            signals.update_combobox.emit(self.box_directive)
-            #close form
-            self.close()
-            # show alert
-            self.message = "Product added Successfully"
-            self.show_alert_information(self.message)"""
          
 class Dialog_insert_product(QDialog):
     def __init__(self, box_product, parent=None):
@@ -315,10 +299,8 @@ class Dialog_insert_product(QDialog):
             box.addItem(str(value['name_product']), userData=value)
         
     def show_alert_information(self, message):
-        #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            #self.label.setText("OK")
             print("OK")
 
     def close(self):
@@ -430,7 +412,6 @@ class Dialog_insert_component(QDialog):
         self.layout_component.addRow("Name  component: (*)", self.edit_name_component)
         self.layout_component.addRow(style.horizontal_line())
         self.layout_component.addRow("Weight (grams/piece) :(*) ", self.edit_component_weight)
-        #self.layout_component.addRow("Is it pollutant ? : ", self.edit_component_isitpollutant)
         self.layout_component.addRow("Number of pieces :(*) ", self.edit_component_numberofpieces)
         self.layout_component.addRow("Comment : ", self.edit_component_comments)
         self.widget_component.setLayout(self.layout_component)
@@ -450,8 +431,6 @@ class Dialog_insert_component(QDialog):
         #--- signal button ---
         self.bouton_close.clicked.connect(self.close)
         self.bouton_save.clicked.connect(self.save_insert_component)
-        #--- signal select combobox
-        #self.edit_component_isitpollutant.currentIndexChanged.connect(self.selectionchange)
         #--- button layout --
         self.layout_button = QGridLayout()
         self.layout_button.addWidget(self.bouton_close,0,0)
@@ -467,15 +446,7 @@ class Dialog_insert_component(QDialog):
         self.layout_main.addWidget(self.widget_button)
         self.setLayout(self.layout_main)
         self.setWindowTitle("Form add component")
-        
-        """
-        layout = QHBoxLayout()
-        self.cb = QComboBox()
-        self.cb.addItem("C")
-        self.cb.addItem("C++")
-        self.cb.addItems(["Java", "C#", "Python"])
-        self.cb.currentIndexChanged.connect(self.selectionchange)
-        """
+
     def reset_orthers_component_material_polymer(self,index):
         #reset selection for
         self.edit_component_material_metal.setCurrentIndex(0)
@@ -506,10 +477,8 @@ class Dialog_insert_component(QDialog):
         
     @Slot(str)
     def show_alert_information(self, message):
-        #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            #self.label.setText("OK")
             print("OK")
     
     def close(self):
@@ -550,9 +519,6 @@ class Dialog_insert_component(QDialog):
                 }
             #insert in database
             self.databasemanager.composedatabase.insert_one_component(new_component)
-            """#signal update_combobox
-            signals.update_combobox.connect(self.update_menu_combobox)
-            signals.update_combobox.emit(self.box_product)"""
             #close form
             self.close()
             # show alert
@@ -643,10 +609,6 @@ class Dialog_insert_material(QDialog):
         
     @Slot(object)
     def update_menu_combobox_component_material(self, class_dialog_insert_component):        
-        """self.class_dialog_insert_component.edit_component_material_polymer
-        self.class_dialog_insert_component.edit_component_material_metal
-        self.class_dialog_insert_component.edit_component_material_other
-        self.class_dialog_insert_component.edit_component_material_personalmaterial"""
         #---material_polymer to select
         self.all_material_polymer = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
         self.class_dialog_insert_component.edit_component_material_polymer.clear()
@@ -674,10 +636,8 @@ class Dialog_insert_material(QDialog):
         
     @Slot(str)
     def show_alert_information(self, message):
-        #reply = QMessageBox.information(self, "Info", message)
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)
         if reply == QMessageBox.Ok:
-            #self.label.setText("OK")
             print("OK")
     
     def close(self):
@@ -737,7 +697,6 @@ class Dialog_insert_material(QDialog):
         """ recovery_rate = recycling_rate + Energy_rate """
         rate = str(int(self.edit_recdis_material.text()) + int(self.edit_enerdis_material.text()))
         self.edit_recodis_material.setText(rate)
-        #self.edit_recdis_material.adjustSize()
         
     def get_recoveryshr(self, text):
         """ recovery_rate = recycling_rate + Energy_rate """
@@ -824,8 +783,6 @@ class Dialog_add_directive(QDialog):
         self.mainLayout.addWidget(self.buttons_widget)
         self.setLayout(self.mainLayout)
         self.setWindowTitle("Insert new directive")
-
-        #besoins : 4 champs (dont 2 pour rentrer)
 
     def save_inserted_directive(self):
         nb_directives = len(list(self.databasemanager.directivedatabase.get_all_directive().keys()))

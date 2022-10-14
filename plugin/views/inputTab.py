@@ -56,7 +56,6 @@ class InputTab(QTabWidget):
         self.edit_component_product.addItem("Select a product to view its components", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
-        #self.edit_component_product.setGeometry(260, 100, 120, 30)
         self.edit_component_product.move(250, 100)
         self.edit_component_product.setFrame(False)
         #add signal
@@ -67,12 +66,11 @@ class InputTab(QTabWidget):
         #---line
         self.ligne_local = style.horizontal_line(self)
         self.ligne_local.setGeometry(10, 130, 400, 1)
-        #self.ligne_local.move(10, 110)
         
         #--- table
         self.datamodel = Datamodel();
-        self.data_list = self.datamodel.getdata_product() #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_product #self.datamodel.header_component
+        self.data_list = self.datamodel.getdata_product()
+        self.header = self.datamodel.header_database_product
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
@@ -81,14 +79,11 @@ class InputTab(QTabWidget):
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        #self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
         self.layout_table_view.addWidget(self.table_view)
         self.widget_table_view.setLayout(self.layout_table_view)
-        #self.widget_table_view.move(10, 170)
         self.widget_table_view.setGeometry(10, 170, 1200, 500)
         self.widget_table_view.show()
         
@@ -101,22 +96,6 @@ class InputTab(QTabWidget):
         #signal update_combobox
         signals.update_combobox.connect(self.update_menu_combobox)
         signals.update_combobox.emit(self.edit_component_product)
-             
-        
-        """#--- QGridLayout grid placement ---
-        self.layout = QGridLayout()
-        self.layout.addWidget(self.button_add_product, 0 ,0)
-        self.layout.addWidget(self.button_add_component, 0 ,1)
-        self.setLayout(self.layout)"""
-        
-        
-        """#--- Final layout ---
-        self.layout_main = QVBoxLayout()
-        self.layout_main.addWidget(style.horizontal_line())
-        self.layout_main.addWidget(self.edit_component_product)
-        #self.layout_main.addWidget(self.widget_button)
-        self.setLayout(self.layout_main)"""
-    
     
     def open_tab(self, parent):
         parent.tabwidget.setCurrentIndex(4)
@@ -129,12 +108,10 @@ class InputTab(QTabWidget):
         if(product_selected==None):
             return None
         
-        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
-        """#get new values"""
         self.datamodel = Datamodel();
-        self.data_list = self.datamodel.getdata_component(product_selected.__getitem__('id_product')) #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_component #self.datamodel.header_component
+        self.data_list = self.datamodel.getdata_component(product_selected.__getitem__('id_product'))
+        self.header = self.datamodel.header_database_component
         self.table_model = TableModel(self, self.data_list, self.header)
         self.table_view = QTableView()
         self.table_view.setModel(self.table_model)
@@ -143,8 +120,6 @@ class InputTab(QTabWidget):
         self.table_view.setFont(self.font)
         # set column width to fit contents (set font first!)
         self.table_view.resizeColumnsToContents()
-        # enable sorting
-        #self.table_view.setSortingEnabled(True)
         #display
         self.widget_table_view = QWidget(self)
         self.layout_table_view = QVBoxLayout(self)
@@ -152,9 +127,6 @@ class InputTab(QTabWidget):
         self.widget_table_view.setLayout(self.layout_table_view)
         self.widget_table_view.setGeometry(10, 170, 1200, 500)
         self.widget_table_view.show()
-        """#signal update table
-        signals.update_table_component_product.connect(self.update_table_component_product)
-        signals.update_table_component_product.emit(self.header, self.data_list)"""
         
     @Slot(object, object)
     def update_table_component_product(self, header_param, data_list_param):

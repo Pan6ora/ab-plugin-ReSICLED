@@ -8,7 +8,6 @@ from .guidelinesdatabase import GuidelinesDatabase
 
 class DatabaseManager():
     def __init__(self, parent=None):
-        #super(DatabaseManager, self).__init__(parent)
         self.directivedatabase = Directivedatabase()
         self.productdatabase = Productdatabase()
         self.composedatabase = Composedatabase()

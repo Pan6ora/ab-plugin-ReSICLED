@@ -44,7 +44,6 @@ class MixedTab(QTabWidget):
         self.edit_component_product.addItem("Select a product", userData=None)
         for key_product, value_product in self.all_product.items():
             self.edit_component_product.addItem(str(value_product['name_product']), userData=value_product)
-        #self.edit_component_product.setGeometry(10, 120, 120, 30)
         
         self.edit_component_product.setFrame(False)
         self.product_editing_widget = QWidget(self)
@@ -120,7 +119,6 @@ class MixedTab(QTabWidget):
         self.layout_rate.addWidget(self.value_residual_waste_rate_status, 3, 3)
         self.widget_rate_view.setLayout(self.layout_rate)
         self.widget_rate_view.move(10, 180)
-        #self.widget_rate_view.setGeometry(10, 180, 420, 220)
         self.widget_rate_view.setStyleSheet(self.style.style_table_rate)
         self.widget_rate_view.show()
         
@@ -172,13 +170,10 @@ class MixedTab(QTabWidget):
         if (product_selected == None):
             return None
         
-        #print("call_show_table_component_product",product_selected.__getitem__('name_product')," id_product==", product_selected.__getitem__('id_product'))
         self.title_component_product.setText('<h1 style=""> '+product_selected.__getitem__('name_product')+' (components list)  </h1>' )
         #get new values
         self.datamodel = Datamodel(self)
-        self.data_list = self.datamodel.getdata_component_scenario_rate(product_selected.__getitem__('id_product'),"mixed") #self.datamodel.getdata_component()
-        self.header = self.datamodel.header_database_component_scenario_rate_mixed #self.datamodel.header_component
-        
+        self.header = self.datamodel.header_database_component_scenario_rate_mixed
         self.value_recycling_rate_product.setText(str(self.datamodel.recycling_rate) + "%")
         self.value_recovery_rate_product.setText(str(self.datamodel.recovery_rate) + "%")
         self.value_residual_waste_rate_product.setText(str(self.datamodel.residual_rate) + "%")
@@ -243,21 +238,18 @@ class MixedTab(QTabWidget):
             self.int_value_residual_waste_rate_directive = 0
         
         if(self.int_value_recycling_rate_directive > 0 or self.int_value_recovery_rate_directive > 0 or self.int_value_residual_waste_rate_directive > 0):
-            #for self.value_recycling_rate_status
             if(self.int_value_recycling_rate_product >= self.int_value_recycling_rate_directive):
                 self.value_recycling_rate_status.setText(self.text_good)
                 self.value_recycling_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)
             else:
                 self.value_recycling_rate_status.setText(self.text_bad)
                 self.value_recycling_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
-            #for self.value_recovery_rate_status
             if(self.int_value_recovery_rate_product >= self.int_value_recovery_rate_directive):
                 self.value_recovery_rate_status.setText(self.text_good)
                 self.value_recovery_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)
             else:
                 self.value_recovery_rate_status.setText(self.text_bad)
                 self.value_recovery_rate_status.setStyleSheet(self.style.style_bad_rate + self.style.style_table_rate_border_bottom)
-            #for self.value_residual_waste_rate_status
             if(self.int_value_residual_waste_rate_product <= self.int_value_residual_waste_rate_directive):
                 self.value_residual_waste_rate_status.setText(self.text_good)
                 self.value_residual_waste_rate_status.setStyleSheet(self.style.style_good_rate + self.style.style_table_rate_border_bottom)
@@ -270,11 +262,9 @@ class MixedTab(QTabWidget):
         self.call_show_table_component_product(None)   
         
     def change_component_strategy(self,item):
-        #print(item.row(),item.column())
         if item.column()==8:
             #Forcing ppl to click on the Scenario column
             clicked_pollutant_status = self.table_view.model().data(self.table_view.model().index(item.row(),7),Qt.DisplayRole)
-            #self.form.show_dialog_change_strategy(self,item)
             if clicked_pollutant_status.lower()=="no":
                 # we can change the value of the scenario, os we do it
                 id_comp = self.table_view.model().data(self.table_view.model().index(item.row(),1),Qt.DisplayRole)
@@ -282,14 +272,5 @@ class MixedTab(QTabWidget):
             else:
                 self.form.show_dialog_alert("This element is pollutant according to the european directive. No change is allowed.")
         self.call_show_table_component_product_mixed(None)
-                
-                
-            
-            
-            # TODO
-            # Regarder la valeur du polluant, si le materiau en question est considere polluant, on met un message d'alerte comme quoi c'est pas possible
-        #sinon on fait pop un form de justification (qui ne serivra à rien pour le moment)
-        # ensuite on fait le chgmt dans la bdd compose
-        # puis on maj le tableau
 
         
