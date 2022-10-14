@@ -60,7 +60,7 @@ class Materialdatabase():
         self.dt = datetime.now()
         self.id_material = dict_material["id_material"] #datetime.timestamp(self.dt)
         self.type_material = dict_material["type_material"]
-        self.name_material = dict_material["name_material"]
+        self.name_material = dict_material["name"]
         self.recdis_material = dict_material["recdis_material"]
         self.enerdis_material = dict_material["enerdis_material"]
         self.wastedis_material = dict_material["wastedis_material"]
@@ -73,7 +73,7 @@ class Materialdatabase():
         self.new_material = {
             "id_material": self.id_material,
             "type_material": self.type_material,
-            "name_material": self.name_material,
+            "name": self.name_material,
             "recdis_material": self.recdis_material,
             "enerdis_material": self.enerdis_material,
             "wastedis_material": self.wastedis_material,

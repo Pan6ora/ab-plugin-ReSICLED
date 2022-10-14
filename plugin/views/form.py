@@ -177,7 +177,7 @@ class Dialog_insert_directive(QDialog):
         self.dict_var = dict()
         for key, value in self.all_directive_form.items():
             # The input
-            self.dict_var[key] = QRadioButton(str(value['directive_title']), self)
+            self.dict_var[key] = QRadioButton(str(value['name']), self)
             # signal
             self.dict_var[key].toggled.connect(self.set_value_directive)
             
@@ -233,7 +233,7 @@ class Dialog_insert_directive(QDialog):
                     self.parent.value_recovery_rate_directive.setText(str(round(float(self.all_directive_form[key]["mixed_recovery_rate"])*100)) + "%")
                     self.parent.value_residual_waste_rate_directive.setText(str(round(float(self.all_directive_form[key]["mixed_residual_waste_rate"])*100)) + "%")
                 #set
-                self.parent.value_directive_applied.setText(self.all_directive_form[key]["directive_title"])
+                self.parent.value_directive_applied.setText(self.all_directive_form[key]["name"])
                 self.parent.call_show_table_component_product(None)
                             
     def show_alert_information(self, message):
@@ -712,7 +712,7 @@ class Dialog_insert_material(QDialog):
             # new material
             new_material = {
                 "type_material": type_material_selected,
-                "name_material": str(self.edit_name_material.text()),
+                "name": str(self.edit_name_material.text()),
                 "recdis_material": self.edit_recdis_material.text(),
                 "enerdis_material": self.edit_enerdis_material.text(),
                 "wastedis_material": self.edit_wastedis_material.text(),
@@ -805,15 +805,15 @@ class Dialog_add_directive(QDialog):
         self.buttons_widget.setLayout(self.buttons_layout)
 
         rate_validator = QDoubleValidator(0.,100.,2,parent = self)
-        self.edit_directive_title = QLineEdit("")
-        self.edit_directive_comment = QLineEdit("")
+        self.edit_name = QLineEdit("")
+        self.edit_comment = QLineEdit("")
         self.edit_recycling_rate = QLineEdit("")
         self.edit_recycling_rate.setValidator(rate_validator)
         self.edit_energy_recovery_rate = QLineEdit("")
         self.edit_energy_recovery_rate.setValidator(rate_validator)
         self.directive_add_layout = QFormLayout()
-        self.directive_add_layout.addRow("Directive title : (*)",self.edit_directive_title)
-        self.directive_add_layout.addRow("Directive comment : ",self.edit_directive_comment)
+        self.directive_add_layout.addRow("Directive title : (*)",self.edit_name)
+        self.directive_add_layout.addRow("Directive comment : ",self.edit_comment)
         self.directive_add_layout.addRow("Recycling rate (in %) : ", self.edit_recycling_rate)
         self.directive_add_layout.addRow("Energy recovery rate (in %) : ", self.edit_energy_recovery_rate)
         self.form_widget = QWidget(self)
@@ -834,8 +834,8 @@ class Dialog_add_directive(QDialog):
         residual_waste_rate = 100. - (recycling_rate+energy_recovery_rate)
         saved_directive_dict = {
             "id_directive" : nb_directives+1,
-            "directive_title" : str(self.edit_directive_title.text()),
-            "directive_comment" : str(self.edit_directive_comment.text()),
+            "name" : str(self.edit_name.text()),
+            "comment" : str(self.edit_comment.text()),
             "dismantling_recycling_rate": recycling_rate/100.,
             "dismantling_recovery_rate": (100.-residual_waste_rate)/100.,
             "dismantling_residual_waste_rate": residual_waste_rate/100.,

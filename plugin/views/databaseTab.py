@@ -185,7 +185,7 @@ class DatabaseTab(QTabWidget):
         if(database_selected.lower() == "directive"):
             #show confirm dialog
             id_element = widget_obj['directive_number']
-            name_element = widget_obj['directive_title']
+            name_element = widget_obj['name']
             text_question = "Do you want to delete the directive << "+name_element+" >> ? "
             result_bool = self.form.show_dialog_question(self, text_question)
             if(result_bool == True):

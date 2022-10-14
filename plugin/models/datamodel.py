@@ -79,7 +79,7 @@ class Datamodel(QAbstractTableModel):
             #--- select
             self.all_directive_form = self.databasemanager.directivedatabase.get_all_directive()
             for _, value in self.all_directive_form.items():
-                self.data_list.append((ref_cmp,value['directive_title'],value['directive_comment'],value['dismantling_recycling_rate'],value['dismantling_recovery_rate'],value['dismantling_residual_waste_rate'],value['shredding_recycling_rate'],value['shredding_recovery_rate'],value['shredding_residual_waste_rate'],value['mixed_recycling_rate'],value['mixed_recovery_rate'],value['mixed_residual_waste_rate'],' '))
+                self.data_list.append((ref_cmp,value['name'],value['comment'],value['dismantling_recycling_rate'],value['dismantling_recovery_rate'],value['dismantling_residual_waste_rate'],value['shredding_recycling_rate'],value['shredding_recovery_rate'],value['shredding_residual_waste_rate'],value['mixed_recycling_rate'],value['mixed_recovery_rate'],value['mixed_residual_waste_rate'],' '))
                 dict_ligne_database[ref_cmp] = value
                 ref_cmp = ref_cmp + 1
                 
@@ -288,5 +288,5 @@ class Datamodel(QAbstractTableModel):
     def get_data_guidelines(self):
         data_list = []
         for _, item in self.databasemanager.guidelinesdatabase.get_all_guidelines().items():
-            data_list.append((item["guideline_number"], item["guideline_name"]))
+            data_list.append((item["guideline_number"], item["name"]))
         return [(elem[1], ) for elem in sorted(data_list, key = lambda x:x[0])]

@@ -61,8 +61,8 @@ class Directivedatabase():
         ##print("--debug--", self.__class__.__name__, "::",sys._getframe().f_code.co_name)
         self.dt = datetime.now()
         self.id_directive = dict_directive["id_directive"] #datetime.timestamp(self.dt)
-        self.directive_title = dict_directive["directive_title"]
-        self.directive_comment = dict_directive["directive_comment"]
+        self.name = dict_directive["name"]
+        self.comment = dict_directive["comment"]
         self.dismantling_recycling_rate = dict_directive["dismantling_recycling_rate"]
         self.dismantling_recovery_rate = dict_directive["dismantling_recovery_rate"]
         self.dismantling_residual_waste_rate = dict_directive["dismantling_residual_waste_rate"]
@@ -75,8 +75,8 @@ class Directivedatabase():
         # new directive
         self.new_directive = {
             "directive_number": self.id_directive,
-            "directive_title": self.directive_title,
-            "directive_comment": self.directive_comment,
+            "name": self.name,
+            "comment": self.comment,
             "dismantling_recycling_rate": self.dismantling_recycling_rate,
             "dismantling_recovery_rate": self.dismantling_recovery_rate,
             "dismantling_residual_waste_rate": self.dismantling_residual_waste_rate,
