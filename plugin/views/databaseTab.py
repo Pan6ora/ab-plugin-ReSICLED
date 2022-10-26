@@ -13,7 +13,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 from ..signals import signals
 
 
@@ -21,7 +21,7 @@ from ..signals import signals
 class DatabaseTab(QTabWidget):
     def __init__(self, parent=None):
         super(DatabaseTab, self).__init__(parent)
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         self.icon = Icon()
         self.form = Form()
         self.style = Style()

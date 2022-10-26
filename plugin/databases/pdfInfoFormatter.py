@@ -1,6 +1,4 @@
-from .database import DatabaseManager
-
-databasemanager = DatabaseManager()
+from .database import databasemanager
 
 class PdfInfoFormatter:
     """

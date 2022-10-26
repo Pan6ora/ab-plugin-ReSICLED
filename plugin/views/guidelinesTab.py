@@ -13,7 +13,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 
 
 
@@ -23,7 +23,7 @@ class GuidelinesTab(QTabWidget):
         self.icon = Icon()
         self.form=Form()
         self.style= Style()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
 
         # --- comboboxes ---
         self.cb1_items = ["All", "Reduce", "Depollution", "Re-use / remanufacture / repair", "Recycle / recover after dismantling (RAD)", 'Recycle / recover after shredding (RAS)', "Energy recovery"]

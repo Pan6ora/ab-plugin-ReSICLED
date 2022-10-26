@@ -13,9 +13,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
-
-databasemanager = DatabaseManager()
+from ..databases.database import databasemanager
 
 class HotspotsTab(QTabWidget):
     def __init__(self, parent=None):

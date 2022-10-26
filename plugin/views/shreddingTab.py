@@ -13,7 +13,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 
 
 
@@ -24,7 +24,7 @@ class ShreddingTab(QTabWidget):
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         
         # --- title ---
         self.title = QLabel(self)

@@ -1,6 +1,6 @@
 from PySide2.QtCore import QAbstractTableModel
 from PySide2.QtCore import *
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 
 
 
@@ -9,7 +9,7 @@ class Datamodel(QAbstractTableModel):
         QAbstractTableModel.__init__(self, parent)
         #sum calculation
         self.parent = parent
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         self.sum_weight = 0
         self.sum_recycle_weight = 0
         self.sum_energy_recovery_weight = 0

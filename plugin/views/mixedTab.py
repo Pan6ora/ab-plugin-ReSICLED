@@ -14,7 +14,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 
 
 class MixedTab(QTabWidget):
@@ -25,7 +25,7 @@ class MixedTab(QTabWidget):
         self.form = Form()
         self.style = Style()
         self.combo_scenario = dict()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         
         # --- title ---
         self.title = QLabel(self)

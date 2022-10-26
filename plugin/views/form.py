@@ -12,7 +12,7 @@ from PySide2.QtCore import Qt
 from PySide2.QtGui import QIntValidator, QDoubleValidator
 from .icon import Icon
 from .style import Style
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 from ..signals import signals
 
 
@@ -85,7 +85,7 @@ class Dialog_change_strategy(QDialog):
         QDialog.__init__(self,parent)
         self.item = item
         style = Style()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         self.strategy_change_widget = QWidget(self)
         self.buttons_widget = QWidget(self)
 
@@ -159,7 +159,7 @@ class Dialog_insert_directive(QDialog):
         #-- init
         self.parent = parent
         self.type_scenario = type_scenario
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         #--- style ---
         style = Style()
         #--- QtWidget ---
@@ -255,7 +255,7 @@ class Dialog_insert_product(QDialog):
         #--- QtWidget ---
         self.widget_product = QWidget()
         self.widget_button = QWidget()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         # The input
         self.edit_name_product = QLineEdit("")
         self.edit_name_autor = QLineEdit("")
@@ -331,7 +331,7 @@ class Dialog_insert_component(QDialog):
         QDialog.__init__(self,parent)
         #--- style ---
         style = Style()
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         #--- QtWidget ---
         self.widget_component = QWidget()
         self.widget_component_material = QWidget()
@@ -531,7 +531,7 @@ class Dialog_insert_material(QDialog):
         QDialog.__init__(self,parent)
         #--- init
         self.class_dialog_insert_component = parent
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         #--- style ---
         style = Style()
         #--- QtWidget ---
@@ -752,7 +752,7 @@ class Dialog(QDialog):
 class Dialog_add_directive(QDialog):
     def __init__(self,parent = None):
         QDialog.__init__(self,parent)
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         self.cancel_button = QPushButton("Cancel")
         self.ok_button = QPushButton("Save")
         self.cancel_button.clicked.connect(self.close)

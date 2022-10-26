@@ -11,7 +11,7 @@ from .style import Style
 from ..signals import signals
 from ..models.tablemodel import TableModel
 from ..models.datamodel import Datamodel
-from ..databases.database import DatabaseManager
+from ..databases.database import databasemanager
 
 
 
@@ -24,7 +24,7 @@ class DismantlingTab(QTabWidget):
         Initializing the tab and building the main widgets 
         """
         super(DismantlingTab, self).__init__(parent)
-        self.databasemanager = DatabaseManager()
+        self.databasemanager = databasemanager
         self.icon = Icon()
         self.form = Form()
         self.style = Style()
