@@ -18,13 +18,7 @@ class Directivedatabase():
         self.tool = Tool()
         
         #database name
-        self.name_database = self.tool.prefix_name_database + "directive"
-        
-        #-- check if database exist, create if not exist
-        if self.name_database not in bw.databases:
-            #Manually creating a database is to have the data in a separate dictionary
-            path = bw.projects.request_directory("plugins")
-            BW2Package().import_file(path+"/{}/plugin/includes/bw2package/directives.bw2package".format(infos["name"]))
+        self.name_database = self.tool.prefix_name_database + "directives"
         self.db = bw.Database(self.name_database)
         
     def get_all_directive(self):
