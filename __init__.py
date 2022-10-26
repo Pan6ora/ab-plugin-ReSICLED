@@ -14,5 +14,10 @@ class Plugin(ab.Plugin):
         self.tabs = [self.mainTab, self.leftTab]
         self.databasemanager = databasemanager
 
-        DatabaseManager()
+    def initialize(self):
+        self.databasemanager.import_databases()
+        signals.databases_changed.emit()
+
+    def remove(self):
+        self.databasemanager.delete_databases()
         signals.databases_changed.emit()
