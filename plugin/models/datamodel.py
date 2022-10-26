@@ -50,7 +50,7 @@ class Datamodel(QAbstractTableModel):
             self.all_component_form = self.databasemanager.composedatabase.get_all_component_and_product()
             for _, value in self.all_component_form.items():
                 name_component = value['one_component']['name_component']
-                name_material = value['material_of_component']['name_material']
+                name_material = value['material_of_component']['name']
                 Type_material = value['material_of_component']['type_material']
                 Weight = str(value['one_component']['weight_component']).replace(",", ".")
                 pollutant = str(value['material_of_component']['pollutant_material'])
@@ -72,7 +72,7 @@ class Datamodel(QAbstractTableModel):
                     pollutant = "No"
                 else:
                     pollutant = "Yes"
-                self.data_list.append((ref_cmp,value['type_material'],value['name_material'],pollutant,value['recdis_material'],value['enerdis_material'],value['wastedis_material'],value['recshr_material'],value['enershr_material'],value['wasteshr_material'],value['price_material'],' '))
+                self.data_list.append((ref_cmp,value['type_material'],value['name'],pollutant,value['recdis_material'],value['enerdis_material'],value['wastedis_material'],value['recshr_material'],value['enershr_material'],value['wasteshr_material'],value['price_material'],' '))
                 dict_ligne_database[ref_cmp] = value
                 ref_cmp = ref_cmp + 1
         elif(type_database.lower()=="directive"):
@@ -104,7 +104,7 @@ class Datamodel(QAbstractTableModel):
         self.all_component_form = self.databasemanager.composedatabase.get_component_by_product(id_product)
         for _, value in self.all_component_form.items():
             name_component = value['one_component']['name_component']
-            name_material = value['material_of_component']['name_material']
+            name_material = value['material_of_component']['name']
             Type_material = value['material_of_component']['type_material']
             Weight = value['one_component']['weight_component']
             pollutant = str(value['material_of_component']['pollutant_material'])

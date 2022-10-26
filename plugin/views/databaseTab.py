@@ -171,7 +171,7 @@ class DatabaseTab(QTabWidget):
         if(database_selected.lower() == "material"):
             #show confirm dialog
             id_element = widget_obj['id_material']
-            name_element = widget_obj['name_material']
+            name_element = widget_obj['name']
             type_material = widget_obj['type_material']
             id_element = widget_obj['id_material']
             text_question = "Do you want to delete the material << "+name_element+" >>  (" + type_material + ") ? All its components linked will also be deleted ! "

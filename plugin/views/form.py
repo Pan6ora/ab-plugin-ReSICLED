@@ -363,22 +363,22 @@ class Dialog_insert_component(QDialog):
         self.all_material_polymer = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
         self.edit_component_material_polymer.addItem("Select")
         for key, value in self.all_material_polymer.items():
-            self.edit_component_material_polymer.addItem(str(value['name_material']), userData=value)
+            self.edit_component_material_polymer.addItem(str(value['name']), userData=value)
         #---material_metal to select
         self.all_material_metal = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
         self.edit_component_material_metal.addItem("Select")
         for key, value in self.all_material_metal.items():
-            self.edit_component_material_metal.addItem(str(value['name_material']), userData=value)
+            self.edit_component_material_metal.addItem(str(value['name']), userData=value)
         #---material_other to select
         self.all_material_other = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
         self.edit_component_material_other.addItem("Select")
         for key, value in self.all_material_other.items():
-            self.edit_component_material_other.addItem(str(value['name_material']), userData=value)
+            self.edit_component_material_other.addItem(str(value['name']), userData=value)
         #---material_personalmaterial to select
         self.all_material_personalmaterial = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
         self.edit_component_material_personalmaterial.addItem("Select")
         for key, value in self.all_material_personalmaterial.items():
-            self.edit_component_material_personalmaterial.addItem(str(value['name_material']), userData=value)
+            self.edit_component_material_personalmaterial.addItem(str(value['name']), userData=value)
         #add signal
         self.edit_component_material_polymer.currentIndexChanged.connect(
             self.reset_orthers_component_material_polymer
@@ -614,25 +614,25 @@ class Dialog_insert_material(QDialog):
         self.class_dialog_insert_component.edit_component_material_polymer.clear()
         self.class_dialog_insert_component.edit_component_material_polymer.addItem("Select")
         for key, value in self.all_material_polymer.items():
-            self.class_dialog_insert_component.edit_component_material_polymer.addItem(str(value['name_material']), userData=value)
+            self.class_dialog_insert_component.edit_component_material_polymer.addItem(str(value['name']), userData=value)
         #---material_metal to select
         self.all_material_metal = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Metals")
         self.class_dialog_insert_component.edit_component_material_metal.clear()
         self.class_dialog_insert_component.edit_component_material_metal.addItem("Select")
         for key, value in self.all_material_metal.items():
-            self.class_dialog_insert_component.edit_component_material_metal.addItem(str(value['name_material']), userData=value)
+            self.class_dialog_insert_component.edit_component_material_metal.addItem(str(value['name']), userData=value)
         #---material_other to select
         self.all_material_other = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Other")
         self.class_dialog_insert_component.edit_component_material_other.clear()
         self.class_dialog_insert_component.edit_component_material_other.addItem("Select")
         for key, value in self.all_material_other.items():
-            self.class_dialog_insert_component.edit_component_material_other.addItem(str(value['name_material']), userData=value)
+            self.class_dialog_insert_component.edit_component_material_other.addItem(str(value['name']), userData=value)
         #---material_personalmaterial to select
         self.all_material_personalmaterial = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Personal")
         self.class_dialog_insert_component.edit_component_material_personalmaterial.clear()
         self.class_dialog_insert_component.edit_component_material_personalmaterial.addItem("Select")
         for key, value in self.all_material_personalmaterial.items():
-            self.class_dialog_insert_component.edit_component_material_personalmaterial.addItem(str(value['name_material']), userData=value)
+            self.class_dialog_insert_component.edit_component_material_personalmaterial.addItem(str(value['name']), userData=value)
         
     @Slot(str)
     def show_alert_information(self, message):
