@@ -9,6 +9,8 @@ class Plugin(ab.Plugin):
 
     def __init__(self):
         ab.Plugin.__init__(self, infos)
+
+    def load(self):
         self.mainTab = RightTab(self)
         self.leftTab = LeftTab(self)
         self.tabs = [self.mainTab, self.leftTab]
