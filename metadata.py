@@ -3,8 +3,8 @@
 ######################
 
 name='ReSICLED'
-version="0.1.0"
-author="Rémy Le Calloch, Brice Notario Bourgade, Elysée Tchassem Noukimi"
+version="0.2.0"
+author="G-SCOP"
 author_email="remy@lecalloch.net"
 url="https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled"
 description='Evaluate the recyclability of product Electr(on)ic for improving product design'
