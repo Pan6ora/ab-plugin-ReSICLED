@@ -25,6 +25,32 @@ Under consideration
 - make a proper doc (eg. docstrings...)
 - lint
 
+[0.2.0] - 2022-11-16
+====================
+
+Fixed
+-----
+
+Added
+-----
+
+- methods requested by plugin-manager-0.2.0
+- methods requested by plugin-manager-0.3.0
+
+Changed
+-------
+
+- bw2packages files now follow Brightway2 guidelines
+- Database tab moved to left panel
+- database importation is now performed in DatabaseManager
+- use only one instance of DatabaseManager
+
+Removed
+=======
+
+- useless json databases removed
+- useless comments removed
+
 [0.1.1] - 2022-07-29
 ====================
 
