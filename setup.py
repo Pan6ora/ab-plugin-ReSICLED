@@ -34,4 +34,9 @@ setup(
     url="https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled",
     long_description=open('README.md').read(),
     description="Evaluate the recyclability of product Electr(on)ic for improving product design",
+    package_data={'': [
+        'includes/resicled_directive/bw2packages/resicled_directives.bw2package', 
+        'includes/resicled_directive/bw2packages/resicled_guidelines.bw2package', 
+        'includes/resicled_directive/bw2packages/resicled_materials.bw2package', 
+        ]},
     )

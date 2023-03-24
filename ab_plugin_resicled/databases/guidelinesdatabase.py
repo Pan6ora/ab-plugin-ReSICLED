@@ -1,7 +1,6 @@
 import brightway2 as bw
 from bw2io.package import BW2Package
 from ..tools.tool import Tool
-from ...metadata import infos
 
 class GuidelinesDatabase:
     def __init__(self,parent = None):

@@ -1,11 +1,11 @@
 import brightway2 as bw
 from bw2io.package import BW2Package
+import pkg_resources
 
 import time
 
 from activity_browser.settings import project_settings
 
-from ...metadata import infos
 from .materialdatabase import Materialdatabase
 from .productdatabase import Productdatabase
 from .composedatabase import Composedatabase
@@ -27,8 +27,7 @@ class DatabaseManager():
 
     def import_databases(self):
 
-        path = bw.projects.request_directory("plugins")
-        path = "{}/{}/plugin/includes/bw2package".format(path,infos["name"])
+        path = pkg_resources.resource_filename(__name__, 'includes/bw2package')
         for db_name in self.included_databases:
             """
             if db_name in bw.databases:

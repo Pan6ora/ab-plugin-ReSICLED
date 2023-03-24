@@ -6,7 +6,6 @@ from brightway2 import *
 from bw2data import *
 from bw2io.package import BW2Package
 
-from ...metadata import infos
 from datetime import datetime
 from ..tools.tool import Tool
 

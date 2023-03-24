@@ -8,7 +8,6 @@ from bw2io.package import BW2Package
 
 from datetime import datetime
 from ..tools.tool import Tool
-from ...metadata import infos
 
 class Materialdatabase():
     def __init__(self, parent=None):
