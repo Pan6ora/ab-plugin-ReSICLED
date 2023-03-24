@@ -17,13 +17,39 @@ Upcoming
 
  - improving updates between tabs
  - PDF Report
- - removing useless lines (comments)
 
 Under consideration
 -------------------
 
 - make a proper doc (eg. docstrings...)
 - lint
+
+[0.3.0] - 2022-03-24
+====================
+
+Fixed
+-----
+
+- Useless and buggy sngals calls
+- Database path (according to pm2.0)
+- Log warnings when re-importing plugin
+
+Added
+-----
+
+- Signals when database list changed
+- Conda build files
+
+Changed
+-------
+
+- Update to pm2.0 
+- Don't import an already existing database
+
+Removed
+-------
+
+- Useless database file
 
 [0.2.0] - 2022-11-16
 ====================
