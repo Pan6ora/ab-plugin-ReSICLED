@@ -4,7 +4,8 @@ import pkg_resources
 
 import time
 
-from activity_browser.settings import project_settings
+from activity_browser.settings import ab_settings, project_settings
+from activity_browser.signals import signals
 
 from .materialdatabase import Materialdatabase
 from .productdatabase import Productdatabase
@@ -31,11 +32,13 @@ class DatabaseManager():
         for db_name in self.included_databases:
             if db_name not in bw.databases:
                 self.import_database(path, db_name)
+        signals.databases_changed.emit()
 
     def delete_databases(self):
-       for db_name in self.included_databases:
+        for db_name in self.included_databases:
             if db_name in bw.databases:
-                 self.delete_database(db_name)               
+                self.delete_database(db_name)
+        signals.databases_changed.emit()             
 
     def import_database(self,path,db_name):
         print("Importing {} database".format(db_name))
@@ -47,5 +50,3 @@ class DatabaseManager():
         del bw.databases[db_name]
 
 databasemanager = DatabaseManager()
-
-
