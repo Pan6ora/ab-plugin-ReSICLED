@@ -188,7 +188,7 @@ class DatabaseTab(QTabWidget):
                 self.all_product = self.databasemanager.directivedatabase.delete_one_directive(id_element)
             
         #emit signal   
-        signals.update_combobox.emit(QComboBox())    
+        signals.update_combobox.emit()    
         #update table view
         self.call_show_table_database(None)  
         

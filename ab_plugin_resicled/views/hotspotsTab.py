@@ -64,11 +64,10 @@ class HotspotsTab(QTabWidget):
         
         #signal update_combobox
         signals.update_combobox.connect(self.update_menu_combobox)
-        signals.update_combobox.emit(self.edit_component_product)
         signals.update_component_scenario.connect(self.call_show_table_component_product)
         
     @Slot(object)
-    def update_menu_combobox(self, box: QComboBox):
+    def update_menu_combobox(self):
         box = self.edit_component_product
         #---product to select
         self.all_product_form = databasemanager.productdatabase.get_all_product()

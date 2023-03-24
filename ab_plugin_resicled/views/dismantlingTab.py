@@ -120,10 +120,9 @@ class DismantlingTab(QTabWidget):
         self.edit_component_product.currentIndexChanged.connect(self.call_show_table_component_product)
         #signal update_combobox
         signals.update_combobox.connect(self.update_menu_combobox)
-        signals.update_combobox.emit(self.edit_component_product)
         
     @Slot(object)
-    def update_menu_combobox(self, box: QComboBox):
+    def update_menu_combobox(self):
         """
         Updates the product selection combobox
         """

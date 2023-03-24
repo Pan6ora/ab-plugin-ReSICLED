@@ -31,9 +31,7 @@ class RightTab(PluginTab):
 		}
         for tab_name, tab_obj in self.tabs.items():
             self.tabwidget.addTab(tab_obj, tab_name)
-            if(tab_name=="Dismantling" or tab_name=="Shredding" or tab_name=="Mixed" or tab_name=="HotSpots"):
-                signals.update_combobox.connect(tab_obj.update_menu_combobox)
-                signals.update_combobox.emit(QComboBox())
+        signals.update_combobox.emit()
             
         #display tab in layout   
         self.layout = QVBoxLayout()

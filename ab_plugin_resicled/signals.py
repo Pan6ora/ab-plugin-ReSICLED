@@ -9,7 +9,7 @@ class Signals(ABSignals):
 
     add_product = Signal(str)
     alert_information = Signal(str)
-    update_combobox = Signal(object)
+    update_combobox = Signal()
     update_table_component_product = Signal(object, object)
     update_component_scenario = Signal(object)
         

@@ -322,8 +322,7 @@ class Dialog_insert_product(QDialog):
             #insert in database
             self.databasemanager.productdatabase.insert_one_product(new_product)
             #signal update_combobox
-            signals.update_combobox.connect(self.update_menu_combobox)
-            signals.update_combobox.emit(self.box_product)
+            signals.update_combobox.emit()
             #close form
             self.close()
             # show alert
@@ -614,7 +613,7 @@ class Dialog_insert_material(QDialog):
         self.setWindowTitle("Form add material")
         
     @Slot(object)
-    def update_menu_combobox_component_material(self, class_dialog_insert_component):        
+    def update_menu_combobox_component_material(self):        
         #---material_polymer to select
         self.all_material_polymer = self.databasemanager.materialdatabase.get_material_by_attrib("type_material","Polymers")
         self.class_dialog_insert_component.edit_component_material_polymer.clear()
@@ -692,7 +691,7 @@ class Dialog_insert_material(QDialog):
             self.databasemanager.componentdatabase.insert_one_material(new_material)
             #signal update_combobox
             signals.update_combobox.connect(self.update_menu_combobox_component_material)
-            signals.update_combobox.emit(self.class_dialog_insert_component)
+            signals.update_combobox.emit()
             #close form
             self.close()
             # show alert
