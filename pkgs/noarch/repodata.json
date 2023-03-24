@@ -1,0 +1,28 @@
+{
+  "info": {
+    "subdir": "noarch"
+  },
+  "packages": {
+    "ab-plugin-resicled-0.3.0-py_0.tar.bz2": {
+      "build": "py_0",
+      "build_number": 0,
+      "depends": [
+        "activity-browser 2.7.*",
+        "python"
+      ],
+      "license": "LGPL3+",
+      "license_family": "LGPL",
+      "md5": "dad0aba0a95843cdfbc3a593507adc80",
+      "name": "ab-plugin-resicled",
+      "noarch": "python",
+      "sha256": "dad273911e0064cf8f20b3169565f39e6123a8937548c6bdd78429bfcbef809f",
+      "size": 32107,
+      "subdir": "noarch",
+      "timestamp": 1679663143704,
+      "version": "0.3.0"
+    }
+  },
+  "packages.conda": {},
+  "removed": [],
+  "repodata_version": 1
+}
