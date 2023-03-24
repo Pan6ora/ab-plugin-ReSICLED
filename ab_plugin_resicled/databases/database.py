@@ -27,13 +27,10 @@ class DatabaseManager():
 
     def import_databases(self):
 
-        path = pkg_resources.resource_filename(__name__, 'includes/bw2package')
+        path = pkg_resources.resource_filename(__name__, '../includes/bw2package')
         for db_name in self.included_databases:
-            """
-            if db_name in bw.databases:
-                self.delete_database(db_name)
-            """
-            self.import_database(path, db_name)
+            if db_name not in bw.databases:
+                self.import_database(path, db_name)
 
     def delete_databases(self):
        for db_name in self.included_databases:
