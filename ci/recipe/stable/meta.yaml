@@ -1,0 +1,32 @@
+package:
+  name: ab-plugin-resicled
+  version: "{{ GIT_DESCRIBE_TAG }}"
+
+source:
+  git_rev: new_workflow
+  git_url: https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled.git
+
+build:
+  noarch: python
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  build:
+    - python =3.9
+    - setuptools
+    - conda-verify
+  run:
+    - activity-browser =2.7
+
+about:
+  home: https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled
+  license: LGPL3+
+  license_family: LGPL
+  license_file: LICENSE.txt
+  summary: Evaluate the recyclability of product Electr(on)ic for improving product design
+  description: |
+    The [Activity Browser](https://github.com/LCA-ActivityBrowser/activity-browser)
+    is a graphical user interface for the [brightway2](https://brightway.dev/)
+    advanced life cycle assessment framework.
+    This plugin is a rewrite of the ReSICLED software created at G-SCOP Laboratory.

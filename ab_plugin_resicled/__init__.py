@@ -1,13 +1,15 @@
 import activity_browser as ab
 from activity_browser.signals import signals
 
-from .plugin.layouts.tabs import LeftTab, RightTab
-from .plugin.databases.database import databasemanager
-from .metadata import infos
+from .layouts.tabs import LeftTab, RightTab
+from .databases.database import databasemanager
 
 class Plugin(ab.Plugin):
 
     def __init__(self):
+        infos = {
+            'name': "ReSICLED",
+        }
         ab.Plugin.__init__(self, infos)
 
     def load(self):

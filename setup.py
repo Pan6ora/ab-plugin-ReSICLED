@@ -2,15 +2,13 @@
 import os
 from setuptools import setup
 
-from .metadata import *
-
 packages = []
 root_dir = os.path.dirname(__file__)
 if root_dir:
     os.chdir(root_dir)
 accepted_filetypes = (".html", ".png", ".svg", ".js", ".css")
 
-for dirpath, dirnames, filenames in os.walk('plugin'):
+for dirpath, dirnames, filenames in os.walk("ab_plugin_resicled"):
     # Ignore dirnames that start with '.'
     if ('__init__.py' in filenames
             or any(x.endswith(accepted_filetypes) for x in filenames)):
@@ -19,17 +17,21 @@ for dirpath, dirnames, filenames in os.walk('plugin'):
             pkg = pkg.replace(os.path.altsep, '.')
         packages.append(pkg)
 
+if 'VERSION' in os.environ:
+    version = os.environ['VERSION']
+else:
+    version = os.environ.get('GIT_DESCRIBE_TAG', '0.0.0')
+
 setup(
-    name=name,
+    name="ab-plugin-resicled",
     version=version,
     packages=packages,
     include_package_data=True,
-    author=author,
-    author_email=author_email,
+    author="G-SCOP",
+    author_email="remy@lecalloch.net",
     license=open('LICENSE.txt').read(),
     install_requires=[], # dependency management in conda recipe
-    url=url,
+    url="https://gricad-gitlab.univ-grenoble-alpes.fr/green-scop/ab-plugins/resicled",
     long_description=open('README.md').read(),
-    description=description,
-    classifiers=classifiers,
+    description="Evaluate the recyclability of product Electr(on)ic for improving product design",
     )
