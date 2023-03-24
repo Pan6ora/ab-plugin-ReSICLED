@@ -11,17 +11,21 @@ class Plugin(ab.Plugin):
             'name': "ReSICLED",
         }
         ab.Plugin.__init__(self, infos)
+        self.databasemanager = databasemanager
 
     def load(self):
         self.mainTab = RightTab(self)
         self.leftTab = LeftTab(self)
         self.tabs = [self.mainTab, self.leftTab]
-        self.databasemanager = databasemanager
-
-    def initialize(self):
         self.databasemanager.import_databases()
         signals.databases_changed.emit()
 
+    def close(self):
+        pass
+
     def remove(self):
-        self.databasemanager.delete_databases()
-        signals.databases_changed.emit()
+        try:
+            self.databasemanager.delete_databases()
+            signals.databases_changed.emit()
+        except:
+            print("Plugin-ReSICLED: no database to remove")
