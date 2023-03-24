@@ -205,10 +205,13 @@ class Dialog_insert_directive(QDialog):
     def update_menu_combobox(self, box: QComboBox):
         #---directive to select
         self.all_directive_form = self.databasemanager.directivedatabase.get_all_directive()
-        box.clear()
-        box.addItem("Select a directive")
-        for key, value in self.all_directive_form.items():
-            box.addItem(str(value['name_directive']), userData=value)
+        try:
+            box.clear()
+            box.addItem("Select a directive")
+            for key, value in self.all_directive_form.items():
+                box.addItem(str(value['name_directive']), userData=value)
+        except: 
+            pass
             
     def set_value_directive(self):
         #---directive to select
@@ -293,10 +296,13 @@ class Dialog_insert_product(QDialog):
     def update_menu_combobox(self, box: QComboBox):
         #---product to select
         self.all_product_form = self.databasemanager.productdatabase.get_all_product()
-        box.clear()
-        box.addItem("Select a product")
-        for key, value in self.all_product_form.items():
-            box.addItem(str(value['name_product']), userData=value)
+        try:
+            box.clear()
+            box.addItem("Select a product")
+            for key, value in self.all_product_form.items():
+                box.addItem(str(value['name_product']), userData=value)
+        except: 
+            pass
         
     def show_alert_information(self, message):
         reply = QMessageBox.question(self, "Info", message, QMessageBox.Ok)

@@ -72,10 +72,13 @@ class HotspotsTab(QTabWidget):
         box = self.edit_component_product
         #---product to select
         self.all_product_form = databasemanager.productdatabase.get_all_product()
-        box.clear()
-        box.addItem("Select a product")
-        for key, value in self.all_product_form.items():
-            box.addItem(str(value['name_product']), userData=value)
+        try:
+            box.clear()
+            box.addItem("Select a product")
+            for key, value in self.all_product_form.items():
+                box.addItem(str(value['name_product']), userData=value)
+        except: 
+            pass
         
     def call_show_dialog_insert_directive(self):
         self.form.show_dialog_insert_directive(self, "shredding")
