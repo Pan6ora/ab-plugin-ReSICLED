@@ -17,7 +17,7 @@ requirements:
     - setuptools
     - conda-verify
   run:
-    - activity-browser
+    - activity-browser <2.10
 
 about:
   home: https://github.com/Pan6ora/ab-plugin-ReSICLED
